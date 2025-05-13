@@ -9,7 +9,7 @@
 
 import js from "@eslint/js";
 import globals from "globals";
-// import tseslint from "typescript-eslint";
+import tseslint from "typescript-eslint";
 import { defineConfig } from "eslint/config";
 import eslintConfigPrettier from "eslint-config-prettier";
 
@@ -26,7 +26,7 @@ export default defineConfig([
     files: ["**/*.{js,mjs,cjs,ts}"],
     languageOptions: { globals: globals.browser },
   },
-  // tseslint.configs.recommended,  // 타입스크립트 전용 권장 사항 세팅
+  tseslint.configs.recommended, // 타입스크립트 전용 권장 사항 세팅
   {
     files: ["**/*.{js,mjs,cjs,ts}"],
     rules: {
