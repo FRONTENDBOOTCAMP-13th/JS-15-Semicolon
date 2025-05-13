@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   build: {
@@ -9,4 +10,5 @@ export default defineConfig({
     },
   },
   appType: "mpa", // fallback 사용안함
+  plugins: [tailwindcss()],
 });
