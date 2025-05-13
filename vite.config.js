@@ -5,10 +5,19 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        index: "index.html", // 기본 index.html
+        index: "index.html",
       },
     },
   },
   appType: "mpa", // fallback 사용안함
   plugins: [tailwindcss()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://apis.data.go.kr",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });
