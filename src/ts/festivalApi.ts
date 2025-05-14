@@ -67,8 +67,8 @@ function renderFestivalList(items: any[]) {
         <img src="${image}" alt="축제 이미지" class="w-full h-[200px] object-cover rounded-[1rem]" />
         <div class="p-3">
           <h3 class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis">${item.title}</h3>
-          <p class="text-gray-500 text-sm truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${item.addr1 || "지역 정보 없음"}</p>
-          <p class="text-gray-500 text-sm truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
+          <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${item.addr1 || "지역 정보 없음"}</p>
+          <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
         </div>
       </div>
     `;
