@@ -63,12 +63,12 @@ function renderFestivalList(items: any[]) {
     const image =
       item.firstimage || "https://via.placeholder.com/300x200?text=No+Image";
     card.innerHTML = `
-      <div class=" flex flex-col space-x-6 bg-white rounded-[1rem] w-[300px] overflow-hidden shadow border border-gray-300">
+      <div class="w-full flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-gray-300">
         <img src="${image}" alt="축제 이미지" class="w-full h-[200px] object-cover rounded-[1rem]" />
         <div class="p-3">
-          <h3 class="font-bold text-[1rem] text-black">${item.title}</h3>
-          <p class="text-gray-500 text-sm">📍 ${item.addr1 || "지역 정보 없음"}</p>
-          <p class="text-gray-500 text-sm">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
+          <h3 class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis">${item.title}</h3>
+          <p class="text-gray-500 text-sm truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${item.addr1 || "지역 정보 없음"}</p>
+          <p class="text-gray-500 text-sm truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
         </div>
       </div>
     `;
