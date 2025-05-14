@@ -1,3 +1,5 @@
+import "../style.css";
+
 const API_KEY = import.meta.env.VITE_TOUR_API_KEY;
 const BASE_URL = "/api/B551011/KorService2/searchFestival2";
 
@@ -57,16 +59,19 @@ function renderFestivalList(items: any[]) {
 
   items.forEach((item) => {
     const card = document.createElement("div");
-    card.className = "festuvalCaard";
+    card.className = "festivalCard";
     const image =
       item.firstimage || "https://via.placeholder.com/300x200?text=No+Image";
     card.innerHTML = `
-        <div class="w-[18.75rem] h-[12.5rem] bg-itc-gray300 rounded-[1rem] overflow-hidden">
-          <img src="${image}" alt="축제 이미지" width="300" height="200"/>
-          <h3>${item.title}</h3>
-          <p>${item.addr1 || "주소 없음"}</p>
-          <p>🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
-        </div>`;
+      <div class=" flex flex-col space-x-6 bg-white rounded-[1rem] w-[300px] overflow-hidden shadow border border-gray-300">
+        <img src="${image}" alt="축제 이미지" class="w-full h-[200px] object-cover rounded-[1rem]" />
+        <div class="p-3">
+          <h3 class="font-bold text-[1rem] text-black">${item.title}</h3>
+          <p class="text-gray-500 text-sm">📍 ${item.addr1 || "지역 정보 없음"}</p>
+          <p class="text-gray-500 text-sm">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
+        </div>
+      </div>
+    `;
     festivalList.appendChild(card);
   });
 }
