@@ -253,11 +253,16 @@ const initDateRangePicker = () => {
   // 외부 클릭 시 닫기
   document.addEventListener("click", (event) => {
     const target = event.target as HTMLElement;
-    if (
+
+    const isOutsideClick =
       !dateRangeButton?.contains(target) &&
       !dateRangePicker?.contains(target) &&
-      !dateRangePicker?.classList.contains("hidden")
-    ) {
+      !dateRangePicker?.classList.contains("hidden");
+
+    // 시작일, 종료일 둘 다 선택된 상태에서만 닫힘 허용
+    const shouldClose = isOutsideClick && startDate && endDate;
+
+    if (shouldClose) {
       dateRangePicker?.classList.add("hidden");
       dateRangeButton?.classList.remove("border-red-500");
     }
