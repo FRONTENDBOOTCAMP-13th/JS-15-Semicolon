@@ -4,9 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/src/style.css" />
+    <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
     <h1>🎉 축제 리스트</h1>
+    <h2 class="text-red-500">안녕하세요 테스트</h2>
     <form id="filterForm" action="filterForm">
       <select id="locationFilter">
         <option value="">전체</option>
@@ -28,11 +31,11 @@
         <option value="38">전남</option>
         <option value="39">제주</option>
       </select>
+
       <input type="date" id="startDate" />
       <input type="date" id="endDate" />
       <button type="submit">검색</button>
     </form>
     <div id="festivalList"></div>
-    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
