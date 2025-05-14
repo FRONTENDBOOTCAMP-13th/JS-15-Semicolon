@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/src/style.css" />
+    <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
     <h1>🎉 축제 리스트</h1>
@@ -28,11 +30,14 @@
         <option value="38">전남</option>
         <option value="39">제주</option>
       </select>
+
       <input type="date" id="startDate" />
       <input type="date" id="endDate" />
       <button type="submit">검색</button>
     </form>
-    <div id="festivalList"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div
+      id="festivalList"
+      class="mx-auto grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-[1.25rem] max-w-[58.5rem] px-2 bg-blue-200"
+    ></div>
   </body>
 </html>

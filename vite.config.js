@@ -9,8 +9,11 @@ export default defineConfig({
       },
     },
   },
-  appType: "mpa", // fallback 사용안함
   plugins: [tailwindcss()],
+  appType: "mpa",
+  css: {
+    postcss: "./postcss.config.js",
+  },
   server: {
     proxy: {
       "/api": {
