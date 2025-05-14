@@ -3,15 +3,19 @@ import "../style.css";
 const API_KEY = import.meta.env.VITE_TOUR_API_KEY;
 const BASE_URL = "/api/B551011/KorService2/searchFestival2";
 
-const form = document.getElementById("filterForm");
+const form = document.getElementById("filterForm"); // form은 지역과 날짜를 선택하는 전체 영역
 const locationFilter = document.getElementById(
   "locationFilter"
-) as HTMLSelectElement;
-const startDateInput = document.getElementById("startDate") as HTMLInputElement;
-const endDateInput = document.getElementById("endDate") as HTMLInputElement;
-const festivalList = document.getElementById("festivalList")!;
+) as HTMLSelectElement; // 지역을 선택하는 부분
+const startDateInput = document.getElementById("startDate") as HTMLInputElement; // 시작 날짜 저장
+const endDateInput = document.getElementById("endDate") as HTMLInputElement; // 종료 날짜 저장
+const festivalList = document.getElementById("festivalList")!; // 찾은 축제들을 보여줄 곳
 
+//==============================================================================================
+// 🚀 지역 선택 함수
+//==============================================================================================
 const initCustomDropdown = () => {
+  // 지역 선택 드롭다운 메뉴 초기화 함수
   const dropdownButton = document.getElementById("dropdownButton");
   const dropdownMenu = document.getElementById("dropdownMenu");
   const locationOptions = document.querySelectorAll(".location-option");
@@ -34,7 +38,7 @@ const initCustomDropdown = () => {
     if (!dropdownButton?.contains(target) && !dropdownMenu?.contains(target)) {
       dropdownMenu?.classList.add("hidden");
       arrow?.classList.remove("rotate-180");
-      dropdownButton?.classList.remove("border-red-500"); // 드롭다운 닫힐 때 빨간색 테두리 제거
+      dropdownButton?.classList.remove("border-red-500");
     }
   });
 
@@ -56,12 +60,14 @@ const initCustomDropdown = () => {
 
       dropdownMenu?.classList.add("hidden");
       arrow?.classList.remove("rotate-180");
-      dropdownButton?.classList.remove("border-red-500"); // 옵션 선택 후 빨간색 테두리 제거
+      dropdownButton?.classList.remove("border-red-500");
     });
   });
 };
 
-// 날짜 범위 선택기 기능
+//==============================================================================================
+// 🚀 날짜 범위 선택 기능
+//==============================================================================================
 const initDateRangePicker = () => {
   const dateRangeButton = document.getElementById("dateRangeButton");
   const dateRangePicker = document.getElementById("dateRangePicker");
@@ -80,6 +86,7 @@ const initDateRangePicker = () => {
   let startDate: Date | null = null;
   let endDate: Date | null = null;
   let tempStartDate: Date | null = null; // 임시 시작일(날짜 범위 선택 중)
+  let isDateCellClicked = false; // 날짜 셀 클릭 여부를 추적하는 플래그
 
   // 날짜 포맷 함수
   const formatDate = (date: Date): string => {
@@ -152,7 +159,13 @@ const initDateRangePicker = () => {
       dateCell.dataset.date = formattedDate;
 
       // 날짜 클릭 이벤트 처리
-      dateCell.addEventListener("click", () => {
+      dateCell.addEventListener("click", (e) => {
+        // 클릭 이벤트 발생 시 플래그 설정
+        isDateCellClicked = true;
+
+        // 이벤트 버블링 막기
+        e.stopPropagation();
+
         const clickedDate = new Date(formattedDate);
 
         // 첫 클릭 또는 양쪽 다 선택된 후 다시 시작하는 경우
@@ -184,6 +197,11 @@ const initDateRangePicker = () => {
 
         // 달력 다시 렌더링
         renderCalendar();
+
+        // 다음 틱에서 플래그 초기화 (이벤트 전파 후)
+        setTimeout(() => {
+          isDateCellClicked = false;
+        }, 10);
       });
 
       calendarDays.appendChild(dateCell);
@@ -191,18 +209,21 @@ const initDateRangePicker = () => {
   };
 
   // 이전/다음 월 버튼 이벤트
-  prevMonthBtn?.addEventListener("click", () => {
+  prevMonthBtn?.addEventListener("click", (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
     currentDate.setMonth(currentDate.getMonth() - 1);
     renderCalendar();
   });
 
-  nextMonthBtn?.addEventListener("click", () => {
+  nextMonthBtn?.addEventListener("click", (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
     currentDate.setMonth(currentDate.getMonth() + 1);
     renderCalendar();
   });
 
   // 날짜 초기화
-  clearDatesBtn?.addEventListener("click", () => {
+  clearDatesBtn?.addEventListener("click", (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
     startDate = null;
     endDate = null;
     if (displayStartDate) displayStartDate.textContent = "-";
@@ -211,7 +232,9 @@ const initDateRangePicker = () => {
   });
 
   // 선택한 날짜 적용
-  applyDateRangeBtn?.addEventListener("click", () => {
+  applyDateRangeBtn?.addEventListener("click", (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
+
     // 시작일과 종료일 모두 선택된 경우만 적용
     if (startDate && endDate) {
       // hidden input 업데이트
@@ -231,8 +254,14 @@ const initDateRangePicker = () => {
     }
   });
 
+  // 날짜 범위 선택기 자체에 클릭 이벤트 추가하여 버블링 방지
+  dateRangePicker?.addEventListener("click", (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
+  });
+
   // 날짜 범위 선택기 토글
-  dateRangeButton?.addEventListener("click", () => {
+  dateRangeButton?.addEventListener("click", (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
     dateRangePicker?.classList.toggle("hidden");
 
     // 선택기가 열렸을 때 테두리 색 변경
@@ -252,6 +281,9 @@ const initDateRangePicker = () => {
 
   // 외부 클릭 시 닫기
   document.addEventListener("click", (event) => {
+    // 날짜 셀 클릭 직후에는 처리하지 않음
+    if (isDateCellClicked) return;
+
     const target = event.target as HTMLElement;
 
     const isOutsideClick =
@@ -259,10 +291,7 @@ const initDateRangePicker = () => {
       !dateRangePicker?.contains(target) &&
       !dateRangePicker?.classList.contains("hidden");
 
-    // 시작일, 종료일 둘 다 선택된 상태에서만 닫힘 허용
-    const shouldClose = isOutsideClick && startDate && endDate;
-
-    if (shouldClose) {
+    if (isOutsideClick) {
       dateRangePicker?.classList.add("hidden");
       dateRangeButton?.classList.remove("border-red-500");
     }
@@ -271,7 +300,9 @@ const initDateRangePicker = () => {
   // 초기 렌더링
   renderCalendar();
 };
-
+//==============================================================================================
+// 🚀 축제 검색 기능
+//==============================================================================================
 form?.addEventListener("submit", async (e) => {
   e.preventDefault();
 
