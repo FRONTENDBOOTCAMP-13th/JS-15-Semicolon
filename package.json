@@ -19,5 +19,9 @@
     "tailwindcss": "^4.1.6",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@types/axios": "^0.9.36",
+    "axios": "^1.9.0"
   }
 }

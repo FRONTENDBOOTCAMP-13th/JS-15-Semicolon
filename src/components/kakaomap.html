@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>카카오맵 API</title>
+    <link rel="stylesheet" href="/src/style.css" />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body class="flex flex-col items-center justify-center min-h-screen">
+    <h1 class="sr-only">카카오 지도 및 길찾기 API</h1>
+    <h3>카카오 길찾기 API</h3>
+    <button id="getRoute">경로 보기</button>
+    <button id="changeOrigin">출발지 변경</button>
+    <section>
+      <p>현재 위치 : <span id="userPosition"></span></p>
+    </section>
+    <div
+      id="map"
+      class="w-[56.25rem] h-[31.25rem] border border-ga-gray200"></div>
+  </body>
+</html>
