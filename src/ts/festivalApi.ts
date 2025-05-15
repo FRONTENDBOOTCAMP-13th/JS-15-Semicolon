@@ -320,10 +320,10 @@ form?.addEventListener("submit", async (e) => {
   e.preventDefault(); // 새로고침 막기
 
   const areaCode = locationFilter.value; // 선택한 지역 코드를 area code에 저장
-  // const startDate = startDateInput.value.replace(/-/g, "");
-  // const endDate = endDateInput.value.replace(/-/g, "");
-  const startDate = startDateInput.value;
-  const endDate = endDateInput.value;
+  const startDate = startDateInput.value.replace(/-/g, "");
+  const endDate = endDateInput.value.replace(/-/g, "");
+  // const startDate = startDateInput.value;
+  // const endDate = endDateInput.value;
 
   const query = [
     // 축제 요청 정보 필요 조건
