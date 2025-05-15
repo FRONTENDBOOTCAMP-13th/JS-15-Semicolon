@@ -6,7 +6,8 @@
     <title>상세 페이지</title>
     <link rel="stylesheet" href="/src/style.css" />
     <link rel="module" href="/src/main.ts" />
-    <link rel="module" href="/src/ts/detail.ts" />
+    <!-- <link rel="module" href="/src/ts/detail.ts" /> -->
+    <script type="module" src="/src/ts/detail.ts"></script>
   </head>
   <body>
     <h1 class="sr-only">축제 상세 페이지</h1>
@@ -15,7 +16,7 @@
 
       <div id="festivalDetail">
         <div
-          class="flex justify-center items-center h-screen w-full flex-col gap-4"
+          class="flex justify-center items-center max-w-[58.5rem] h-screen w-full flex-col gap-4"
         >
           <div
             class="animate-spin h-10 w-10 border-4 border-ga-red200 rounded-full border-t-transparent"
