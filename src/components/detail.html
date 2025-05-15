@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상세 페이지</title>
+    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="module" href="/src/main.ts" />
+    <!-- <link rel="module" href="/src/ts/detail.ts" /> -->
+    <script type="module" src="/src/ts/detail.ts"></script>
+  </head>
+  <body>
+    <h1 class="sr-only">축제 상세 페이지</h1>
+    <div class="festival-container">
+      <a class="back-button" href="card.html">목록으로 돌아가기</a>
+
+      <div id="festivalDetail">
+        <div
+          class="flex justify-center items-center max-w-[58.5rem] h-screen w-full flex-col gap-4"
+        >
+          <div
+            class="animate-spin h-10 w-10 border-4 border-ga-red200 rounded-full border-t-transparent"
+          ></div>
+          <p class="text-gray-600">축제 정보를 불러오는 중...</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
