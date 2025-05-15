@@ -1,7 +1,9 @@
 import "../style.css";
 
 const API_KEY = import.meta.env.VITE_TOUR_API_KEY;
+// TOUR API 키 저장
 const BASE_URL = "/api/B551011/KorService2/searchFestival2";
+// Base URL 저장
 
 const form = document.getElementById("filterForm"); // form은 지역과 날짜를 선택하는 전체 영역
 const locationFilter = document.getElementById(
@@ -27,25 +29,32 @@ const initCustomDropdown = () => {
     arrow?.classList.toggle("rotate-180");
 
     if (!dropdownMenu?.classList.contains("hidden")) {
-      dropdownButton.classList.add("border-red-500");
+      dropdownButton.classList.add("border-ga-red300");
     } else {
-      dropdownButton.classList.remove("border-red-500");
+      dropdownButton.classList.remove("border-ga-red300");
     }
   });
 
   document.addEventListener("click", (event) => {
-    const target = event.target as HTMLElement;
+    const target = event.target as HTMLElement; // 클릭한 대상을 target에 저장
     if (!dropdownButton?.contains(target) && !dropdownMenu?.contains(target)) {
+      // 클릭 대상이 드롭다운 버튼 및 메뉴가 아니면 실행
       dropdownMenu?.classList.add("hidden");
+      // 드롭다운 메뉴에 hidden을 추가해서 메뉴 숨기기
       arrow?.classList.remove("rotate-180");
-      dropdownButton?.classList.remove("border-red-500");
+      // 드롭다운 메뉴 화살표 원래 방향으로 돌려놓기
+      dropdownButton?.classList.remove("border-ga-red300");
     }
   });
 
   locationOptions.forEach((option) => {
+    // 모든 지역 옵션에 대해 반복해서 다음 코드 실행
     option.addEventListener("click", () => {
+      // 각 옵션에 클릭 이벤트 추가
       const value = option.getAttribute("data-value") || "";
+      // 옵션 date-value 속성값을 가져와서 저장
       const text = option.textContent || "";
+      // 옵션의 텍스트 내용을 가져와서 저장
 
       if (selectedLocation) {
         selectedLocation.textContent = text;
@@ -53,9 +62,12 @@ const initCustomDropdown = () => {
 
       if (locationFilter) {
         locationFilter.value = value;
+        // locationFilter의 값을 클릭한 옵션의 value로 설정
 
         const event = new Event("change", { bubbles: true });
+        // change라는 새로운 이벤트를 만들어 bubbles: true를 통해 이벤트가 상위 요소들에게도 전달
         locationFilter.dispatchEvent(event);
+        // change 이벤트를 발생시켜 선택의 변경 사항을 공유 가능
       }
 
       dropdownMenu?.classList.add("hidden");
@@ -304,20 +316,24 @@ const initDateRangePicker = () => {
 // 🚀 축제 검색 기능
 //==============================================================================================
 form?.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  // form 제출 이벤트 추가
+  e.preventDefault(); // 새로고침 막기
 
-  const areaCode = locationFilter.value;
-  const startDate = startDateInput.value.replace(/-/g, "");
-  const endDate = endDateInput.value.replace(/-/g, "");
+  const areaCode = locationFilter.value; // 선택한 지역 코드를 area code에 저장
+  // const startDate = startDateInput.value.replace(/-/g, "");
+  // const endDate = endDateInput.value.replace(/-/g, "");
+  const startDate = startDateInput.value;
+  const endDate = endDateInput.value;
 
   const query = [
+    // 축제 요청 정보 필요 조건
     `serviceKey=${API_KEY}`,
     "MobileApp=AppTest",
     "MobileOS=ETC",
-    "_type=json",
-    "numOfRows=15",
+    "_type=json", // json 형식으로 받기
+    "numOfRows=2", // 전달 받는 축제 정보량
     "pageNo=1", // TODO : 수정 -> 다음 호출때 + 1 하는 형식으로 로직 구현 시도
-    "arrange=A",
+    "arrange=A", // 알파벳 순서대로 정렬
     startDate && `eventStartDate=${startDate}`,
     endDate && `eventEndDate=${endDate}`,
     areaCode && `areaCode=${areaCode}`,
@@ -326,10 +342,11 @@ form?.addEventListener("submit", async (e) => {
     .join("&");
 
   const url = `${BASE_URL}?${query}`;
+  // 기본 주소와 조건을 합쳐 최종 URL 만들기
 
   try {
-    const res = await fetch(url);
-    const json = await res.json();
+    const res = await fetch(url); // 요청을 보내고 응답 올때까지 대기, 오면 변수에 저장
+    const json = await res.json(); // 받은 응답을 json 형식으로 변환, 오면 변수에 저장
     const items = json.response?.body?.items?.item || [];
 
     renderFestivalList(items);
@@ -340,7 +357,7 @@ form?.addEventListener("submit", async (e) => {
 });
 
 function renderFestivalList(items: any[]) {
-  festivalList.innerHTML = "";
+  festivalList.innerHTML = ""; // 축제 목록을 보여줄 부분 비움
 
   if (items.length === 0) {
     festivalList.innerHTML = "<p>📭 해당 조건에 맞는 축제가 없습니다.</p>";
@@ -348,8 +365,9 @@ function renderFestivalList(items: any[]) {
   }
 
   items.forEach((item) => {
+    // 각 축제에 대한 정보를 반복해서 코드 실행
     const card = document.createElement("div");
-    card.className = "festivalCard";
+    card.className = "festivalCard"; // div에 클래스 이름 부여
     const image =
       item.firstimage || "https://via.placeholder.com/300x200?text=No+Image";
     card.innerHTML = `
@@ -367,6 +385,7 @@ function renderFestivalList(items: any[]) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // 웹 페이지가 완전 로드되면 다음 코드 실행
   initCustomDropdown();
   initDateRangePicker();
 });
