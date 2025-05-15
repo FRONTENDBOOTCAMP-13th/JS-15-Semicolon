@@ -368,6 +368,8 @@ function renderFestivalList(items: any[]) {
     // 각 축제에 대한 정보를 반복해서 코드 실행
     const card = document.createElement("div");
     card.className = "festivalCard"; // div에 클래스 이름 부여
+    card.style.cursor = "pointer";
+
     const image =
       item.firstimage || "https://via.placeholder.com/300x200?text=No+Image";
     card.innerHTML = `
@@ -380,6 +382,12 @@ function renderFestivalList(items: any[]) {
         </div>
       </div>
     `;
+    // 카드 클릭시 상세 페이지로 이동하는 이벤트 리스너 추가
+    card.addEventListener("click", () => {
+      localStorage.setItem("selectedFestival", JSON.stringify(item));
+      // 상세 페이지로 이동
+      window.location.href = "detail.html";
+    });
     festivalList.appendChild(card);
   });
 }
