@@ -3,11 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="/src/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+  <body
+    class="m-0 p-0 h-screen w-screen flex justify-center items-center bg-gray-500"
+  >
+    <div class="grid grid-rows-1 grid-cols-2 gap-10">
+      <div class="flex flex-col gap-10 p-20 rounded-3xl">
+        <p class="text-50 text-white border-black">Component</p>
+        <ul class="text-50 text-black flex flex-col gap-4">
+          <li><a href="./src/components/card.html">card</a></li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      let li = document.querySelectorAll("li");
+      console.log(li);
+      const soothingColors = [
+        "#A8D8D8",
+        "#A2C8E4",
+        "#E6E6FA",
+        "#F8D7D1",
+        "#D3D3D3",
+        "#36454F",
+        "#B8B8B8",
+        "#B5B67A",
+        "#F5F5DC",
+        "#D4B68A",
+        "#C2A388",
+        "#FFDAB9",
+        "#FFFFE0",
+        "#77DD77",
+        "#FFF5E1",
+        "#FFFFF0",
+      ];
+      const soothingColorsHSL = [
+        "hsl(180, 35%, 75%)",
+        "hsl(200, 60%, 75%)",
+        "hsl(240, 100%, 94%)",
+        "hsl(6, 100%, 87%)",
+        "hsl(0, 0%, 83%)",
+        "hsl(210, 20%, 25%)",
+        "hsl(0, 0%, 72%)",
+        "hsl(60, 25%, 60%)",
+        "hsl(60, 50%, 90%)",
+        "hsl(39, 50%, 67%)",
+        "hsl(30, 100%, 86%)",
+        "hsl(39, 100%, 85%)",
+        "hsl(60, 100%, 90%)",
+        "hsl(120, 50%, 60%)",
+        "hsl(45, 100%, 94%)",
+        "hsl(60, 100%, 97%)",
+      ];
+
+      li.forEach((e, i) => {
+        e.style.backgroundColor =
+          soothingColorsHSL[i % soothingColorsHSL.length];
+        e.style.borderRadius = "10px";
+        e.style.paddingInline = "10px";
+        let tmp = soothingColorsHSL[i % soothingColorsHSL.length];
+        if (parseInt(tmp[tmp.length - 4]) < 5) e.style.color = "#fff";
+        e.children[0].style.display = "block";
+      });
+    </script>
   </body>
 </html>
