@@ -331,7 +331,7 @@ form?.addEventListener("submit", async (e) => {
     "MobileApp=AppTest",
     "MobileOS=ETC",
     "_type=json", // json 형식으로 받기
-    "numOfRows=2", // 전달 받는 축제 정보량
+    "numOfRows=20", // 전달 받는 축제 정보량
     "pageNo=1", // TODO : 수정 -> 다음 호출때 + 1 하는 형식으로 로직 구현 시도
     "arrange=A", // 알파벳 순서대로 정렬
     startDate && `eventStartDate=${startDate}`,
@@ -349,14 +349,19 @@ form?.addEventListener("submit", async (e) => {
     const json = await res.json(); // 받은 응답을 json 형식으로 변환, 오면 변수에 저장
     const items = json.response?.body?.items?.item || [];
 
-    renderFestivalList(items);
+    renderFestivalList(items, areaCode, startDate, endDate);
   } catch (err) {
     console.error("❌ API 에러:", err);
     festivalList.innerHTML = `<p style="color:red;">데이터를 불러오는 데 실패했습니다.</p>`;
   }
 });
 
-function renderFestivalList(items: any[]) {
+function renderFestivalList(
+  items: any[],
+  areaCode: string,
+  startDate: string,
+  endDate: string
+) {
   festivalList.innerHTML = ""; // 축제 목록을 보여줄 부분 비움
 
   if (items.length === 0) {
@@ -390,10 +395,51 @@ function renderFestivalList(items: any[]) {
     });
     festivalList.appendChild(card);
   });
+  // 검색 조건과 결과를 localStorage에 저장
+  localStorage.setItem(
+    "searchConditions",
+    JSON.stringify({
+      areaCode,
+      startDate,
+      endDate,
+    })
+  );
+  localStorage.setItem("searchResults", JSON.stringify(items));
 }
-
+//==============================================================================================
 document.addEventListener("DOMContentLoaded", () => {
-  // 웹 페이지가 완전 로드되면 다음 코드 실행
   initCustomDropdown();
   initDateRangePicker();
+
+  // ✅ 검색 조건 & 결과 복원
+  const savedConditions = localStorage.getItem("searchConditions");
+  const savedResults = localStorage.getItem("searchResults");
+
+  if (savedConditions && savedResults) {
+    const { areaCode, startDate, endDate } = JSON.parse(savedConditions);
+    const items = JSON.parse(savedResults);
+
+    // 지역 필터 복원
+    locationFilter.value = areaCode;
+    const selectedLocation = document.getElementById("selectedLocation");
+    const selectedText = [
+      ...document.querySelectorAll(".location-option"),
+    ].find((opt) => opt.getAttribute("data-value") === areaCode)?.textContent;
+    if (selectedLocation && selectedText)
+      selectedLocation.textContent = selectedText;
+
+    // 날짜 필터 복원
+    if (startDateInput && endDateInput) {
+      startDateInput.value = startDate.replace(/-/g, "");
+      endDateInput.value = endDate.replace(/-/g, "");
+    }
+
+    const selectedDateRange = document.getElementById("selectedDateRange");
+    if (selectedDateRange) {
+      selectedDateRange.textContent = `${startDate} ~ ${endDate}`;
+    }
+
+    // 카드 다시 렌더링
+    renderFestivalList(items, areaCode, startDate, endDate);
+  }
 });
