@@ -2,11 +2,6 @@ import "/src/style.css";
 import weatherRegionCodeMap2 from "../assets/weather-short-data";
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-const BASE_DATE = getBaseDate(); // 오늘 날짜, 기준시간 0200
-const BASE_TIME = "0200"; // TMX/TMN은 보통 0200에 제공됨
-
-const NX = 64; // 서울
-const NY = 68;
 
 function getBaseDate() {
   const now = new Date();
@@ -22,7 +17,7 @@ async function fetchDailyWeather(nx: number, ny: number) {
 
   const url =
     `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst` +
-    `?serviceKey=${API_KEY}&pageNo=1&numOfRows=800&dataType=JSON` +
+    `?serviceKey=${API_KEY}&pageNo=1&numOfRows=1000&dataType=JSON` +
     `&base_date=${BASE_DATE}&base_time=${BASE_TIME}&nx=${nx}&ny=${ny}`;
 
   const res = await fetch(url);
@@ -96,8 +91,8 @@ function getPtyText(code: string) {
   }
 }
 
-const city = "서울특별시 종로구"; // 사용자가 선택한 지역
-const locationData = weatherRegionCodeMap2[city];
+const city2 = "서울특별시 종로구"; // 사용자가 선택한 지역
+const locationData = weatherRegionCodeMap2[city2];
 
 if (!locationData) {
   console.error("해당 지역의 좌표가 없습니다.");
@@ -113,7 +108,7 @@ if (!locationData) {
     if (!weatherContainer) return;
     weatherContainer.innerHTML = "";
 
-    dates.slice(0, 3).forEach((date, i) => {
+    dates.slice(0, 4).forEach((date, i) => {
       const { tmn, tmx, skyAm, skyPm, ptyAm, ptyPm } = weatherMap[date];
 
       const weatherAm = ptyAm ? `${ptyAm} / ${skyAm}` : skyAm;

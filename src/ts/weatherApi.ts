@@ -105,7 +105,7 @@ function displayMidTermForecast(temp: any, land: any) {
   if (!weatherContainer) return;
   weatherContainer.innerHTML = ""; // 초기화
 
-  for (let i = 4; i <= 7; i++) {
+  for (let i = 4; i <= 6; i++) {
     const date = getDateAfterDays(i); // ex) 05월 20일
 
     const minTemp = temp[`taMin${i}`];
