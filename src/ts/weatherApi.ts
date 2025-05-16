@@ -1,5 +1,5 @@
 import "/src/style.css";
-import weatherRegionCodeMap from "../assets/weather-middle-data-2";
+import weatherRegionCodeMap from "../assets/weather-middle-data";
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
@@ -85,32 +85,65 @@ function getForecastLocationCode(city: string) {
 }
 
 // ///////////////////////////////////////////////////////
-const city = "인천";
+const city = "서울";
 const { tempCode, landCode } = getForecastLocationCode(city);
 
-fetchMidTermForecast(landCode) // land 설명용
-  .then((res) => console.log("🌤️ 육상예보:", res));
+function getDateAfterDays(days: number): string {
+  // 오늘 기준 N일 후 날짜를 "MM월 DD일" 형식으로 반환
+  const now = new Date();
+  now.setDate(now.getDate() + days);
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const date = String(now.getDate()).padStart(2, "0");
+  return `${month}월 ${date}일`;
+}
 
-fetchMidTermForecast(tempCode) // 기온용
-  .then((res) => console.log("🌡️ 기온:", res));
+function displayMidTermForecast(temp: any, land: any) {
+  const weatherContainer = document.querySelector(
+    ".weather-container.mid-term"
+  );
 
-////////////////
+  if (!weatherContainer) return;
+  weatherContainer.innerHTML = ""; // 초기화
+
+  for (let i = 4; i <= 7; i++) {
+    const date = getDateAfterDays(i); // ex) 05월 20일
+
+    const minTemp = temp[`taMin${i}`];
+    const maxTemp = temp[`taMax${i}`];
+
+    let weatherAm = land[`wf${i}Am`];
+    let weatherPm = land[`wf${i}Pm`];
+
+    if (i <= 7) {
+      weatherAm = land[`wf${i}Am`] || "-";
+      weatherPm = land[`wf${i}Pm`] || "-";
+    } else {
+      const fullDay = land[`wf${i}`];
+      weatherAm = fullDay || "-";
+      weatherPm = fullDay || "-";
+    }
+
+    // 카드 요소 생성
+    const weatherCard = document.createElement("li");
+    weatherCard.className = "middle-weather-card";
+    weatherCard.innerHTML = `
+      <div class="date">${date}</div>
+      <div class="weather">
+        <div>🌄 오전: ${weatherAm}</div>
+        <div>🌇 오후: ${weatherPm}</div>
+      </div>
+      <div class="temp">
+        <div>🌡️ 최저: ${minTemp}°</div>
+        <div>🔥 최고: ${maxTemp}°</div>
+      </div>
+    `;
+    weatherContainer.appendChild(weatherCard);
+  }
+}
+
 Promise.all([
-  fetchMidTermForecast(tempCode), // 기온 예보용
-  fetchMidTermForecast(landCode), // 날씨 상태용
+  fetchMidTermForecast(tempCode),
+  fetchMidTermForecast(landCode),
 ]).then(([tempResult, landResult]) => {
-  const temp = tempResult.temp;
-  const land = landResult.land;
-
-  // 4일 후 데이터 추출
-  const minTemp = temp.taMin4;
-  const maxTemp = temp.taMax4;
-  const weatherDesc = `오전: ${land?.wf4Am || "정보 없음"}, 오후: ${
-    land?.wf4Pm || "정보 없음"
-  }`;
-
-  console.log(`📅 4일 후 서울 날씨`);
-  console.log(`🌡️ 최저기온: ${minTemp}도`);
-  console.log(`🔥 최고기온: ${maxTemp}도`);
-  console.log(`🌤️ 날씨 상태: ${weatherDesc}`);
+  displayMidTermForecast(tempResult.temp, landResult.land);
 });
