@@ -21,6 +21,12 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
+      // 기상청 중기예보 api 프록시
+      "/weather-api": {
+        target: "https://apis.data.go.kr",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/weather-api/, ""),
+      },
     },
   },
 });

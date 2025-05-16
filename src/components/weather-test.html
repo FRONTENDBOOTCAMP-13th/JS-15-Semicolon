@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .weather-card {
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>날씨 조회~</h1>
+    <ul class="weather-container2">
+      <li>
+        <time class="font-bold">00월 00일</time>
+        <div>맑음/흐리고 비</div>
+        <strong
+          ><span class="text-11 text-blue-500">12°</span>/<span
+            class="text-11 text-red-600"
+            >19°</span
+          ></strong
+        >
+      </li>
+    </ul>
+    <div style="height: 100px; width: 100px"></div>
+    <ul class="weather-container short-term"></ul>
+    <ul class="weather-container mid-term"></ul>
+
+    <script type="module" src="../ts/shortWeatherApi.ts"></script>
+    <script type="module" src="../ts/weatherApi.ts"></script>
+  </body>
+</html>
