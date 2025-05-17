@@ -1,9 +1,7 @@
 import "../style.css";
 
-const API_KEY = import.meta.env.VITE_TOUR_API_KEY;
-// TOUR API 키 저장
-const BASE_URL = "/api/B551011/KorService2/searchFestival2";
-// Base URL 저장
+const API_KEY = import.meta.env.VITE_TOUR_API_KEY; // TOUR API 키 저장
+const BASE_URL = "/api/B551011/KorService2/searchFestival2"; // Base URL 저장
 
 const form = document.getElementById("filterForm"); // form은 지역과 날짜를 선택하는 전체 영역
 const locationFilter = document.getElementById(
