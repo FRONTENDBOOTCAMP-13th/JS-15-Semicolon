@@ -4,23 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/src/style.css" />
     <style>
-      .weather-card {
-        background: red;
+      @theme {
+        --text-ga-red200: #ff515d;
+        --text-ga-gray300: #838383;
       }
     </style>
   </head>
-  <body>
+  <body class="font-sans">
     <h1>날씨 조회~</h1>
-    <ul class="weather-container2">
-      <li>
-        <time class="font-bold">00월 00일</time>
-        <div>맑음/흐리고 비</div>
-        <strong
-          ><span class="text-11 text-blue-500">12°</span>/<span
-            class="text-11 text-red-600"
-            >19°</span
-          ></strong
+    <ul
+      class="weather-container2 flex py-4 border rounded-2xl border-gray-300 gap-3"
+    >
+      <li
+        class="flex flex-col items-center text-center px-5 border-r border-gray-300"
+      >
+        <time class="text-14 text-ga-gray300 font-light">00월 00일</time>
+        <div class="text-26">🌨️ ⛅</div>
+        <strong class="text-18"
+          ><span class="text-blue-500">12°</span
+          ><span class="text-ga-gray200 text-12 px-0.5 font-normal">/</span
+          ><span class="text-ga-red200">19°</span></strong
         >
       </li>
     </ul>
