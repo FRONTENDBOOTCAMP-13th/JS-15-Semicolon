@@ -13,9 +13,23 @@
     </style>
   </head>
   <body class="font-sans">
-    <h1>날씨 조회~</h1>
+    <h1>날씨</h1>
+    <h2>날씨 일별 카드 컴포넌트</h2>
+    <li
+      class="flex flex-col items-center text-center px-5 border-r border-gray-300"
+    >
+      <time class="text-14 text-ga-gray300 font-light">00월 00일</time>
+      <div class="text-26">🌨️ ⛅</div>
+      <strong class="text-18"
+        ><span class="text-blue-500">12°</span
+        ><span class="text-ga-gray200 text-12 px-0.5 font-normal">/</span
+        ><span class="text-ga-red200">19°</span></strong
+      >
+    </li>
+
+    <h2>날씨 주간 카드 스타일</h2>
     <ul
-      class="weather-container2 flex py-4 border rounded-2xl border-gray-300 gap-3"
+      class="weather-container2 flex justify-center py-4 border rounded-2xl border-gray-300"
     >
       <li
         class="flex flex-col items-center text-center px-5 border-r border-gray-300"
@@ -28,10 +42,80 @@
           ><span class="text-ga-red200">19°</span></strong
         >
       </li>
+      <li
+        class="flex flex-col items-center text-center px-5 border-r border-gray-300"
+      >
+        <time class="text-14 text-ga-gray300 font-light">00월 00일</time>
+        <div class="text-26">🌨️ ⛅</div>
+        <strong class="text-18"
+          ><span class="text-blue-500">12°</span
+          ><span class="text-ga-gray200 text-12 px-0.5 font-normal">/</span
+          ><span class="text-ga-red200">19°</span></strong
+        >
+      </li>
+      <li
+        class="flex flex-col items-center text-center px-5 border-r border-gray-300"
+      >
+        <time class="text-14 text-ga-gray300 font-light">00월 00일</time>
+        <div class="text-26">🌨️ ⛅</div>
+        <strong class="text-18"
+          ><span class="text-blue-500">12°</span
+          ><span class="text-ga-gray200 text-12 px-0.5 font-normal">/</span
+          ><span class="text-ga-red200">19°</span></strong
+        >
+      </li>
+      <li
+        class="flex flex-col items-center text-center px-5 border-r border-gray-300"
+      >
+        <time class="text-14 text-ga-gray300 font-light">00월 00일</time>
+        <div class="text-26">🌨️ ⛅</div>
+        <strong class="text-18"
+          ><span class="text-blue-500">12°</span
+          ><span class="text-ga-gray200 text-12 px-0.5 font-normal">/</span
+          ><span class="text-ga-red200">19°</span></strong
+        >
+      </li>
+      <li
+        class="flex flex-col items-center text-center px-5 border-r border-gray-300"
+      >
+        <time class="text-14 text-ga-gray300 font-light">00월 00일</time>
+        <div class="text-26">🌨️ ⛅</div>
+        <strong class="text-18"
+          ><span class="text-blue-500">12°</span
+          ><span class="text-ga-gray200 text-12 px-0.5 font-normal">/</span
+          ><span class="text-ga-red200">19°</span></strong
+        >
+      </li>
+      <li
+        class="flex flex-col items-center text-center px-5 border-r border-gray-300"
+      >
+        <time class="text-14 text-ga-gray300 font-light">00월 00일</time>
+        <div class="text-26">🌨️ ⛅</div>
+        <strong class="text-18"
+          ><span class="text-blue-500">12°</span
+          ><span class="text-ga-gray200 text-12 px-0.5 font-normal">/</span
+          ><span class="text-ga-red200">19°</span></strong
+        >
+      </li>
+      <li class="flex flex-col items-center text-center px-5 border-gray-300">
+        <time class="text-14 text-ga-gray300 font-light">00월 00일</time>
+        <div class="text-26">🌨️ ⛅</div>
+        <strong class="text-18"
+          ><span class="text-blue-500">12°</span
+          ><span class="text-ga-gray200 text-12 px-0.5 font-normal">/</span
+          ><span class="text-ga-red200">19°</span></strong
+        >
+      </li>
     </ul>
     <div style="height: 100px; width: 100px"></div>
-    <ul class="weather-container short-term"></ul>
-    <ul class="weather-container mid-term"></ul>
+
+    <h2>날씨 컴포넌트</h2>
+    <div
+      class="weather-container2 flex justify-center text-center py-4 border rounded-2xl border-gray-300"
+    >
+      <ul class="weather-container flex short-term"></ul>
+      <ul class="weather-container flex mid-term"></ul>
+    </div>
 
     <script type="module" src="../ts/shortWeatherApi.ts"></script>
     <script type="module" src="../ts/weatherApi.ts"></script>
