@@ -7,6 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
 const storedUserData = localStorage.getItem("userData");
 const userData = storedUserData ? JSON.parse(storedUserData) : {};
 
+/*
+ *
+ * 🚀 로그인 로직 흐름
+ * 1. 사용자 입력 → login()
+ * 2. localStorage에서 userData 불러와서 비교
+ * 3. 맞으면 로그인 성공, 아니면 실패
+ */
+
 function login() {
   const username = (
     document.getElementById("loginUsername") as HTMLInputElement
@@ -22,6 +30,14 @@ function login() {
     alert("Invalid username or password");
   }
 }
+
+/*
+ * 🚀 회원가입 로직 흐름
+ * 1. 사용자 입력 → signup()
+ * 2. userData에 계정 추가
+ * 3. localStorage에 저장
+ * 4. 로그인 페이지로 이동
+ */
 
 function signup() {
   const username = (
