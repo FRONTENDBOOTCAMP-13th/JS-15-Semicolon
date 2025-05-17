@@ -1,3 +1,3 @@
-import "./ts/festivalApi";
-import "./ts/kakaoApi";
+import "./ts/api/festivalApi";
+import "./ts/api/kakaoApi";
 import "./style.css";
