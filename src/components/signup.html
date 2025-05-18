@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Signup Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcryptjs.min.js"></script>
   </head>
   <body class="flex items-center justify-center min-h-screen bg-gray-50">
     <div class="w-full max-w-md p-8 mx-auto bg-white rounded-lg shadow-md">
@@ -108,6 +109,9 @@
     <script>
       emailjs.init("eZvd0JYXSfS7EDwB2"); // EmailJS 대시보드에서 복사한 퍼블릭 키
     </script>
-    <script type="module" src="/src/ts/auth/auth.ts"></script>
+    <script type="module">
+      import "/src/ts/auth/auth.ts";
+    </script>
+    <!-- signup.html or index.html -->
   </body>
 </html>

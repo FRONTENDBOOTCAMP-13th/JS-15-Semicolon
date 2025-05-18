@@ -1,5 +1,6 @@
 // @ts-ignore
 import emailjs from "emailjs-com";
+// const bcrypt = window.bcrypt;
 
 window.addEventListener("load", () => {
   if (typeof emailjs !== "undefined") {
