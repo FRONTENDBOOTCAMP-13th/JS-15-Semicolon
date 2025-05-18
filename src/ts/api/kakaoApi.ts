@@ -1,4 +1,4 @@
-import "/src/style.css";
+import "../../style.css";
 import axios from "axios";
 
 const script = document.createElement("script");
@@ -8,9 +8,10 @@ script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
 script.defer = true;
 document.head.appendChild(script);
 
+// script load -> Kakao 지도 SDK 로딩 후 실행
 script.onload = () => {
   window.kakao.maps.load(() => {
-    initKakaoMap(); // 이 함수 안에 기존 초기화 코드 다 들어있으면 됨
+    initKakaoMap();
   });
 };
 
@@ -42,11 +43,6 @@ const myPosition = document.querySelector("#userPosition"); // 사용자 위치 
 const getRoutebtn = document.querySelector("#getRoute"); // 누르면 경로를 띄워주는 버튼
 // (TODO_API로 받아온 축제 장소 주소 입력)
 const changeOriginbtn = document.querySelector("#changeOrigin"); // 도착지 입력된 카카오 길찾기 새 창 띄워주는 버튼
-
-// Kakao 지도 SDK 로딩 후 실행
-window.kakao.maps.load(() => {
-  initKakaoMap();
-});
 
 // 지도 초기화 및 이벤트 등록
 function initKakaoMap() {

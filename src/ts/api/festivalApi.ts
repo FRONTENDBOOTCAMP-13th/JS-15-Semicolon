@@ -11,6 +11,22 @@ const startDateInput = document.getElementById("startDate") as HTMLInputElement;
 const endDateInput = document.getElementById("endDate") as HTMLInputElement; // 종료 날짜 저장
 const festivalList = document.getElementById("festivalList")!; // 찾은 축제들을 보여줄 곳
 
+// 리렌더링 변수 선언
+let currentPage = 1;
+let isFetching = false;
+
+// 🚀 무한 스크롤 이벤트 리스너
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const bodyHeight = document.body.offsetHeight;
+
+  if (scrollTop + windowHeight >= bodyHeight - 100 && !isFetching) {
+    currentPage++;
+    fetchMoreFestivals(currentPage);
+  }
+});
+
 //==============================================================================================
 // 🚀 지역 선택 함수
 //==============================================================================================
@@ -358,11 +374,14 @@ function renderFestivalList(
   items: any[],
   areaCode: string,
   startDate: string,
-  endDate: string
+  endDate: string,
+  append: boolean = false
 ) {
-  festivalList.innerHTML = ""; // 축제 목록을 보여줄 부분 비움
+  if (!append) {
+    festivalList.innerHTML = ""; // 축제 목록을 보여줄 부분 비움
+  }
 
-  if (items.length === 0) {
+  if (items.length === 0 && !append) {
     festivalList.innerHTML = "<p>📭 해당 조건에 맞는 축제가 없습니다.</p>";
     return;
   }
@@ -405,6 +424,44 @@ function renderFestivalList(
   localStorage.setItem("searchResults", JSON.stringify(items));
 }
 //==============================================================================================
+
+async function fetchMoreFestivals(page: number) {
+  isFetching = true;
+
+  const areaCode = locationFilter.value;
+  const startDate = startDateInput.value.replace(/-/g, "");
+  const endDate = endDateInput.value.replace(/-/g, "");
+
+  const query = [
+    `serviceKey=${API_KEY}`,
+    "MobileApp=AppTest",
+    "MobileOS=ETC",
+    "_type=json",
+    "numOfRows=20",
+    `pageNo=${page}`,
+    "arrange=A",
+    startDate && `eventStartDate=${startDate}`,
+    endDate && `eventEndDate=${endDate}`,
+    areaCode && `areaCode=${areaCode}`,
+  ]
+    .filter(Boolean)
+    .join("&");
+
+  const url = `${BASE_URL}?${query}`;
+
+  try {
+    const res = await fetch(url);
+    const json = await res.json();
+    const items = json.response?.body?.items?.item || [];
+    renderFestivalList(items, areaCode, startDate, endDate, true); // append = true
+  } catch (err) {
+    console.error("❌ 무한 스크롤 API 에러:", err);
+  } finally {
+    isFetching = false;
+  }
+}
+
+//==============================================================================================
 document.addEventListener("DOMContentLoaded", () => {
   initCustomDropdown();
   initDateRangePicker();
@@ -439,5 +496,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 카드 다시 렌더링
     renderFestivalList(items, areaCode, startDate, endDate);
+  } else {
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0].replace(/-/g, "");
+
+    const url = `${BASE_URL}?${[
+      `serviceKey=${API_KEY}`,
+      "MobileApp=AppTest",
+      "MobileOS=ETC",
+      "_type=json",
+      "numOfRows=20",
+      "pageNo=1",
+      "arrange=R", // 최신순
+      `eventStartDate=${formattedDate}`,
+    ].join("&")}`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => {
+        const items = json.response?.body?.items?.item || [];
+        renderFestivalList(items, "", formattedDate, formattedDate);
+      })
+      .catch((err) => {
+        console.error("❌ 초기 로딩 실패:", err);
+        festivalList.innerHTML = `<p style="color:red;">초기 데이터를 불러오지 못했습니다.</p>`;
+      });
   }
 });

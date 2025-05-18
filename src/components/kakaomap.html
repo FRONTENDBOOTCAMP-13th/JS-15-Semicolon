@@ -10,42 +10,44 @@
   <body class="flex flex-col items-center justify-center min-h-screen">
     <h1 class="sr-only">카카오 지도 및 길찾기 API</h1>
     <h3>카카오 길찾기 API</h3>
-    <!-- 지도 영역 -->
-    <div
-      id="map"
-      class="w-[35rem] h-[16.5rem] sm:w-[56.25rem] sm:h-[31.25rem] border border-ga-gray200 relative z-0">
-      <div
-        class="absolute bottom-4 right-4 flex flex-col sm:flex-row gap-2 z-10">
-        <!-- 길 찾기 버튼 -->
-        <button
-          id="getRoute"
-          class="flex items-center gap-2 px-6 py-2 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition-colors duration-200">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            fill="currentColor">
-            <path
-              d="M3,4V12.5L6,9.5L9,13C10,14 10,15 10,15V21H14V14C14,14 14,13 13.47,12C12.94,11 12,10 12,10L9,6.58L11.5,4M18,4L13.54,8.47L14,9C14,9 14.93,10 15.47,11C15.68,11.4 15.8,11.79 15.87,12.13L21,7" />
-          </svg>
-          길 찾기
-        </button>
+    <div class="w-full max-w-[56.25rem]">
+      <!-- 지도 영역 -->
+      <section
+        id="map"
+        class="w-full h-[16.5rem] sm:h-[31.25rem] border border-ga-gray200 relative z-0">
+        <div
+          class="absolute bottom-4 right-4 flex flex-col lg:flex-row gap-2 z-10">
+          <!-- 길 찾기 버튼 -->
+          <button
+            id="getRoute"
+            class="flex text-xs sm:text-sm items-center gap-1 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition-colors duration-200">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 sm:w-5 sm:h-5"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              fill="currentColor">
+              <path
+                d="M3,4V12.5L6,9.5L9,13C10,14 10,15 10,15V21H14V14C14,14 14,13 13.47,12C12.94,11 12,10 12,10L9,6.58L11.5,4M18,4L13.54,8.47L14,9C14,9 14.93,10 15.47,11C15.68,11.4 15.8,11.79 15.87,12.13L21,7" />
+            </svg>
+            길 찾기
+          </button>
 
-        <!-- 출발지 변경 버튼 -->
-        <button
-          id="changeOrigin"
-          class="flex items-center gap-2 px-6 py-2 bg-white text-red-500 font-semibold rounded-full border border-red-500 shadow-md hover:bg-red-500 hover:text-white transition-colors duration-200">
-          + 출발지 변경
-        </button>
-      </div>
+          <!-- 출발지 변경 버튼 -->
+          <button
+            id="changeOrigin"
+            class="flex text-xs sm:text-sm items-center gap-1 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2 bg-white text-red-500 font-semibold rounded-full border border-red-500 shadow-md hover:bg-red-500 hover:text-white transition-colors duration-200">
+            + 출발지 변경
+          </button>
+        </div>
+      </section>
+
+      <!-- 위치 정보 표시 영역 -->
+      <section class="w-full flex justify-end mt-2">
+        <p class="text-xs sm:text-sm text-gray-700 font-semibold mr-1">
+          현재 위치 : <span id="userPosition"></span>
+        </p>
+      </section>
     </div>
-
-    <!-- 위치 정보 표시 영역 -->
-    <section class="w-[35rem] sm:w-[56.25rem] flex justify-end mt-2">
-      <p class="text-sm text-gray-700 font-semibold">
-        현재 위치 : <span id="userPosition"></span>
-      </p>
-    </section>
   </body>
 </html>
