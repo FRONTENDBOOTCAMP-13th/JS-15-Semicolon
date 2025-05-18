@@ -10,5 +10,33 @@
   <body class="flex flex-col items-center justify-center min-h-screen">
     <h1 class="sr-only">캐러셀</h1>
     <h3>캐러셀</h3>
+    <!-- Swiper HTML 구조 -->
+    <div class="swiper w-full h-64">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img
+            src="../assets/img/sample-image1.webp"
+            alt="슬라이드1"
+            class="w-full h-full object-cover" />
+        </div>
+        <div class="swiper-slide">
+          <img
+            src="../assets/img/sample-image2.webp"
+            alt="슬라이드2"
+            class="w-full h-full object-cover" />
+        </div>
+        <div class="swiper-slide">
+          <img
+            src="../assets/img/sample-image3.webp"
+            alt="슬라이드3"
+            class="w-full h-full object-cover" />
+        </div>
+      </div>
+
+      <!-- 페이지네이션/네비게이션 -->
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
   </body>
 </html>
