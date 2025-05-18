@@ -439,5 +439,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 카드 다시 렌더링
     renderFestivalList(items, areaCode, startDate, endDate);
+  } else {
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0].replace(/-/g, "");
+
+    const url = `${BASE_URL}?${[
+      `serviceKey=${API_KEY}`,
+      "MobileApp=AppTest",
+      "MobileOS=ETC",
+      "_type=json",
+      "numOfRows=20",
+      "pageNo=1",
+      "arrange=R", // 최신순
+      `eventStartDate=${formattedDate}`,
+    ].join("&")}`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => {
+        const items = json.response?.body?.items?.item || [];
+        renderFestivalList(items, "", formattedDate, formattedDate);
+      })
+      .catch((err) => {
+        console.error("❌ 초기 로딩 실패:", err);
+        festivalList.innerHTML = `<p style="color:red;">초기 데이터를 불러오지 못했습니다.</p>`;
+      });
   }
 });
