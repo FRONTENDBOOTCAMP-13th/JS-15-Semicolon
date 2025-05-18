@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@types/axios": "^0.9.36",
-    "axios": "^1.9.0"
+    "axios": "^1.9.0",
+    "bcryptjs": "^3.0.2",
+    "emailjs-com": "^3.2.0"
   }
 }
