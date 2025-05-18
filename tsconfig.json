@@ -110,6 +110,9 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["src/**/*", "vite-env.d.ts"]
+  "include": ["src/**/*", "vite-env.d.ts"],
   // "exclude": ["node_modules", "src/**/*"]
+  "moduleResolution": "node",
+  "esModuleInterop": true,
+  "types": ["vite/client"]
 }
