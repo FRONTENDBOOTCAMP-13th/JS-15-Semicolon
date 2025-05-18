@@ -1,7 +1,8 @@
 import "/src/style.css";
-import weatherRegionCodeMap from "../assets/weather-middle-data";
+import "../assets/style/weather.css";
+import weatherRegionCodeMap from "../assets/ts/weather-middle-data";
 
-const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
 // 기준 날짜를 계산 (발표시간: 매일 오전 6시)
 function getTmFc(): string {
@@ -25,13 +26,13 @@ export async function fetchMidTermForecast(regId: string) {
   // 육상예보 API URL
   const landUrl =
     `/weather-api/1360000/MidFcstInfoService/getMidLandFcst?` +
-    `serviceKey=${API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&` +
+    `serviceKey=${WEATHER_API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&` +
     `regId=${regId}&tmFc=${tmFc}`;
 
   // 기온예보 API URL
   const tempUrl =
     `/weather-api/1360000/MidFcstInfoService/getMidTa?` +
-    `serviceKey=${API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&` +
+    `serviceKey=${WEATHER_API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&` +
     `regId=${regId}&tmFc=${tmFc}`;
 
   //병렬로 요청 보내기
@@ -97,6 +98,15 @@ function getDateAfterDays(days: number): string {
   return `${month}월 ${date}일`;
 }
 
+function getMidTermWeatherClass(text: string): string {
+  if (text.includes("맑음")) return "sunny";
+  if (text.includes("구름")) return "cloudy";
+  if (text.includes("안개")) return "overcast";
+  if (text.includes("비") || text.includes("소나기")) return "rainy";
+  if (text.includes("눈")) return "snowy";
+  return "unknown";
+}
+
 function displayMidTermForecast(temp: any, land: any) {
   const weatherContainer = document.querySelector(
     ".weather-container.mid-term"
@@ -123,19 +133,31 @@ function displayMidTermForecast(temp: any, land: any) {
       weatherPm = fullDay || "-";
     }
 
+    const weatherAmClass = getMidTermWeatherClass(weatherAm);
+    const weatherPmClass = getMidTermWeatherClass(weatherPm);
+
+    // 마지막 카드인지 체크 (i === 6이면 마지막)
+    const isLast = i === 6;
+
+    // border-r 제거할 조건 클래스 설정
+    const borderClass = isLast ? "" : "border-r border-gray-300";
+
     // 카드 요소 생성
     const weatherCard = document.createElement("li");
     weatherCard.className = "middle-weather-card";
     weatherCard.innerHTML = `
-      <div class="date">${date}</div>
-      <div class="weather">
-        <div>🌄 오전: ${weatherAm}</div>
-        <div>🌇 오후: ${weatherPm}</div>
-      </div>
-      <div class="temp">
-        <div>🌡️ 최저: ${minTemp}°</div>
-        <div>🔥 최고: ${maxTemp}°</div>
-      </div>
+      <li class="flex flex-col items-center text-center ${borderClass} px-2 md:px-5">
+        <time class=" text-ga-gray300 font-light text-12 md:text-14">${date}</time>
+        <div class="flex p-1 gap-1 md:gap-4 ">
+          <div class="icon ${weatherAmClass} w-6 h-6 md:w-7.5 md:h-7.5 "></div>
+          <div class="icon ${weatherPmClass} w-6 h-6 md:w-7.5 md:h-7.5 "></div>
+        </div>
+        <strong  class="text-14 md:text-18">
+          <span class="text-blue-500">${minTemp}°</span
+          ><span class="text-ga-gray200 text-12 px-0.5 font-normal">/</span
+          ><span class="text-ga-red200 ml-1">${maxTemp}°</span>
+        </strong>
+      </li>
     `;
     weatherContainer.appendChild(weatherCard);
   }

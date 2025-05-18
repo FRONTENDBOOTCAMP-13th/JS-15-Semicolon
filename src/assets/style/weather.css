@@ -1,0 +1,24 @@
+.icon.sunny {
+  background-image: url("../icon/sun.svg");
+}
+.icon.cloudy {
+  background-image: url("../icon/cloudy.svg");
+}
+.icon.overcast {
+  background-image: url("../icon/overcast.svg");
+}
+.icon.snowy {
+  background-image: url("../icon/snow.svg");
+}
+.icon.rainy {
+  background-image: url("../icon/rain.svg");
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none; /* 크롬, 사파리, 오페라 */
+  -moz-user-select: none; /* 파이어폭스 */
+  -ms-user-select: none; /* 인터넷 익스플로러/엣지 */
+  /* 드래그로 스크롤 가능하게 하려면 touch-action 추가 */
+  touch-action: pan-x pan-y;
+}
