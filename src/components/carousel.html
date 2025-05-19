@@ -1,36 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <script type="module" src="/src/main.ts"></script>
-    <title>Swiper demo</title>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta charset="UTF-8" />
+    <title>Swiper Carousel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="module" src="../ts/carousel.ts"></script>
   </head>
-
   <body>
-    <div class="swiper mySwiper w-full">
+    <div
+      class="swiper mySwiper w-full h-[60vh] max-h-[43.75rem] lg:h-[60vh] sm:h-[80vh]">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <img src="../assets/img/sample-image1.webp" alt="슬라이드1" />
+          <img
+            src="../assets/img/sample-image1.webp"
+            alt="슬라이드1"
+            class="w-full h-full object-cover object-center" />
         </div>
         <div class="swiper-slide">
-          <img src="../assets/img/sample-image2.webp" alt="슬라이드2" />
+          <img
+            src="../assets/img/sample-image2.webp"
+            alt="슬라이드2"
+            class="w-full h-full object-cover object-center" />
         </div>
         <div class="swiper-slide">
-          <img src="../assets/img/sample-image3.webp" alt="슬라이드3" />
+          <img
+            src="../assets/img/sample-image3.webp"
+            alt="슬라이드3"
+            class="w-full h-full object-cover object-center" />
         </div>
       </div>
 
       <!-- Optional navigation buttons -->
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
+      <!-- <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div> -->
 
       <!-- Optional pagination -->
       <div class="swiper-pagination"></div>
     </div>
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script> -->
   </body>
 </html>
