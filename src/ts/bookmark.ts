@@ -1,48 +1,85 @@
 function bookmark() {
-  const renderBookmarksBtn = document.querySelector(".render-bookmarks"); // 즐겨찾기 모아보는 버튼
-  const addBookmarkBtn = document.querySelectorAll(".bookmark-btn"); // 즐겨찾기 추가 버튼
+  const renderBookmarksBtn = document.querySelector(".render-bookmarks");
+  const addBookmarkBtns = document.querySelectorAll(".bookmark-btn");
   const cards = document.querySelectorAll("#festivalList > div");
-  let isFiltered = false; // 즐겨찾기 필터링 (초기값 false)
+  let isFiltered = false;
 
-  // 별 버튼 클릭 시 토글
-  addBookmarkBtn.forEach((btn) => {
+  // ✅ 로컬스토리지에서 즐겨찾기 ID 리스트 가져오기
+  let bookmarkedIds = JSON.parse(
+    localStorage.getItem("bookmarkedFestivals") || "[]"
+  );
+
+  // ✅ 카드에 data-id 자동 부여
+  cards.forEach((card, index) => {
+    if (!card.getAttribute("data-id")) {
+      card.setAttribute("data-id", `festival${index}`);
+    }
+  });
+
+  // ✅ 초기 상태 반영 (로컬스토리지 기반으로 별 표시)
+  cards.forEach((card) => {
+    const id = card.getAttribute("data-id");
+    const svg = card.querySelector(".bookmark-btn svg");
+
+    if (!id || !svg) return;
+
+    if (bookmarkedIds.includes(id)) {
+      svg.setAttribute("fill", "white");
+      card.setAttribute("data-starred", "true");
+    } else {
+      svg.setAttribute("fill", "none");
+      card.setAttribute("data-starred", "false");
+    }
+  });
+
+  // ✅ 즐겨찾기 버튼 클릭 시 토글
+  addBookmarkBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      let card = btn.parentNode as HTMLElement; // 혹은 btn.closet("div");
-      let svg = btn.querySelector("svg");
+      const card = btn.closest("div") as HTMLElement;
+      const svg = btn.querySelector("svg");
 
-      if (!svg) return;
-      if (!card) return;
+      if (!card || !svg) return;
 
-      let isBookmarked = card.getAttribute("data-starred") === "true";
+      const id = card.getAttribute("data-id");
+      const isBookmarked = card.getAttribute("data-starred") === "true";
+
+      if (!id) return;
 
       if (isBookmarked) {
-        // 별 해제
-        svg.setAttribute("fill", "none"); // 기본 색으로 (필요에 따라 변경)
+        svg.setAttribute("fill", "none");
         card.setAttribute("data-starred", "false");
+        bookmarkedIds = bookmarkedIds.filter(
+          (savedId: string) => savedId !== id
+        ); // 제거
       } else {
-        // 별 표시
-        svg.setAttribute("fill", "white"); // 별 표시 색
+        svg.setAttribute("fill", "white");
         card.setAttribute("data-starred", "true");
+        bookmarkedIds.push(id); // 추가
       }
+
+      // ✅ 로컬스토리지에 저장
+      localStorage.setItem(
+        "bookmarkedFestivals",
+        JSON.stringify(bookmarkedIds)
+      );
     });
   });
 
-  // 필터 버튼 클릭 시 토글
+  // ✅ 즐겨찾기 모아보기 버튼 클릭 시 필터링
   renderBookmarksBtn?.addEventListener("click", () => {
     isFiltered = !isFiltered;
 
     cards.forEach((card) => {
       const isBookmarked = card.getAttribute("data-starred") === "true";
-      const cardE = card as HTMLElement;
+      const cardEl = card as HTMLElement;
 
-      if (isFiltered) {
-        // 별표된 카드만 보이기
-        cardE.style.display = isBookmarked ? "block" : "none";
-      } else {
-        // 전체 카드 보이기
-        cardE.style.display = "block";
-      }
+      cardEl.style.display = isFiltered
+        ? isBookmarked
+          ? "block"
+          : "none"
+        : "block";
     });
   });
 }
+
 bookmark();
