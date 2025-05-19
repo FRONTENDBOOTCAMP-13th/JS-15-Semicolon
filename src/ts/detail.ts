@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // 축제 상세 정보를 표시할 요소 선택
   const festivalDetail = document.getElementById("festivalDetail");
 
   interface Festival {
@@ -13,8 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
     homepage?: string;
   }
 
+  // 로컬 스토리지에서 선택한 축제 데이터 가져옴
   const rawData = localStorage.getItem("selectedFestival");
-
+  // 데이터 없으면 에러 메시지 표시
   if (!rawData || !festivalDetail) {
     festivalDetail!.innerHTML = `
       <div class="info-box text-center">
@@ -25,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  // 로컬스토리지에서 가져온 데이터를 JSON으로 파싱
+  // JSON.parse()를 사용하여 문자열을 객체로 변환
   const selectedFestival: Festival = JSON.parse(rawData);
   console.log("rawData:", rawData); // 추가
 
