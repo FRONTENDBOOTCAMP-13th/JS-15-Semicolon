@@ -45,16 +45,23 @@ const getRoutebtn = document.querySelector("#getRoute"); // 누르면 경로를 
 const changeOriginbtn = document.querySelector("#changeOrigin"); // 도착지 입력된 카카오 길찾기 새 창 띄워주는 버튼
 
 // 지도 초기화 및 이벤트 등록
-function initKakaoMap() {
+export function initKakaoMap() {
   // 지도에 위치 표시
   const container = document.getElementById("map") as HTMLElement; //지도를 담을 영역의 DOM 레퍼런스
-  const position: Position = { lat: 37.571174, lng: 126.978899 }; // 초기 영역 (TODO_축제 장소로 변경 필요)
+  const position: Position = window.festivalCoords || {
+    lat: 37.571174,
+    lng: 126.978899,
+  }; // 초기 영역 (TODO_축제 장소로 변경 필요)
   const options = {
     center: new kakao.maps.LatLng(position.lat, position.lng),
     level: 3,
   };
   map = new kakao.maps.Map(container, options);
   showMarker(position); // 지도에 마커 표시
+
+  // ✅ 여기서 다시 바인딩
+  const getRoutebtn = document.querySelector("#getRoute");
+  getRoutebtn?.addEventListener("click", getRoute);
 
   // 버튼 이벤트 등록
   getRoutebtn?.addEventListener("click", getRoute);
@@ -142,7 +149,7 @@ type CoordResult = {
   y?: number;
   x?: number;
 };
-function getCoordsFromAddress(address: string): Promise<Position> {
+export function getCoordsFromAddress(address: string): Promise<Position> {
   return new Promise((resolve, reject) => {
     const geocoder = new kakao.maps.services.Geocoder();
     geocoder.addressSearch(address, (result: CoordResult[], status: string) => {
@@ -215,9 +222,13 @@ async function getRoute() {
   if (myPosition instanceof HTMLElement) {
     showPosition(userPosition, myPosition);
   }
+  // TODO : 위치 수정
   const origin = { lat: userPosition.lat, lng: userPosition.lng }; // 사용자 위치
-  const destination = { lat: 37.508929, lng: 126.891217 }; // 산본이마트 : TODO_축제 위치로 수정
-
+  const destination = window.festivalCoords;
+  if (!destination) {
+    console.error("축제 위치 좌표가 없습니다.");
+    return;
+  }
   try {
     const res = await axios.get(url, {
       headers: {
@@ -292,4 +303,12 @@ function drawRouteOnMap(data: any) {
   });
   // 계산된 bounds를 기반으로 지도 영역 조정
   map.setBounds(bounds);
+}
+
+// Allow other scripts to provide address-based coordinates
+declare global {
+  interface Window {
+    kakao: any;
+    festivalCoords?: Position;
+  }
 }
