@@ -1,6 +1,7 @@
 import { renderMidTermForecastFromAddress } from "./api/weatherApi";
 import { outputtingWeather } from "./api/shortWeatherApi";
 import { xScroll } from "./weather";
+import { getCoordsFromAddress, initKakaoMap } from "./api/kakaoApi";
 
 document.addEventListener("DOMContentLoaded", () => {
   // 축제 상세 정보를 표시할 요소 선택
@@ -92,19 +93,101 @@ document.addEventListener("DOMContentLoaded", () => {
           <ul class="weather-container flex mid-term"></ul>
         </div>
       </div>
+      <div class="mt-10 max-w-[58.5rem] mx-auto px-4">
+        <h2 class="text-xl font-bold mb-2">📖 축제 위치</h2>
+                <section
+          id="map"
+          class="w-full h-[16.5rem] sm:h-[31.25rem] border border-ga-gray200 relative z-0">
+          <div
+            class="absolute bottom-4 right-4 flex flex-col lg:flex-row gap-2 z-10">
+            <button
+              id="getRoute"
+              class="flex text-xs sm:text-sm items-center gap-1 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition-colors duration-200">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 sm:w-5 sm:h-5"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                fill="currentColor">
+                <path
+                  d="M3,4V12.5L6,9.5L9,13C10,14 10,15 10,15V21H14V14C14,14 14,13 13.47,12C12.94,11 12,10 12,10L9,6.58L11.5,4M18,4L13.54,8.47L14,9C14,9 14.93,10 15.47,11C15.68,11.4 15.8,11.79 15.87,12.13L21,7" />
+              </svg>
+              길 찾기
+            </button>
+
+            <button
+              id="changeOrigin"
+              class="flex text-xs sm:text-sm items-center gap-1 sm:gap-2 px-4 py-1.5 sm:px-6 sm:py-2 bg-white text-red-500 font-semibold rounded-full border border-red-500 shadow-md hover:bg-red-500 hover:text-white transition-colors duration-200">
+              + 출발지 변경
+            </button>
+          </div>
+        </section>
+        <section class="w-full flex justify-end mt-2">
+          <p class="text-xs sm:text-sm text-gray-700 font-semibold mr-1">
+            현재 위치 : <span id="userPosition"></span>
+          </p>
+        </section>
+      </div>
     </div>
   </div>
 `;
   document.title = `${selectedFestival.title || "축제 정보"} - 상세 정보`;
 
+  // if (selectedFestival.addr1) {
+  //   renderMidTermForecastFromAddress(selectedFestival.addr1);
+  //   const shortWeatherTarget = document.querySelector(
+  //     ".weather-container.short-term"
+  //   );
+  //   if (shortWeatherTarget) {
+  //     outputtingWeather(selectedFestival.addr1);
+  //   }
+  //   xScroll();
+  // }
+  // function waitForKakao(): Promise<void> {
+  //   return new Promise((resolve) => {
+  //     const check = () => {
+  //       if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
+  //         resolve();
+  //       } else {
+  //         setTimeout(check, 50);
+  //       }
+  //     };
+  //     check();
+  //   });
+  // }
+  function waitForKakao(): Promise<void> {
+    return new Promise((resolve) => {
+      const check = () => {
+        if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
+          resolve();
+        } else {
+          setTimeout(check, 50);
+        }
+      };
+      check();
+    });
+  }
+
   if (selectedFestival.addr1) {
-    renderMidTermForecastFromAddress(selectedFestival.addr1);
-    const shortWeatherTarget = document.querySelector(
-      ".weather-container.short-term"
-    );
-    if (shortWeatherTarget) {
-      outputtingWeather(selectedFestival.addr1);
-    }
-    xScroll();
+    const addr = selectedFestival.addr1;
+
+    waitForKakao().then(() => {
+      renderMidTermForecastFromAddress(addr);
+
+      const shortWeatherTarget = document.querySelector(
+        ".weather-container.short-term"
+      );
+      if (shortWeatherTarget) {
+        outputtingWeather(addr);
+      }
+
+      xScroll();
+
+      // ✅ 여기가 빠졌던 핵심
+      getCoordsFromAddress(addr).then((coords) => {
+        window.festivalCoords = coords; // 전역으로 넘겨줌
+        initKakaoMap(); // 지도 초기화 실행
+      });
+    });
   }
 });
