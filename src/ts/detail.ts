@@ -1,3 +1,6 @@
+import { renderMidTermForecastFromAddress } from "./api/weatherApi";
+import { outputtingWeather } from "./api/shortWeatherApi";
+
 document.addEventListener("DOMContentLoaded", () => {
   // 축제 상세 정보를 표시할 요소 선택
   const festivalDetail = document.getElementById("festivalDetail");
@@ -81,8 +84,25 @@ document.addEventListener("DOMContentLoaded", () => {
       `
           : ""
       }
+      <div>
+        <h2 class="text-xl font-bold mb-2">🌤️ 축제 기간 날씨</h2>
+        <div class="weather-container-wrap no-select flex justify-center text-center py-4 border rounded-2xl border-gray-300 overflow-hidden">
+          <ul class="weather-container flex short-term"></ul>
+          <ul class="weather-container flex mid-term"></ul>
+        </div>
+      </div>
     </div>
   </div>
 `;
   document.title = `${selectedFestival.title || "축제 정보"} - 상세 정보`;
+
+  if (selectedFestival.addr1) {
+    renderMidTermForecastFromAddress(selectedFestival.addr1);
+    const shortWeatherTarget = document.querySelector(
+      ".weather-container.short-term"
+    );
+    if (shortWeatherTarget) {
+      outputtingWeather(selectedFestival.addr1);
+    }
+  }
 });
