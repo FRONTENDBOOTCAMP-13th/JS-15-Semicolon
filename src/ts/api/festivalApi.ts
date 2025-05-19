@@ -1,28 +1,86 @@
+/*
+ * 1️⃣ 페이지 로딩 시 초기화 단계
+ * - 페이지 로딩 -> 필요 기능 초기화 -> 이전 검색 기록 확인 -> 초기 축제 목록 표시
+ *
+ * 2️⃣ 사용자 상호작용 흐름
+ * 🚀 지역 선택 시
+ * 지역 드롭다운 클릭 -> 지역 목록 표시 -> 지역 선택 -> 선택한 지역 표시 및 값 저장
+ *
+ * 🚀 날짜 선택 시
+ * 날짜 버튼 클릭 -> 캘린더 표시 -> 시작일 표시 -> 종료일 선택 -> 적용 버튼 클릭 -> 선택한 날짜 표시 및 값 저장
+ *
+ * 🚀 축제 검색 시
+ * 검색 버튼 클릭 -> 검색 조건 수집 -> 서버에 요청 -> 응답 받기 -> 축제 목록 표시 -> 검색 조건 및 결과 저장
+ * - user가 검색 버튼 클릭시 form 제출 이벤트 발생
+ * - 선택한 지역 코드 및 날짜를 수집하여 검색 조건 생성
+ * - 만든 조건으로 API 서버에 요청
+ * - 서버에서 응답 받아 JSON 형태로 변환
+ * - 받은 축제 목록 화면에 표시
+ * - 로컬 스토리지에 저장하여 나중에도 사용가능토록 세팅
+ *
+ * 3️⃣ 축제 목록 표시 및 상호작용
+ * 🚀 축제 목록 표시
+ * 축제 데이터 받기 -> 각 축제마다 카드 생성 -> 카드에 정보 채우기 -> 클릭 이벤트 추가 -> 페이지에 표시
+ * - 서버에서 받은 축제 데이터 처리
+ * - 각 축제마다 카드 요소 생성
+ * - 카드에 축제 정보 채우기
+ * - 클릭 이벤트 추가하여 상세 페이지로 이동할 수 있게 세팅
+ * - 만들어진 카드를 축제 목록 영역에 추가
+ *
+ * 🚀 무한 스크롤
+ * 스크롤 감지 -> 페이지 하단 도달 확인 -> 다음 페이지 축제 요청 -> 추가 데이터 받기 -> 기존 목록에 추가
+ *
+ * 🚀 축제 상세 정보 이동
+ * 축제 카드 클릭 -> 선택한 축제 정보 저장 -> 상세 페이지 이동
+ *
+ * 4️⃣ 예외 처리 흐름
+ * 🚀 데이터 로딩 실패
+ * 에러 발생 -> 에러 로깅 -> 사용자에게 오류 표시
+ *
+ * 🚀 검색 결과 없음
+ * 빈 결과 배열 확인 -> "문구 표시"
+ */
+
 import "/src/style.css";
 
 const API_KEY = import.meta.env.VITE_TOUR_API_KEY; // TOUR API 키 저장
 const BASE_URL = "/api/B551011/KorService2/searchFestival2"; // Base URL 저장
 
 const form = document.getElementById("filterForm"); // form은 지역과 날짜를 선택하는 전체 영역
-const locationFilter = document.getElementById(
-  "locationFilter"
-) as HTMLSelectElement; // 지역을 선택하는 부분
-const startDateInput = document.getElementById("startDate") as HTMLInputElement; // 시작 날짜 저장
-const endDateInput = document.getElementById("endDate") as HTMLInputElement; // 종료 날짜 저장
+const locationEl = document.getElementById("locationFilter");
+if (!(locationEl instanceof HTMLSelectElement)) {
+  throw new Error("X");
+}
+const locationFilter = locationEl; // 지역 선택 부분
+
+const startEl = document.getElementById("startDate"); // 시작 날짜 저장
+if (!(startEl instanceof HTMLInputElement)) {
+  throw new Error("start는 input 요소여야 함");
+} // 타입 가드로 변환
+const startDateInput = startEl;
+
+const endEl = document.getElementById("endDate");
+if (!(endEl instanceof HTMLInputElement)) {
+  throw new Error("end는 input 요소여야 함");
+}
+const endDateInput = endEl; // 종료 날짜 저장
 const festivalList = document.getElementById("festivalList")!; // 찾은 축제들을 보여줄 곳
 
 // 리렌더링 변수 선언
-let currentPage = 1;
-let isFetching = false;
+let currentPage = 1; // 몇번째 페이지인지 기록할 변수
+let isFetching = false; // 연속으로 호출되지 않도록 막는 플래그
 
 // 🚀 무한 스크롤 이벤트 리스너
+// 스크롤하면 다음 축제 데이터 20개 불러오는 부분
+// 스크롤 감지해서 렌더링 함수 출력(fetchMoreFestivals)
 window.addEventListener("scroll", () => {
-  const scrollTop = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const bodyHeight = document.body.offsetHeight;
+  const scrollTop = window.scrollY; // 얼마나 스크롤했는지 확인
+  const windowHeight = window.innerHeight; // 화면의 높이 확인
+  const bodyHeight = document.body.offsetHeight; // 전체 페이지의 높이 확인
 
+  // 페이지 끝 부분에 도달하면 다음 페이지 렌더링
   if (scrollTop + windowHeight >= bodyHeight - 100 && !isFetching) {
-    currentPage++;
+    currentPage++; // 다음 페이지로 이동
     fetchMoreFestivals(currentPage);
   }
 });
@@ -38,10 +96,12 @@ const initCustomDropdown = () => {
   const selectedLocation = document.getElementById("selectedLocation");
   const arrow = dropdownButton?.querySelector("svg");
 
+  // 드롭다운 메뉴를 클릭하면 보여주거나 숨기기
   dropdownButton?.addEventListener("click", () => {
     dropdownMenu?.classList.toggle("hidden");
     arrow?.classList.toggle("rotate-180");
 
+    // 메뉴가 보이면 버튼 테두리 색 변경
     if (!dropdownMenu?.classList.contains("hidden")) {
       dropdownButton.classList.add("border-ga-red300");
     } else {
@@ -330,6 +390,7 @@ const initDateRangePicker = () => {
 // 🚀 축제 검색 기능
 //==============================================================================================
 form?.addEventListener("submit", async (e) => {
+  // 검색 버튼 클릭시 실행
   // form 제출 이벤트 추가
   e.preventDefault(); // 새로고침 막기
 
@@ -346,7 +407,7 @@ form?.addEventListener("submit", async (e) => {
     "MobileOS=ETC",
     "_type=json", // json 형식으로 받기
     "numOfRows=20", // 전달 받는 축제 정보량
-    "pageNo=1", // TODO : 수정 -> 다음 호출때 + 1 하는 형식으로 로직 구현 시도
+    "pageNo=1",
     "arrange=A", // 알파벳 순서대로 정렬
     startDate && `eventStartDate=${startDate}`,
     endDate && `eventEndDate=${endDate}`,
@@ -359,11 +420,11 @@ form?.addEventListener("submit", async (e) => {
   // 기본 주소와 조건을 합쳐 최종 URL 만들기
 
   try {
-    const res = await fetch(url); // 요청을 보내고 응답 올때까지 대기, 오면 변수에 저장
-    const json = await res.json(); // 받은 응답을 json 형식으로 변환, 오면 변수에 저장
-    const items = json.response?.body?.items?.item || [];
+    const res = await fetch(url); // 서버에 축제 정보를 요청
+    const json = await res.json(); // 받은 정보를 json으로 변환
+    const items = json.response?.body?.items?.item || []; // 축제 목록을 가져오고 없으면 빈 배열 생성
 
-    renderFestivalList(items, areaCode, startDate, endDate);
+    renderFestivalList(items, areaCode, startDate, endDate); // 축제 목록을 화면에 보여줌
   } catch (err) {
     console.error("❌ API 에러:", err);
     festivalList.innerHTML = `<p style="color:red;">데이터를 불러오는 데 실패했습니다.</p>`;
@@ -371,11 +432,11 @@ form?.addEventListener("submit", async (e) => {
 });
 
 function renderFestivalList(
-  items: any[],
-  areaCode: string,
-  startDate: string,
-  endDate: string,
-  append: boolean = false
+  items: any[], // 축제 목록
+  areaCode: string, // 지역 코드
+  startDate: string, // 시작 날짜
+  endDate: string, // 종료 날짜
+  append: boolean = false // 첫 렌더링, 기존 추가 렌더링 여부
 ) {
   if (!append) {
     festivalList.innerHTML = ""; // 축제 목록을 보여줄 부분 비움
@@ -388,29 +449,46 @@ function renderFestivalList(
 
   items.forEach((item) => {
     // 각 축제에 대한 정보를 반복해서 코드 실행
-    const card = document.createElement("div");
-    card.className = "festivalCard"; // div에 클래스 이름 부여
-    card.style.cursor = "pointer";
+    const card = document.createElement("div"); // 축제 정보가 들어갈 카드 div 만들기
+    card.className = "festivalCard"; // 스타일 적용을 위한 클래스 추가
+    card.style.cursor = "pointer"; // 커서 스타일 조정
 
-    const image =
-      item.firstimage || "https://via.placeholder.com/300x200?text=No+Image";
+    // const image =
+    //   item.firstimage || "https://via.placeholder.com/300x200?text=No+Image";
+    // card.innerHTML = `
+    //   <div class="w-full flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-gray-300 transform transition duration-300 ease-in-out hover:-translate-y-1">
+    //     <img src="${image}" alt="축제 이미지" class="w-full h-[200px] object-cover rounded-[1rem]" />
+    //     <div class="p-3">
+    //       <h3 class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis">${item.title}</h3>
+    //       <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${item.addr1 || "지역 정보 없음"}</p>
+    //       <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
+    //     </div>
+    //   </div>
+    // `;
+    const image = item.firstimage;
+    const imageElement = image
+      ? `<img src="${image}" alt="축제 이미지" class="w-full h-[200px] object-cover rounded-[1rem]" />`
+      : `<div class="w-full h-[200px] bg-ga-gray300 flex items-center justify-center text-gray-600 text-sm rounded-[1rem]">
+      이미지 없음
+    </div>`;
+
     card.innerHTML = `
-      <div class="w-full flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-gray-300 transform transition duration-300 ease-in-out hover:-translate-y-1">
-        <img src="${image}" alt="축제 이미지" class="w-full h-[200px] object-cover rounded-[1rem]" />
-        <div class="p-3">
-          <h3 class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis">${item.title}</h3>
-          <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${item.addr1 || "지역 정보 없음"}</p>
-          <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
-        </div>
-      </div>
-    `;
+  <div class="w-full flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1">
+    ${imageElement}
+    <div class="p-3">
+      <h3 class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis">${item.title}</h3>
+      <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${item.addr1 || "지역 정보 없음"}</p>
+      <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
+    </div>
+  </div>
+`;
     // 카드 클릭시 상세 페이지로 이동하는 이벤트 리스너 추가
     card.addEventListener("click", () => {
-      localStorage.setItem("selectedFestival", JSON.stringify(item));
+      localStorage.setItem("selectedFestival", JSON.stringify(item)); // 선택한 축제 정보 저장
       // 상세 페이지로 이동
       window.location.href = "detail.html";
     });
-    festivalList.appendChild(card);
+    festivalList.appendChild(card); // 만든 카드를 축제 목록에 추가
   });
   // 검색 조건과 결과를 localStorage에 저장
   localStorage.setItem(
@@ -424,7 +502,7 @@ function renderFestivalList(
   localStorage.setItem("searchResults", JSON.stringify(items));
 }
 //==============================================================================================
-
+// 무한스크롤이 작동할 때, 더 많은 축제를 가져오는 함수
 async function fetchMoreFestivals(page: number) {
   isFetching = true;
 
@@ -432,6 +510,7 @@ async function fetchMoreFestivals(page: number) {
   const startDate = startDateInput.value.replace(/-/g, "");
   const endDate = endDateInput.value.replace(/-/g, "");
 
+  // 서버에 보낼 요청 조건 만들기
   const query = [
     `serviceKey=${API_KEY}`,
     "MobileApp=AppTest",
@@ -450,6 +529,7 @@ async function fetchMoreFestivals(page: number) {
   const url = `${BASE_URL}?${query}`;
 
   try {
+    // 서버에서 추가 축제 정보 가져오기
     const res = await fetch(url);
     const json = await res.json();
     const items = json.response?.body?.items?.item || [];
@@ -466,13 +546,18 @@ document.addEventListener("DOMContentLoaded", () => {
   initCustomDropdown();
   initDateRangePicker();
 
-  // ✅ 검색 조건 & 결과 복원
+  // 로컬스토리지에서 지난 검색 기록 꺼내기
   const savedConditions = localStorage.getItem("searchConditions");
+  // 내가 이전에 검색했던 지역, 날짜 같은 조건들
   const savedResults = localStorage.getItem("searchResults");
+  // 그 조건으로 받았던 축제들(결과)
 
   if (savedConditions && savedResults) {
+    // 만약 전에 찾아본 조건과 결과가 모두 있다면 다음 코드 실행
     const { areaCode, startDate, endDate } = JSON.parse(savedConditions);
+    // 저장된 검색 조건을 풀어서 지역코드와 시작날짜, 끝날짜를 꺼낸다.
     const items = JSON.parse(savedResults);
+    // 저장된 축제 결과도 풀어서 목록으로 가져오기
 
     // 지역 필터 복원
     locationFilter.value = areaCode;
@@ -497,9 +582,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // 카드 다시 렌더링
     renderFestivalList(items, areaCode, startDate, endDate);
   } else {
+    // 처음 방문하면 오늘 날짜의 축제 보여줌
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0].replace(/-/g, "");
 
+    // 오늘 날짜 기준으로 카드 렌더링
     const url = `${BASE_URL}?${[
       `serviceKey=${API_KEY}`,
       "MobileApp=AppTest",
