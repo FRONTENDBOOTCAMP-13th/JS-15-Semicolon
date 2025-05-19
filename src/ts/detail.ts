@@ -37,15 +37,20 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${year}년 ${month}월 ${day}일`;
   };
 
-  const image =
-    selectedFestival.firstimage ||
-    "https://via.placeholder.com/800x400?text=축제+이미지가+없습니다";
+  let imageHTML = "";
 
+  if (selectedFestival.firstimage) {
+    imageHTML = `<img src="${selectedFestival.firstimage}" alt="${selectedFestival.title}" class="mx-auto rounded-[0.625rem]" />`;
+  } else {
+    imageHTML = `<div class="mx-auto w-full h-[400px] bg-ga-gray300 flex items-center justify-center rounded-[0.625rem] text-ga-gray300 text-lg">
+    축제 이미지가 없습니다
+  </div>`;
+  }
   // 축제 상세 정보 표시
   console.log("렌더 시작");
   festivalDetail.innerHTML = `
   <div class="max-w-[58.5rem] mx-auto px-4">
-    <img src="${image}" alt="${selectedFestival.title}" class="mx-auto rounded-[0.625rem]" />
+    ${imageHTML}
     <div class="space-y-4 text-left">
       <h1 class="text-3xl font-bold my-4">${selectedFestival.title || "제목 없음"}</h1>
       <div>
