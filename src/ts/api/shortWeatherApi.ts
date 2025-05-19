@@ -1,6 +1,6 @@
 import "/src/style.css";
-import "../assets/style/weather.css";
-import weatherRegionCodeMap2 from "../assets/ts/weather-short-data";
+import "../../assets/style/weather.css";
+import weatherRegionCodeMap2 from "../../assets/ts/weather-short-data";
 
 const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
