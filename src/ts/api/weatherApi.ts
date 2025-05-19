@@ -19,7 +19,7 @@ function getTmFc(): string {
   return `${yyyy}${MM}${dd}0600`; // 기준 시간: 오전 6시
 }
 
-// 기존예보와 육상예보를 동시에 가져옴
+// 기온예보와 육상예보를 동시에 가져옴
 export async function fetchMidTermForecast(regId: string) {
   const tmFc = getTmFc(); //기준 발표 시각
 
@@ -51,7 +51,9 @@ export async function fetchMidTermForecast(regId: string) {
   };
 }
 
-const fullAddress = "충청남도보령시";
+const weatherFullAddress = "서울 종로구 사직로 161 경복궁";
+renderMidTermForecastFromAddress(weatherFullAddress);
+
 function matchRegionFromAddress(address: string): string | null {
   const regions = Object.keys(weatherRegionCodeMap).sort(
     (a, b) => b.length - a.length
@@ -84,20 +86,27 @@ function extractRegionCandidates(address: string): string[] {
   return [...trimmed, ...splitWords].filter(Boolean);
 }
 
-const matchedRegion = matchRegionFromAddress(fullAddress);
-console.log(matchedRegion);
+async function renderMidTermForecastFromAddress(address: string) {
+  const matchedRegion = matchRegionFromAddress(address);
+  console.log(matchedRegion);
 
-if (!matchedRegion) {
-  console.error("주소에서 매칭되는 지역명을 찾을 수 없습니다.");
-} else {
-  const { tempCode, landCode } = getForecastLocationCode(matchedRegion);
+  if (!matchedRegion) {
+    console.error("주소에서 매칭되는 지역명을 찾을 수 없습니다.");
+    return;
+  }
 
-  Promise.all([
-    fetchMidTermForecast(tempCode),
-    fetchMidTermForecast(landCode),
-  ]).then(([tempResult, landResult]) => {
+  try {
+    const { tempCode, landCode } = getForecastLocationCode(matchedRegion);
+
+    const [tempResult, landResult] = await Promise.all([
+      fetchMidTermForecast(tempCode),
+      fetchMidTermForecast(landCode),
+    ]);
+
     displayMidTermForecast(tempResult.temp, landResult.land);
-  });
+  } catch (error) {
+    console.error("날씨 데이터를 가져오는 중 오류 발생:", error);
+  }
 }
 
 // 도시 이름을 입력하면 기온/육상예보 코드를 반환하는 함수
@@ -110,9 +119,20 @@ function getForecastLocationCode(city: string) {
   }
 
   // 앞 3자리 or 4자리 → 육상예보 지역 분류
-  const landPrefix = tempCode.substring(0, 4); // 예: 11B
+  const landPrefix =
+    tempCode.startsWith("11D1") ||
+    tempCode.startsWith("11D2") ||
+    tempCode.startsWith("11C1") ||
+    tempCode.startsWith("11C2") ||
+    tempCode.startsWith("11F1") ||
+    tempCode.startsWith("11F2") ||
+    tempCode.startsWith("11H1") ||
+    tempCode.startsWith("11H2")
+      ? tempCode.substring(0, 4)
+      : tempCode.substring(0, 3);
+
   const regionToLandCodeMap: Record<string, string> = {
-    "11B0": "11B00000",
+    "11B": "11B00000",
     "11D1": "11D10000",
     "11D2": "11D20000",
     "11C2": "11C20000",
@@ -121,7 +141,7 @@ function getForecastLocationCode(city: string) {
     "11F1": "11F10000",
     "11H1": "11H10000",
     "11H2": "11H20000",
-    "11G0": "11G00000",
+    "11G": "11G00000",
   };
 
   // 육상예보 코드 찾기
