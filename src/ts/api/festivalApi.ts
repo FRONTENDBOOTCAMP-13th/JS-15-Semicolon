@@ -453,18 +453,35 @@ function renderFestivalList(
     card.className = "festivalCard"; // 스타일 적용을 위한 클래스 추가
     card.style.cursor = "pointer"; // 커서 스타일 조정
 
-    const image =
-      item.firstimage || "https://via.placeholder.com/300x200?text=No+Image";
+    // const image =
+    //   item.firstimage || "https://via.placeholder.com/300x200?text=No+Image";
+    // card.innerHTML = `
+    //   <div class="w-full flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-gray-300 transform transition duration-300 ease-in-out hover:-translate-y-1">
+    //     <img src="${image}" alt="축제 이미지" class="w-full h-[200px] object-cover rounded-[1rem]" />
+    //     <div class="p-3">
+    //       <h3 class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis">${item.title}</h3>
+    //       <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${item.addr1 || "지역 정보 없음"}</p>
+    //       <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
+    //     </div>
+    //   </div>
+    // `;
+    const image = item.firstimage;
+    const imageElement = image
+      ? `<img src="${image}" alt="축제 이미지" class="w-full h-[200px] object-cover rounded-[1rem]" />`
+      : `<div class="w-full h-[200px] bg-ga-gray300 flex items-center justify-center text-gray-600 text-sm rounded-[1rem]">
+      이미지 없음
+    </div>`;
+
     card.innerHTML = `
-      <div class="w-full flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-gray-300 transform transition duration-300 ease-in-out hover:-translate-y-1">
-        <img src="${image}" alt="축제 이미지" class="w-full h-[200px] object-cover rounded-[1rem]" />
-        <div class="p-3">
-          <h3 class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis">${item.title}</h3>
-          <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${item.addr1 || "지역 정보 없음"}</p>
-          <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
-        </div>
-      </div>
-    `;
+  <div class="w-full flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1">
+    ${imageElement}
+    <div class="p-3">
+      <h3 class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis">${item.title}</h3>
+      <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${item.addr1 || "지역 정보 없음"}</p>
+      <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
+    </div>
+  </div>
+`;
     // 카드 클릭시 상세 페이지로 이동하는 이벤트 리스너 추가
     card.addEventListener("click", () => {
       localStorage.setItem("selectedFestival", JSON.stringify(item)); // 선택한 축제 정보 저장
