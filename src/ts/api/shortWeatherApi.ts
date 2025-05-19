@@ -137,9 +137,9 @@ function findRegionFromAddress(
 }
 
 // 실제로 날씨를 불러오고 화면에 표시하는 함수
-function outputtingWeather() {
-  const city2 = "서울특별시 종로구 사직로 161 경복궁"; // 사용자가 선택한 지역
-  const locationData = findRegionFromAddress(city2); // 좌표 찾기
+export function outputtingWeather(address: string) {
+  // const city2 = "서울특별시 종로구 사직로 161 경복궁"; // 사용자가 선택한 지역
+  const locationData = findRegionFromAddress(address); // 좌표 찾기
 
   if (!locationData) {
     console.error("해당 지역의 좌표가 없습니다.");
@@ -194,4 +194,4 @@ function outputtingWeather() {
     });
   }
 }
-outputtingWeather();
+// outputtingWeather();

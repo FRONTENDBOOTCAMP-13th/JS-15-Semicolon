@@ -1,4 +1,4 @@
-function xScroll() {
+export function xScroll() {
   const scrollContainer = document.querySelector(
     ".weather-container-wrap"
   ) as HTMLElement;
@@ -48,4 +48,3 @@ function xScroll() {
     scrollContainer.scrollLeft = scrollLeft - walk;
   });
 }
-xScroll();
