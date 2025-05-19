@@ -65,6 +65,7 @@ export function initKakaoMap() {
 
   // 버튼 이벤트 등록
   getRoutebtn?.addEventListener("click", getRoute);
+  const changeOriginbtn = document.querySelector("#changeOrigin");
   changeOriginbtn?.addEventListener("click", () => {
     // (TODO_축제 장소로 변경 필요)
     openKakaoMapDirectionsTo(
