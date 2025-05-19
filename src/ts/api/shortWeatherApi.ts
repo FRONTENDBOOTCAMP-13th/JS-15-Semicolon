@@ -104,9 +104,26 @@ function formatToMonthDay(dateStr: string): string {
   return `${month}월 ${day}일`;
 }
 
+function findRegionFromAddress(
+  address: string
+): { nx: number; ny: number } | null {
+  const regions = Object.keys(weatherRegionCodeMap2);
+
+  // 긴 지역부터 먼저 찾도록 정렬
+  regions.sort((a, b) => b.length - a.length);
+
+  for (const region of regions) {
+    if (address.startsWith(region)) {
+      return weatherRegionCodeMap2[region];
+    }
+  }
+
+  return null;
+}
+
 function outputtingWeather() {
-  const city2 = "제주특별자치도 제주시"; // 사용자가 선택한 지역
-  const locationData = weatherRegionCodeMap2[city2];
+  const city2 = "충청남도 보령시 대천동"; // 사용자가 선택한 지역
+  const locationData = findRegionFromAddress(city2);
 
   if (!locationData) {
     console.error("해당 지역의 좌표가 없습니다.");
