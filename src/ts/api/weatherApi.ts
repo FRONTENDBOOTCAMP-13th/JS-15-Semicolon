@@ -86,7 +86,8 @@ function extractRegionCandidates(address: string): string[] {
   return [...trimmed, ...splitWords].filter(Boolean);
 }
 
-async function renderMidTermForecastFromAddress(address: string) {
+// 훈진 - 상세페이지에서 날씨 정보 넘겨받기 위해 export 추가
+export async function renderMidTermForecastFromAddress(address: string) {
   const matchedRegion = matchRegionFromAddress(address);
   console.log(matchedRegion);
 
