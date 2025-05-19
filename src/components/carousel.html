@@ -1,42 +1,36 @@
 <!DOCTYPE html>
-<html lang="ko-KR">
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>캐러셀 컴포넌트</title>
-    <link rel="stylesheet" href="/src/style.css" />
+    <meta charset="utf-8" />
     <script type="module" src="/src/main.ts"></script>
+    <title>Swiper demo</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
   </head>
-  <body class="flex flex-col items-center justify-center min-h-screen">
-    <h1 class="sr-only">캐러셀</h1>
-    <h3>캐러셀</h3>
-    <!-- Swiper HTML 구조 -->
-    <div class="swiper w-full h-64">
+
+  <body>
+    <div class="swiper mySwiper w-full">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <img
-            src="../assets/img/sample-image1.webp"
-            alt="슬라이드1"
-            class="w-full h-full object-cover" />
+          <img src="../assets/img/sample-image1.webp" alt="슬라이드1" />
         </div>
         <div class="swiper-slide">
-          <img
-            src="../assets/img/sample-image2.webp"
-            alt="슬라이드2"
-            class="w-full h-full object-cover" />
+          <img src="../assets/img/sample-image2.webp" alt="슬라이드2" />
         </div>
         <div class="swiper-slide">
-          <img
-            src="../assets/img/sample-image3.webp"
-            alt="슬라이드3"
-            class="w-full h-full object-cover" />
+          <img src="../assets/img/sample-image3.webp" alt="슬라이드3" />
         </div>
       </div>
 
-      <!-- 페이지네이션/네비게이션 -->
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
+      <!-- Optional navigation buttons -->
       <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+
+      <!-- Optional pagination -->
+      <div class="swiper-pagination"></div>
     </div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script> -->
   </body>
 </html>

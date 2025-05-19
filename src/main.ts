@@ -1,4 +1,4 @@
 import "./ts/api/festivalApi";
 import "./ts/api/kakaoApi";
-import "./ts/auth/carousel";
+import "./ts/carousel";
 import "./style.css";

@@ -22,3 +22,10 @@ const swiper = new Swiper(".swiper", {
     prevEl: ".swiper-button-prev",
   },
 });
+
+// const bodyEl = document.querySelector("body");
+// const test = document.createElement("div");
+// const testText = document.createTextNode("히히 테스ffgffd트용");
+
+// test.appendChild(testText);
+// bodyEl?.appendChild(test);
