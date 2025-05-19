@@ -48,3 +48,5 @@ export function xScroll() {
     scrollContainer.scrollLeft = scrollLeft - walk;
   });
 }
+
+xScroll();

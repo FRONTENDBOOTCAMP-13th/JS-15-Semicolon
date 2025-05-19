@@ -194,4 +194,4 @@ export function outputtingWeather(address: string) {
     });
   }
 }
-// outputtingWeather();
+outputtingWeather("서울특별시 종로구 사직로 161 경복궁");
