@@ -42,6 +42,7 @@
  */
 
 import "/src/style.css";
+import { bookmark } from "../bookmark";
 
 const API_KEY = import.meta.env.VITE_TOUR_API_KEY; // TOUR API 키 저장
 const BASE_URL = "/api/B551011/KorService2/searchFestival2"; // Base URL 저장
@@ -498,13 +499,17 @@ function renderFestivalList(
   </div>
 `;
     // 카드 클릭시 상세 페이지로 이동하는 이벤트 리스너 추가
-    card.addEventListener("click", () => {
+    card.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+
+      if (target.closest(".bookmark-btn")) return;
       localStorage.setItem("selectedFestival", JSON.stringify(item)); // 선택한 축제 정보 저장
       // 상세 페이지로 이동
       window.location.href = "detail.html";
     });
     festivalList.appendChild(card); // 만든 카드를 축제 목록에 추가
   });
+
   // 검색 조건과 결과를 localStorage에 저장
   localStorage.setItem(
     "searchConditions",
@@ -515,7 +520,9 @@ function renderFestivalList(
     })
   );
   localStorage.setItem("searchResults", JSON.stringify(items));
+  bookmark();
 }
+
 //==============================================================================================
 // 무한스크롤이 작동할 때, 더 많은 축제를 가져오는 함수
 async function fetchMoreFestivals(page: number) {
