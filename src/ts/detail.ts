@@ -1,5 +1,6 @@
 import { renderMidTermForecastFromAddress } from "./api/weatherApi";
 import { outputtingWeather } from "./api/shortWeatherApi";
+import { xScroll } from "./weather";
 
 document.addEventListener("DOMContentLoaded", () => {
   // 축제 상세 정보를 표시할 요소 선택
@@ -104,5 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (shortWeatherTarget) {
       outputtingWeather(selectedFestival.addr1);
     }
+    xScroll();
   }
 });
