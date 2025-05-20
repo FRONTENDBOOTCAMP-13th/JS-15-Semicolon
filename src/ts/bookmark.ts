@@ -76,7 +76,7 @@ export function bookmark() {
         svg.setAttribute("fill", "none");
         card.setAttribute("data-starred", "false");
       } else {
-        svg.setAttribute("fill", "white");
+        svg.setAttribute("fill", "#F8C427");
         card.setAttribute("data-starred", "true");
       }
     });
@@ -85,6 +85,8 @@ export function bookmark() {
   // 필터 버튼 클릭 시 토글
   renderBookmarksBtn?.addEventListener("click", () => {
     isFiltered = !isFiltered;
+
+    changeFill(renderBookmarksBtn, "#F8C427");
 
     const cards = document.querySelectorAll("#festivalList > .festivalCard");
     cards.forEach((card) => {
@@ -98,4 +100,15 @@ export function bookmark() {
         : "block";
     });
   });
+
+  // 버튼 내부의 svg아이콘 fill 색깔 변경하는 함수
+  function changeFill(button: Element, color: string) {
+    if (!(button instanceof HTMLElement)) return;
+
+    const iconPath = button.querySelector("svg path")!;
+    const fillColor = color;
+    const isActive = iconPath.getAttribute("fill") === fillColor;
+
+    iconPath.setAttribute("fill", isActive ? "none" : fillColor);
+  }
 }
