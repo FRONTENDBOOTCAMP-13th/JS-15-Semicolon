@@ -46,7 +46,7 @@ export class FestivalApi {
       .filter(Boolean)
       .join("&");
 
-    const proxy = window.location.hostname === "localhost" ? "" : "/api";
+    const proxy = window.location.hostname === "localhost" ? "" : "/api/";
     const url = `${proxy}?${query}`;
 
     try {
