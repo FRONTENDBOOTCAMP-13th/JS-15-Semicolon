@@ -1,6 +1,6 @@
 [[redirects]]
 from = "/api"
-  to = "https://apis.data.go.kr/B551011/KorService2/searchFestival2?:_query"
+  to = "https://apis.data.go.kr/B551011/KorService2/searchFestival2"
   status = 200
   force = true
 
