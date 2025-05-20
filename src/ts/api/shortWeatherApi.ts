@@ -114,7 +114,7 @@ function formatToMonthDay(dateStr: string): string {
   return `${month}월 ${day}일`;
 }
 
-// 주소 문자열에서 해당 지역의 nx, ny 좌표 찾기기
+// 주소 문자열에서 해당 지역의 nx, ny 좌표 찾기
 function findRegionFromAddress(
   address: string
 ): { nx: number; ny: number } | null {
