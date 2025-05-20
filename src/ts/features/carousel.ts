@@ -8,10 +8,12 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 // 이미지 경로 배열 : 원하는 이미지 경로 추가하면 slide 추가 됨
 const imageList: string[] = [
-  "../assets/img/sample-image1.webp",
-  "../assets/img/sample-image2.webp",
-  "../assets/img/sample-image3.webp",
-  "../assets/img/sample-image4.png",
+  "../assets/img/hero-carousel-image1.webp",
+  "../assets/img/hero-carousel-image2.webp",
+  "../assets/img/hero-carousel-image3.webp",
+  "../assets/img/hero-carousel-image5.webp",
+  "../assets/img/hero-carousel-image6.webp",
+  "../assets/img/hero-carousel-image7.webp",
 ];
 
 // DOM 로드된 이후에 실행
