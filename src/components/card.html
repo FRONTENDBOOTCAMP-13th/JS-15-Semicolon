@@ -6,7 +6,7 @@
     <title>축제 리스트</title>
     <link rel="stylesheet" href="/src/style.css" />
     <script type="module" src="/src/ts/api/festivalApi.ts"></script>
-    <script type="module" src="../ts/bookmark.ts"></script>
+    <script type="module" src="../ts/features/bookmark.ts"></script>
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
@@ -14,7 +14,7 @@
     <form
       id="filterForm"
       action="filterForm"
-      class="mx-auto grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-[1.25rem] max-w-[58.5rem] px-2 mt-6 mb-6"
+      class="mx-auto grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-[1.25rem] md:px-[7%] lg:px-[13%] px-2 mt-6 mb-6"
     >
       <div class="relative w-full">
         <button
@@ -319,7 +319,7 @@
     </form>
     <div
       id="festivalList"
-      class="mx-auto grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-[1.25rem] max-w-[58.5rem] px-2"
+      class="mx-auto grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-[1.25rem] md:px-[7%] lg:px-[13%] px-2"
     ></div>
   </body>
 </html>
