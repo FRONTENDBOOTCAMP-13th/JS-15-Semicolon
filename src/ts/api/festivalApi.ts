@@ -330,7 +330,9 @@ const initDateRangePicker = () => {
 
       // 버튼 텍스트 업데이트
       if (selectedDateRangeText) {
-        selectedDateRangeText.textContent = `${formatDate(startDate)} ~ ${formatDate(endDate)}`;
+        selectedDateRangeText.textContent = `${formatDate(
+          startDate
+        )} ~ ${formatDate(endDate)}`;
       }
 
       // 달력 닫기
@@ -492,9 +494,15 @@ function renderFestivalList(
     </button>
     ${imageElement}
     <div class="p-3">
-      <h3 class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis">${item.title}</h3>
-      <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${item.addr1 || "지역 정보 없음"}</p>
-      <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${item.eventstartdate} ~ ${item.eventenddate}</p>
+      <h3 class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis">${
+        item.title
+      }</h3>
+      <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">📍 ${
+        item.addr1 || "지역 정보 없음"
+      }</p>
+      <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${
+        item.eventstartdate
+      } ~ ${item.eventenddate}</p>
     </div>
   </div>
 `;

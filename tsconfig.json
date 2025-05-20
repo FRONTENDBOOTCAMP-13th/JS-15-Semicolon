@@ -108,11 +108,12 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "moduleResolution": "node" // 위치 이동
   },
   "include": ["src/**/*", "vite-env.d.ts"],
   // "exclude": ["node_modules", "src/**/*"]
-  "moduleResolution": "node",
+
   "esModuleInterop": true,
   "types": ["vite/client"]
 }

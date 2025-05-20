@@ -76,7 +76,7 @@ export function bookmark() {
         svg.setAttribute("fill", "none");
         card.setAttribute("data-starred", "false");
       } else {
-        svg.setAttribute("fill", "yellow");
+        svg.setAttribute("fill", "white");
         card.setAttribute("data-starred", "true");
       }
     });
