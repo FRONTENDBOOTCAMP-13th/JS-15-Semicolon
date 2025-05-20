@@ -47,7 +47,7 @@ export class FestivalApi {
       .join("&");
 
     const proxy = window.location.hostname === "localhost" ? "" : "/api/";
-    const url = `${proxy}?${query}`;
+    const url = `${proxy}B551011/KorService2/searchFestival2?${query}`;
 
     try {
       const response = await fetch(url); // 서버에 축제 정보 요청
