@@ -1,3 +1,92 @@
+import { FilterOptions } from "../features/filter";
+
+// 축제 정보에 대한 타입을 정의하는 인터페이스
+export interface FestivalItem {
+  title: string;
+  addr1: string;
+  eventstartdate: string;
+  eventenddate: string;
+  firstimage: string;
+  contentid: string;
+  [key: string]: any;
+}
+
+// 축제 API 호출 키
+export class FestivalApi {
+  private apiKey: string;
+  private baseUrl: string;
+
+  constructor(apiKey: string, baseUrl: string) {
+    this.apiKey = apiKey;
+    this.baseUrl = baseUrl;
+  }
+
+  // 축제 검색 API 호출
+  async searchFestivals(
+    filters: FilterOptions,
+    page: number = 1,
+    numOfRows: number = 20
+  ): Promise<FestivalItem[]> {
+    const { areaCode, startDate, endDate } = filters;
+
+    const query = [
+      `serviceKey=${this.apiKey}`,
+      "MobileApp=AppTest",
+      "MobileOS=ETC",
+      "_type=json",
+      `numOfRows=${numOfRows}`,
+      `pageNo=${page}`,
+      "arrange=A",
+      startDate && `eventStartDate=${startDate}`,
+      endDate && `eventEndDate=${endDate}`,
+      areaCode && `areaCode=${areaCode}`,
+    ]
+      .filter(Boolean)
+      .join("&");
+
+    const url = `${this.baseUrl}?${query}`;
+
+    try {
+      const response = await fetch(url); // 서버에 축제 정보 요청
+      const data = await response.json(); // 응답 JSON 변환
+      // 응답에서 축제 목록 추출, 없으면 빈 배열[]
+      return data.response?.body?.items?.item || [];
+    } catch (error) {
+      console.error("API 호출 중 오류 발생:", error);
+      throw error;
+    }
+  }
+
+  // 오늘 날짜 기준으로 축제 목록 가져오기
+  async getTodayFestivals(numOfRows: number = 20): Promise<FestivalItem[]> {
+    const today = new Date();
+    // 서버에서 20250520 형식으로 날짜를 요구하여 형식 변환
+    const formattedDate = today.toISOString().split("T")[0].replace(/-/g, "");
+
+    const query = [
+      `serviceKey=${this.apiKey}`,
+      "MobileApp=AppTest",
+      "MobileOS=ETC",
+      "_type=json",
+      `numOfRows=${numOfRows}`,
+      "pageNo=1",
+      "arrange=R", // 최신순
+      `eventStartDate=${formattedDate}`,
+    ].join("&");
+
+    const url = `${this.baseUrl}?${query}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data.response?.body?.items?.item || [];
+    } catch (error) {
+      console.error("API 호출 중 오류 발생:", error);
+      throw error;
+    }
+  }
+}
+
 // /*
 //  * 1️⃣ 페이지 로딩 시 초기화 단계
 //  * - 페이지 로딩 -> 필요 기능 초기화 -> 이전 검색 기록 확인 -> 초기 축제 목록 표시
@@ -628,88 +717,3 @@
 //       });
 //   }
 // });
-// festivalApi.ts
-import { FilterOptions } from "../features/filter";
-
-export interface FestivalItem {
-  title: string;
-  addr1: string;
-  eventstartdate: string;
-  eventenddate: string;
-  firstimage: string;
-  contentid: string;
-  [key: string]: any;
-}
-
-export class FestivalApi {
-  private apiKey: string;
-  private baseUrl: string;
-
-  constructor(apiKey: string, baseUrl: string) {
-    this.apiKey = apiKey;
-    this.baseUrl = baseUrl;
-  }
-
-  // 축제 검색 API 호출
-  async searchFestivals(
-    filters: FilterOptions,
-    page: number = 1,
-    numOfRows: number = 20
-  ): Promise<FestivalItem[]> {
-    const { areaCode, startDate, endDate } = filters;
-
-    const query = [
-      `serviceKey=${this.apiKey}`,
-      "MobileApp=AppTest",
-      "MobileOS=ETC",
-      "_type=json",
-      `numOfRows=${numOfRows}`,
-      `pageNo=${page}`,
-      "arrange=A",
-      startDate && `eventStartDate=${startDate}`,
-      endDate && `eventEndDate=${endDate}`,
-      areaCode && `areaCode=${areaCode}`,
-    ]
-      .filter(Boolean)
-      .join("&");
-
-    const url = `${this.baseUrl}?${query}`;
-
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      return data.response?.body?.items?.item || [];
-    } catch (error) {
-      console.error("API 호출 중 오류 발생:", error);
-      throw error;
-    }
-  }
-
-  // 오늘 날짜 기준 축제 가져오기
-  async getTodayFestivals(numOfRows: number = 20): Promise<FestivalItem[]> {
-    const today = new Date();
-    const formattedDate = today.toISOString().split("T")[0].replace(/-/g, "");
-
-    const query = [
-      `serviceKey=${this.apiKey}`,
-      "MobileApp=AppTest",
-      "MobileOS=ETC",
-      "_type=json",
-      `numOfRows=${numOfRows}`,
-      "pageNo=1",
-      "arrange=R", // 최신순
-      `eventStartDate=${formattedDate}`,
-    ].join("&");
-
-    const url = `${this.baseUrl}?${query}`;
-
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      return data.response?.body?.items?.item || [];
-    } catch (error) {
-      console.error("API 호출 중 오류 발생:", error);
-      throw error;
-    }
-  }
-}

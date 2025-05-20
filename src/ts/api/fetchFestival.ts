@@ -1,9 +1,10 @@
 // festivalApi.ts
 import { FilterOptions } from "../features/filter";
 
+// 축제에 들어가는 인터페이스 정의
 export interface FestivalItem {
-  title: string;
-  addr1: string;
+  title: string; // 축제 이름
+  addr1: string; // 주소
   eventstartdate: string;
   eventenddate: string;
   firstimage: string;
