@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>top-btn</title>
+    <link rel="stylesheet" href="/src/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="">
+    <div>
+      <header
+        class="px-2 md:px-[7%] lg:px-[13%] py-4 md:py-5 flex justify-between items-center"
+      >
+        <a href="./card.html" class="w-[5rem] md:w-[7.5rem]">
+          <img src="../assets/icon/logo.svg" alt="home" />
+        </a>
+        <a
+          href="./login.html"
+          class="border border-[#ff515d] text-[#ff515d] hover:bg-[#ff515d] transition hover:text-white rounded-2xl py-0.5 px-3 md:py-1.5 md:px-6 text-10 md:text-14 font-semibold font-sans"
+          >로그인</a
+        >
+      </header>
+      <form
+        id="filterForm"
+        action="filterForm"
+        class="px-2 md:px-[5%] lg:px-[13%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-[1.25rem] mt-6 mb-6"
+      >
+        <div class="relative w-full">
+          <button
+            type="button"
+            id="dropdownButton"
+            class="flex items-center justify-between w-full px-4 py-3 border border-gray-300 rounded-[1.25rem] bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+          >
+            <span id="selectedLocation">지역선택</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 transition-transform duration-200"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 11.586l3.71-4.356a.75.75 0 111.14.976l-4.25 5a.75.75 0 01-1.14 0l-4.25-5a.75.75 0 01.02-1.06z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <div
+            id="dropdownMenu"
+            class="absolute left-0 z-10 w-full mt-1 bg-white border border-gray-300 rounded-[1.25rem] shadow-lg hidden"
+          >
+            <ul class="py-1 max-h-60 overflow-y-auto">
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value=""
+              >
+                전체
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="1"
+              >
+                서울
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="2"
+              >
+                인천
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="3"
+              >
+                대전
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="4"
+              >
+                대구
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="5"
+              >
+                광주
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="6"
+              >
+                부산
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="7"
+              >
+                울산
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="8"
+              >
+                세종
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="31"
+              >
+                경기
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="32"
+              >
+                강원
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="33"
+              >
+                충북
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="34"
+              >
+                충남
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="35"
+              >
+                경북
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="36"
+              >
+                경남
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="37"
+              >
+                전북
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="38"
+              >
+                전남
+              </li>
+              <li
+                class="location-option cursor-pointer hover:bg-gray-100 px-4 py-2"
+                data-value="39"
+              >
+                제주
+              </li>
+            </ul>
+          </div>
+          <select id="locationFilter" name="locationFilter" class="hidden">
+            <option value="">전체</option>
+            <option value="1">서울</option>
+            <option value="2">인천</option>
+            <option value="3">대전</option>
+            <option value="4">대구</option>
+            <option value="5">광주</option>
+            <option value="6">부산</option>
+            <option value="7">울산</option>
+            <option value="8">세종</option>
+            <option value="31">경기</option>
+            <option value="32">강원</option>
+            <option value="33">충북</option>
+            <option value="34">충남</option>
+            <option value="35">경북</option>
+            <option value="36">경남</option>
+            <option value="37">전북</option>
+            <option value="38">전남</option>
+            <option value="39">제주</option>
+          </select>
+        </div>
+        <!-- 날짜 범위 선택기 -->
+        <div class="relative w-full">
+          <button
+            type="button"
+            id="dateRangeButton"
+            class="flex items-center justify-between w-full px-4 py-3 border border-gray-300 rounded-[20px] bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+          >
+            <span id="selectedDateRange">날짜 선택</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <!-- 달력 컨테이너 -->
+          <div
+            id="dateRangePicker"
+            class="absolute left-0 z-20 mt-1 bg-white border border-gray-300 rounded-[1.25rem] shadow-lg p-4 hidden"
+            style="width: 293.34px"
+          >
+            <!-- 월 선택기 및 이전/다음 버튼 -->
+            <div class="flex justify-between items-center mb-2">
+              <button id="prevMonth" class="text-gray-600 hover:text-gray-900">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <span id="currentMonthYear" class="font-medium"></span>
+              <button id="nextMonth" class="text-gray-600 hover:text-gray-900">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+            <!-- 요일 헤더 -->
+            <div
+              class="grid grid-cols-7 gap-1 text-center text-xs text-gray-500 mb-1"
+            >
+              <div>일</div>
+              <div>월</div>
+              <div>화</div>
+              <div>수</div>
+              <div>목</div>
+              <div>금</div>
+              <div>토</div>
+            </div>
+            <!-- 달력 날짜 셀 -->
+            <div id="calendarDays" class="grid grid-cols-7 gap-1"></div>
+            <!-- 선택된 범위 표시 -->
+            <div class="mt-3 pt-3 border-t border-gray-200">
+              <div class="flex justify-between text-sm">
+                <div>
+                  <span class="text-gray-500">시작:</span>
+                  <span id="displayStartDate" class="ml-1">-</span>
+                </div>
+                <div>
+                  <span class="text-gray-500">종료:</span>
+                  <span id="displayEndDate" class="ml-1">-</span>
+                </div>
+              </div>
+            </div>
+            <!-- 버튼 영역 -->
+            <div class="mt-3 flex justify-end space-x-2">
+              <button
+                type="button"
+                id="clearDates"
+                class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900"
+              >
+                초기화
+              </button>
+              <button
+                type="button"
+                id="applyDateRange"
+                class="px-3 py-1 text-sm bg-red-500 text-white rounded-[.625rem] hover:bg-red-600"
+              >
+                적용
+              </button>
+            </div>
+          </div>
+          <!-- 실제 폼 제출용 hidden input -->
+          <input type="hidden" id="startDate" name="startDate" />
+          <input type="hidden" id="endDate" name="endDate" />
+        </div>
+        <div class="flex gap-2 w-full h-[3.125rem]">
+          <button
+            type="button"
+            id="dropdownButton"
+            class="render-bookmarks flex items-center justify-center w-[3.75rem] px-4 py-3 border border-gray-300 rounded-[1.25rem] bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+          >
+            <svg
+              width="29"
+              height="28"
+              viewBox="0 0 29 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.0381 2.00879C13.4731 0.670058 15.3213 0.627835 15.8447 1.88281L15.8906 2.00879L17.9102 8.22168C18.2448 9.25167 19.2041 9.94913 20.2871 9.94922H26.8203C28.2734 9.94922 28.8777 11.809 27.7021 12.6631L22.417 16.5029C21.5957 17.0997 21.222 18.1286 21.4541 19.1035L21.5088 19.2979L23.5273 25.5117C23.9762 26.8936 22.3943 28.0425 21.2188 27.1885L15.9336 23.3486C15.1121 22.7518 14.0177 22.714 13.1621 23.2363L12.9951 23.3486L7.70898 27.1885C6.53346 28.0423 4.95246 26.8936 5.40137 25.5117L7.41992 19.2979C7.73357 18.3322 7.43098 17.2802 6.66992 16.6279L6.51172 16.5029L1.22656 12.6631C0.0509946 11.809 0.65531 9.94922 2.1084 9.94922H8.6416C9.72448 9.94903 10.6839 9.25159 11.0186 8.22168L13.0381 2.00879Z"
+                stroke="#F8C427"
+                stroke-width="1.5"
+              />
+            </svg>
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 w-full bg-red-500 text-white rounded-[1.25rem] hover:bg-ga-red300 transform transition-colors duration-300"
+          >
+            검색
+          </button>
+        </div>
+      </form>
+      <div class="px-2 md:px-[5%] lg:px-[13%]">
+        <div
+          id="festivalList"
+          class="mx-auto grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-[1.25rem] px-2"
+        ></div>
+        <div
+          id="festivalList"
+          class="mx-auto grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-[1.25rem] px-2"
+        >
+          <div
+            class="w-full relative flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1"
+          >
+            <button class="bookmark-btn absolute right-0 p-2 text-white">
+              <svg
+                width="24"
+                height="23"
+                viewBox="0 0 24 23"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.5127 2.12695C11.7933 1.26326 12.9567 1.20918 13.3477 1.96484L13.415 2.12695L14.7686 6.29199C15.1701 7.52795 16.3216 8.36509 17.6211 8.36523H22.001C22.9696 8.36527 23.3723 9.60436 22.5889 10.1738L19.0459 12.748C18.0602 13.4642 17.612 14.6992 17.8906 15.8691L17.9561 16.1025L19.3096 20.2676C19.6087 21.1888 18.5542 21.9548 17.7705 21.3857L14.2275 18.8115C13.1761 18.0476 11.7517 18.0476 10.7002 18.8115L7.15723 21.3857C6.37357 21.9548 5.31899 21.1887 5.61816 20.2676L6.97168 16.1025C7.3733 14.8665 6.9333 13.512 5.88184 12.748L2.33887 10.1738C1.55547 9.60436 1.95816 8.36527 2.92676 8.36523H7.30664C8.60618 8.36509 9.75759 7.52795 10.1592 6.29199L11.5127 2.12695Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </button>
+            <img
+              src="https://i.pinimg.com/736x/0c/8d/fd/0c8dfdbd920af19dc9afa5c5536a0fdb.jpg"
+              alt="축제 이미지"
+              class="w-full h-[200px] object-cover rounded-[1rem]"
+            />
+            <div class="p-3">
+              <h3
+                class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                ${item.title}
+              </h3>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                📍 ${item.addr1 || "지역 정보 없음"}
+              </p>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                🗓️ ${item.eventstartdate} ~ ${item.eventenddate}
+              </p>
+            </div>
+          </div>
+          <div
+            class="w-full relative flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1"
+          >
+            <button class="bookmark-btn absolute right-0 p-2 text-white">
+              <svg
+                width="24"
+                height="23"
+                viewBox="0 0 24 23"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.5127 2.12695C11.7933 1.26326 12.9567 1.20918 13.3477 1.96484L13.415 2.12695L14.7686 6.29199C15.1701 7.52795 16.3216 8.36509 17.6211 8.36523H22.001C22.9696 8.36527 23.3723 9.60436 22.5889 10.1738L19.0459 12.748C18.0602 13.4642 17.612 14.6992 17.8906 15.8691L17.9561 16.1025L19.3096 20.2676C19.6087 21.1888 18.5542 21.9548 17.7705 21.3857L14.2275 18.8115C13.1761 18.0476 11.7517 18.0476 10.7002 18.8115L7.15723 21.3857C6.37357 21.9548 5.31899 21.1887 5.61816 20.2676L6.97168 16.1025C7.3733 14.8665 6.9333 13.512 5.88184 12.748L2.33887 10.1738C1.55547 9.60436 1.95816 8.36527 2.92676 8.36523H7.30664C8.60618 8.36509 9.75759 7.52795 10.1592 6.29199L11.5127 2.12695Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </button>
+            <img
+              src="https://i.pinimg.com/736x/0c/8d/fd/0c8dfdbd920af19dc9afa5c5536a0fdb.jpg"
+              alt="축제 이미지"
+              class="w-full h-[200px] object-cover rounded-[1rem]"
+            />
+            <div class="p-3">
+              <h3
+                class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                ${item.title}
+              </h3>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                📍 ${item.addr1 || "지역 정보 없음"}
+              </p>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                🗓️ ${item.eventstartdate} ~ ${item.eventenddate}
+              </p>
+            </div>
+          </div>
+          <div
+            class="w-full relative flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1"
+          >
+            <button class="bookmark-btn absolute right-0 p-2 text-white">
+              <svg
+                width="24"
+                height="23"
+                viewBox="0 0 24 23"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.5127 2.12695C11.7933 1.26326 12.9567 1.20918 13.3477 1.96484L13.415 2.12695L14.7686 6.29199C15.1701 7.52795 16.3216 8.36509 17.6211 8.36523H22.001C22.9696 8.36527 23.3723 9.60436 22.5889 10.1738L19.0459 12.748C18.0602 13.4642 17.612 14.6992 17.8906 15.8691L17.9561 16.1025L19.3096 20.2676C19.6087 21.1888 18.5542 21.9548 17.7705 21.3857L14.2275 18.8115C13.1761 18.0476 11.7517 18.0476 10.7002 18.8115L7.15723 21.3857C6.37357 21.9548 5.31899 21.1887 5.61816 20.2676L6.97168 16.1025C7.3733 14.8665 6.9333 13.512 5.88184 12.748L2.33887 10.1738C1.55547 9.60436 1.95816 8.36527 2.92676 8.36523H7.30664C8.60618 8.36509 9.75759 7.52795 10.1592 6.29199L11.5127 2.12695Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </button>
+            <img
+              src="https://i.pinimg.com/736x/0c/8d/fd/0c8dfdbd920af19dc9afa5c5536a0fdb.jpg"
+              alt="축제 이미지"
+              class="w-full h-[200px] object-cover rounded-[1rem]"
+            />
+            <div class="p-3">
+              <h3
+                class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                ${item.title}
+              </h3>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                📍 ${item.addr1 || "지역 정보 없음"}
+              </p>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                🗓️ ${item.eventstartdate} ~ ${item.eventenddate}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          id="festivalList"
+          class="mx-auto grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-[1.25rem] px-2"
+        ></div>
+        <div
+          id="festivalList"
+          class="mx-auto grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-[1.25rem] px-2"
+        >
+          <div
+            class="w-full relative flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1"
+          >
+            <button class="bookmark-btn absolute right-0 p-2 text-white">
+              <svg
+                width="24"
+                height="23"
+                viewBox="0 0 24 23"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.5127 2.12695C11.7933 1.26326 12.9567 1.20918 13.3477 1.96484L13.415 2.12695L14.7686 6.29199C15.1701 7.52795 16.3216 8.36509 17.6211 8.36523H22.001C22.9696 8.36527 23.3723 9.60436 22.5889 10.1738L19.0459 12.748C18.0602 13.4642 17.612 14.6992 17.8906 15.8691L17.9561 16.1025L19.3096 20.2676C19.6087 21.1888 18.5542 21.9548 17.7705 21.3857L14.2275 18.8115C13.1761 18.0476 11.7517 18.0476 10.7002 18.8115L7.15723 21.3857C6.37357 21.9548 5.31899 21.1887 5.61816 20.2676L6.97168 16.1025C7.3733 14.8665 6.9333 13.512 5.88184 12.748L2.33887 10.1738C1.55547 9.60436 1.95816 8.36527 2.92676 8.36523H7.30664C8.60618 8.36509 9.75759 7.52795 10.1592 6.29199L11.5127 2.12695Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </button>
+            <img
+              src="https://i.pinimg.com/736x/0c/8d/fd/0c8dfdbd920af19dc9afa5c5536a0fdb.jpg"
+              alt="축제 이미지"
+              class="w-full h-[200px] object-cover rounded-[1rem]"
+            />
+            <div class="p-3">
+              <h3
+                class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                ${item.title}
+              </h3>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                📍 ${item.addr1 || "지역 정보 없음"}
+              </p>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                🗓️ ${item.eventstartdate} ~ ${item.eventenddate}
+              </p>
+            </div>
+          </div>
+          <div
+            class="w-full relative flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1"
+          >
+            <button class="bookmark-btn absolute right-0 p-2 text-white">
+              <svg
+                width="24"
+                height="23"
+                viewBox="0 0 24 23"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.5127 2.12695C11.7933 1.26326 12.9567 1.20918 13.3477 1.96484L13.415 2.12695L14.7686 6.29199C15.1701 7.52795 16.3216 8.36509 17.6211 8.36523H22.001C22.9696 8.36527 23.3723 9.60436 22.5889 10.1738L19.0459 12.748C18.0602 13.4642 17.612 14.6992 17.8906 15.8691L17.9561 16.1025L19.3096 20.2676C19.6087 21.1888 18.5542 21.9548 17.7705 21.3857L14.2275 18.8115C13.1761 18.0476 11.7517 18.0476 10.7002 18.8115L7.15723 21.3857C6.37357 21.9548 5.31899 21.1887 5.61816 20.2676L6.97168 16.1025C7.3733 14.8665 6.9333 13.512 5.88184 12.748L2.33887 10.1738C1.55547 9.60436 1.95816 8.36527 2.92676 8.36523H7.30664C8.60618 8.36509 9.75759 7.52795 10.1592 6.29199L11.5127 2.12695Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </button>
+            <img
+              src="https://i.pinimg.com/736x/0c/8d/fd/0c8dfdbd920af19dc9afa5c5536a0fdb.jpg"
+              alt="축제 이미지"
+              class="w-full h-[200px] object-cover rounded-[1rem]"
+            />
+            <div class="p-3">
+              <h3
+                class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                ${item.title}
+              </h3>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                📍 ${item.addr1 || "지역 정보 없음"}
+              </p>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                🗓️ ${item.eventstartdate} ~ ${item.eventenddate}
+              </p>
+            </div>
+          </div>
+          <div
+            class="w-full relative flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1"
+          >
+            <button class="bookmark-btn absolute right-0 p-2 text-white">
+              <svg
+                width="24"
+                height="23"
+                viewBox="0 0 24 23"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.5127 2.12695C11.7933 1.26326 12.9567 1.20918 13.3477 1.96484L13.415 2.12695L14.7686 6.29199C15.1701 7.52795 16.3216 8.36509 17.6211 8.36523H22.001C22.9696 8.36527 23.3723 9.60436 22.5889 10.1738L19.0459 12.748C18.0602 13.4642 17.612 14.6992 17.8906 15.8691L17.9561 16.1025L19.3096 20.2676C19.6087 21.1888 18.5542 21.9548 17.7705 21.3857L14.2275 18.8115C13.1761 18.0476 11.7517 18.0476 10.7002 18.8115L7.15723 21.3857C6.37357 21.9548 5.31899 21.1887 5.61816 20.2676L6.97168 16.1025C7.3733 14.8665 6.9333 13.512 5.88184 12.748L2.33887 10.1738C1.55547 9.60436 1.95816 8.36527 2.92676 8.36523H7.30664C8.60618 8.36509 9.75759 7.52795 10.1592 6.29199L11.5127 2.12695Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </button>
+            <img
+              src="https://i.pinimg.com/736x/0c/8d/fd/0c8dfdbd920af19dc9afa5c5536a0fdb.jpg"
+              alt="축제 이미지"
+              class="w-full h-[200px] object-cover rounded-[1rem]"
+            />
+            <div class="p-3">
+              <h3
+                class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                ${item.title}
+              </h3>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                📍 ${item.addr1 || "지역 정보 없음"}
+              </p>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                🗓️ ${item.eventstartdate} ~ ${item.eventenddate}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          id="festivalList"
+          class="mx-auto grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-[1.25rem] px-2"
+        ></div>
+        <div
+          id="festivalList"
+          class="mx-auto grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-[1.25rem] px-2"
+        >
+          <div
+            class="w-full relative flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1"
+          >
+            <button class="bookmark-btn absolute right-0 p-2 text-white">
+              <svg
+                width="24"
+                height="23"
+                viewBox="0 0 24 23"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.5127 2.12695C11.7933 1.26326 12.9567 1.20918 13.3477 1.96484L13.415 2.12695L14.7686 6.29199C15.1701 7.52795 16.3216 8.36509 17.6211 8.36523H22.001C22.9696 8.36527 23.3723 9.60436 22.5889 10.1738L19.0459 12.748C18.0602 13.4642 17.612 14.6992 17.8906 15.8691L17.9561 16.1025L19.3096 20.2676C19.6087 21.1888 18.5542 21.9548 17.7705 21.3857L14.2275 18.8115C13.1761 18.0476 11.7517 18.0476 10.7002 18.8115L7.15723 21.3857C6.37357 21.9548 5.31899 21.1887 5.61816 20.2676L6.97168 16.1025C7.3733 14.8665 6.9333 13.512 5.88184 12.748L2.33887 10.1738C1.55547 9.60436 1.95816 8.36527 2.92676 8.36523H7.30664C8.60618 8.36509 9.75759 7.52795 10.1592 6.29199L11.5127 2.12695Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </button>
+            <img
+              src="https://i.pinimg.com/736x/0c/8d/fd/0c8dfdbd920af19dc9afa5c5536a0fdb.jpg"
+              alt="축제 이미지"
+              class="w-full h-[200px] object-cover rounded-[1rem]"
+            />
+            <div class="p-3">
+              <h3
+                class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                ${item.title}
+              </h3>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                📍 ${item.addr1 || "지역 정보 없음"}
+              </p>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                🗓️ ${item.eventstartdate} ~ ${item.eventenddate}
+              </p>
+            </div>
+          </div>
+          <div
+            class="w-full relative flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1"
+          >
+            <button class="bookmark-btn absolute right-0 p-2 text-white">
+              <svg
+                width="24"
+                height="23"
+                viewBox="0 0 24 23"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.5127 2.12695C11.7933 1.26326 12.9567 1.20918 13.3477 1.96484L13.415 2.12695L14.7686 6.29199C15.1701 7.52795 16.3216 8.36509 17.6211 8.36523H22.001C22.9696 8.36527 23.3723 9.60436 22.5889 10.1738L19.0459 12.748C18.0602 13.4642 17.612 14.6992 17.8906 15.8691L17.9561 16.1025L19.3096 20.2676C19.6087 21.1888 18.5542 21.9548 17.7705 21.3857L14.2275 18.8115C13.1761 18.0476 11.7517 18.0476 10.7002 18.8115L7.15723 21.3857C6.37357 21.9548 5.31899 21.1887 5.61816 20.2676L6.97168 16.1025C7.3733 14.8665 6.9333 13.512 5.88184 12.748L2.33887 10.1738C1.55547 9.60436 1.95816 8.36527 2.92676 8.36523H7.30664C8.60618 8.36509 9.75759 7.52795 10.1592 6.29199L11.5127 2.12695Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </button>
+            <img
+              src="https://i.pinimg.com/736x/0c/8d/fd/0c8dfdbd920af19dc9afa5c5536a0fdb.jpg"
+              alt="축제 이미지"
+              class="w-full h-[200px] object-cover rounded-[1rem]"
+            />
+            <div class="p-3">
+              <h3
+                class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                ${item.title}
+              </h3>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                📍 ${item.addr1 || "지역 정보 없음"}
+              </p>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                🗓️ ${item.eventstartdate} ~ ${item.eventenddate}
+              </p>
+            </div>
+          </div>
+          <div
+            class="w-full relative flex flex-col bg-white rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1"
+          >
+            <button class="bookmark-btn absolute right-0 p-2 text-white">
+              <svg
+                width="24"
+                height="23"
+                viewBox="0 0 24 23"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.5127 2.12695C11.7933 1.26326 12.9567 1.20918 13.3477 1.96484L13.415 2.12695L14.7686 6.29199C15.1701 7.52795 16.3216 8.36509 17.6211 8.36523H22.001C22.9696 8.36527 23.3723 9.60436 22.5889 10.1738L19.0459 12.748C18.0602 13.4642 17.612 14.6992 17.8906 15.8691L17.9561 16.1025L19.3096 20.2676C19.6087 21.1888 18.5542 21.9548 17.7705 21.3857L14.2275 18.8115C13.1761 18.0476 11.7517 18.0476 10.7002 18.8115L7.15723 21.3857C6.37357 21.9548 5.31899 21.1887 5.61816 20.2676L6.97168 16.1025C7.3733 14.8665 6.9333 13.512 5.88184 12.748L2.33887 10.1738C1.55547 9.60436 1.95816 8.36527 2.92676 8.36523H7.30664C8.60618 8.36509 9.75759 7.52795 10.1592 6.29199L11.5127 2.12695Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </button>
+            <img
+              src="https://i.pinimg.com/736x/0c/8d/fd/0c8dfdbd920af19dc9afa5c5536a0fdb.jpg"
+              alt="축제 이미지"
+              class="w-full h-[200px] object-cover rounded-[1rem]"
+            />
+            <div class="p-3">
+              <h3
+                class="font-bold text-[1rem] text-black truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                ${item.title}
+              </h3>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                📍 ${item.addr1 || "지역 정보 없음"}
+              </p>
+              <p
+                class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis"
+              >
+                🗓️ ${item.eventstartdate} ~ ${item.eventenddate}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-full h-[1px] bg-ga-gray200 mt-17 md:mt-21"></div>
+      <footer
+        class="px-2 md:px-[7%] lg:px-[13%] flex flex-col md:flex-row justify-left md:justify-between py-10 md:py-12"
+      >
+        <span class="w-1/9 min-w-[4rem]">
+          <img src="../assets/icon/logo.svg" alt="" />
+        </span>
+        <span class="text-ga-gray300 text-12 pt-1.5 md:pt-0 md:text-16"
+          >&copy; 2025 여기갈래 All rights reserved.</span
+        >
+      </footer>
+    </div>
+
+    <button class="top-btn hidden fixed bottom-[5%] right-[5%]">
+      <img src="../assets/icon/top.svg" alt="top" />
+    </button>
+
+    <script src="../ts/top-btn.ts"></script>
+  </body>
+</html>
