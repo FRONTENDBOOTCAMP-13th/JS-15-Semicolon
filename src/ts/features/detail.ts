@@ -1,7 +1,7 @@
-import { renderMidTermForecastFromAddress } from "./api/weatherApi";
-import { outputtingWeather } from "./api/shortWeatherApi";
+import { renderMidTermForecastFromAddress } from "../api/weatherApi";
+import { outputtingWeather } from "../api/shortWeatherApi";
 import { xScroll } from "./weather";
-import { getCoordsFromAddress, initKakaoMap } from "./api/kakaoApi";
+import { getCoordsFromAddress, initKakaoMap } from "../api/kakaoApi";
 
 document.addEventListener("DOMContentLoaded", () => {
   // 축제 상세 정보를 표시할 요소 선택
@@ -136,28 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
 `;
   document.title = `${selectedFestival.title || "축제 정보"} - 상세 정보`;
 
-  // if (selectedFestival.addr1) {
-  //   renderMidTermForecastFromAddress(selectedFestival.addr1);
-  //   const shortWeatherTarget = document.querySelector(
-  //     ".weather-container.short-term"
-  //   );
-  //   if (shortWeatherTarget) {
-  //     outputtingWeather(selectedFestival.addr1);
-  //   }
-  //   xScroll();
-  // }
-  // function waitForKakao(): Promise<void> {
-  //   return new Promise((resolve) => {
-  //     const check = () => {
-  //       if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
-  //         resolve();
-  //       } else {
-  //         setTimeout(check, 50);
-  //       }
-  //     };
-  //     check();
-  //   });
-  // }
   function waitForKakao(): Promise<void> {
     return new Promise((resolve) => {
       const check = () => {
@@ -186,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       xScroll();
 
-      // ✅ 여기가 빠졌던 핵심
       getCoordsFromAddress(addr).then((coords) => {
         window.festivalCoords = coords; // 전역으로 넘겨줌
         initKakaoMap(); // 지도 초기화 실행
