@@ -1,5 +1,5 @@
 [[redirects]]
-from = "/api/*"
-to = "https://apis.data.go.kr/:splat"
-status = 200
-force = true
+from = "/api"
+  to = "https://apis.data.go.kr/B551011/KorService2/searchFestival2:splat"
+  status = 200
+  force = true
