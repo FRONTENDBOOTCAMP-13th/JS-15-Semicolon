@@ -26,8 +26,8 @@ export async function fetchMidTermForecast(regId: string) {
   // 🚀 훈진 수정 : 프록시 서버 주소 세팅
   const proxy = `https://fesp-api.koyeb.app/proxy`;
   // 기상청 API 경로
-  const landPath = `1360000/MidFcstInfoService/getMidLandFcst`;
-  const tempPath = `1360000/MidFcstInfoService/getMidTa`;
+  const landPath = `/1360000/MidFcstInfoService/getMidLandFcst`;
+  const tempPath = `/1360000/MidFcstInfoService/getMidTa`;
   // 공통 쿼리
   const commonQuery = `serviceKey=${WEATHER_API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&regId=${regId}&tmFc=${tmFc}`;
 
