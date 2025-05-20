@@ -10,7 +10,8 @@ import { bookmark } from "./ts/features/bookmark";
 
 // 환경 변수 로드
 const API_KEY = import.meta.env.VITE_TOUR_API_KEY;
-const BASE_URL = "/api/B551011/KorService2/searchFestival2";
+const BASE_URL =
+  "https://apis.data.go.kr/api/B551011/KorService2/searchFestival2";
 
 // 상태 변수
 let currentPage = 1;
