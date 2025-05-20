@@ -72,6 +72,7 @@ function matchRegionFromAddress(address: string): string | null {
   return null;
 }
 
+// 시/군/구 단위로 주소 자르기
 function extractRegionCandidates(address: string): string[] {
   // 시/군/구 단위로 자르기 (예: "충청남도 보령시" → ["보령시", "보령", ...])
   const matches = address.match(/(.*?[시군구])/g) || []; // 시,군,구로 끝나는 단어들 뽑기
@@ -158,7 +159,7 @@ function getForecastLocationCode(city: string) {
   return { tempCode, landCode };
 }
 
-// ///////////////////////////////////////////////////////
+// 오늘 기준 N일 후 날짜를 MM월 DD일 형식으로 반환
 function getDateAfterDays(days: number): string {
   // 오늘 기준 N일 후 날짜를 "MM월 DD일" 형식으로 반환
   const now = new Date();
@@ -168,6 +169,7 @@ function getDateAfterDays(days: number): string {
   return `${month}월 ${date}일`;
 }
 
+// text로 오는 육상예보를 class name으로 반환
 function getMidTermWeatherClass(text: string): string {
   if (text.includes("맑음")) return "sunny";
   if (text.includes("구름")) return "cloudy";
@@ -177,6 +179,7 @@ function getMidTermWeatherClass(text: string): string {
   return "unknown";
 }
 
+// 여기서 작동~~~~~~~~~~~~~ html에 날씨예보 삽입
 function displayMidTermForecast(temp: any, land: any) {
   const weatherContainer = document.querySelector(
     ".weather-container.mid-term"
