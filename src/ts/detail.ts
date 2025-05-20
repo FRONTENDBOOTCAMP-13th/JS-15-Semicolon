@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (selectedFestival.firstimage) {
     imageHTML = `<img src="${selectedFestival.firstimage}" alt="${selectedFestival.title}" class="mx-auto rounded-[0.625rem]" />`;
   } else {
-    imageHTML = `<div class="mx-auto w-full h-[400px] bg-ga-gray300 flex items-center justify-center rounded-[0.625rem] text-ga-gray300 text-lg">
+    imageHTML = `<div class="mx-auto w-full h-[400px] bg-ga-gray300 flex items-center justify-center rounded-2xl text-ga-gray300 text-lg">
     축제 이미지가 없습니다
   </div>`;
   }
@@ -60,44 +60,51 @@ document.addEventListener("DOMContentLoaded", () => {
   festivalDetail.innerHTML = `
   <div class="max-w-[58.5rem] mx-auto px-4">
     ${imageHTML}
-    <div class="space-y-4 text-left">
-      <h1 class="text-3xl font-bold my-4">${selectedFestival.title || "제목 없음"}</h1>
-      <div>
-        <h2 class="text-xl font-bold mb-2">🗓️ 축제 기간</h2>
-        <p>${formatDate(selectedFestival.eventstartdate)} ~ ${formatDate(selectedFestival.eventenddate)}</p>
-      </div>
-      <div>
-        <h2 class="text-xl font-bold mb-2">📍 축제 장소</h2>
-        <p>${selectedFestival.addr1 || "장소 정보가 없습니다"}</p>
+    <div class="space-y-4 text-left" >
+      <div class="border rounded-2xl border-gray-300 px-4 mt-4">
+        <h1 class="text-3xl font-bold my-4">
+          ${selectedFestival.title || "제목 없음"}
+        </h1>
+
+        <!-- 축제 기간 -->
+        <div class="mt-6">
+          <h2 class="text-xl font-bold mb-2">🗓️ 축제 기간</h2>
+          <p>${formatDate(selectedFestival.eventstartdate)} ~ ${formatDate(selectedFestival.eventenddate)}</p>
+        </div>
+
+        <!-- 축제 장소 -->
+        <div class="mt-6">
+          <h2 class="text-xl font-bold mb-2">📍 축제 장소</h2>
+          <p>${selectedFestival.addr1 || "장소 정보가 없습니다"}</p>
+          ${
+            selectedFestival.addr2
+              ? `<p class="text-sm text-gray-500 mt-1">${selectedFestival.addr2}</p>`
+              : ""
+          }
+        </div>
+
+        <!-- 문의처 -->
         ${
-          selectedFestival.addr2
-            ? `<p class="text-sm text-gray-500 mt-1">${selectedFestival.addr2}</p>`
+          selectedFestival.tel
+            ? `
+            <div class="mt-6">
+              <h2 class="text-xl font-bold mb-2">📞 문의처</h2>
+              <p>${selectedFestival.tel}</p>
+            </div>
+          `
             : ""
         }
       </div>
-
-      ${
-        selectedFestival.tel
-          ? `
       <div>
-        <h2 class="text-xl font-bold mb-2">📞 문의처</h2>
-        <p>${selectedFestival.tel}</p>
-      </div>
-      `
-          : ""
-      }
-      <div>
-        <h2 class="text-xl font-bold mb-2">🌤️ 축제 기간 날씨</h2>
         <div class="weather-container-wrap no-select flex justify-center text-center py-4 border rounded-2xl border-gray-300 overflow-hidden">
           <ul class="weather-container flex short-term"></ul>
           <ul class="weather-container flex mid-term"></ul>
         </div>
       </div>
-      <div class="mt-10 max-w-[58.5rem] mx-auto px-4">
-        <h2 class="text-xl font-bold mb-2">📖 축제 위치</h2>
+      <div class="mt-10 max-w-[58.5rem] mx-auto rounded-2xl">
                 <section
           id="map"
-          class="w-full h-[16.5rem] sm:h-[31.25rem] border border-ga-gray200 relative z-0">
+          class="w-full h-[16.5rem] sm:h-[31.25rem] mb-10 rounded-2xl border border-ga-gray200 relative z-0">
           <div
             class="absolute bottom-4 right-4 flex flex-col lg:flex-row gap-2 z-10">
             <button
@@ -122,11 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
           </div>
         </section>
-        <section class="w-full flex justify-end mt-2">
-          <p class="text-xs sm:text-sm text-gray-700 font-semibold mr-1">
-            현재 위치 : <span id="userPosition"></span>
-          </p>
-        </section>
+
       </div>
     </div>
   </div>

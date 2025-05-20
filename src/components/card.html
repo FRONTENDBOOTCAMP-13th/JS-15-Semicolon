@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/src/style.css" />
     <!-- <script type="module" src="/src/main.ts"></script> -->
     <script type="module" src="/src/ts/api/festivalApi.ts"></script>
+    <script type="module" src="../ts/bookmark.ts"></script>
   </head>
   <body>
     <h1 class="sr-only">🎉 축제 리스트</h1>
@@ -288,13 +289,33 @@
         <input type="hidden" id="startDate" name="startDate" />
         <input type="hidden" id="endDate" name="endDate" />
       </div>
-
-      <button
-        type="submit"
-        class="px-4 py-2 bg-red-500 text-white rounded-[1.25rem] hover:bg-ga-red300 transform transition-colors duration-300"
-      >
-        검색
-      </button>
+      <div class="flex gap-2 w-full h-[3.125rem]">
+        <button
+          type="button"
+          id="dropdownButton"
+          class="render-bookmarks flex items-center justify-center w-[3.75rem] px-4 py-3 border border-gray-300 rounded-[1.25rem] bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+        >
+          <svg
+            width="29"
+            height="28"
+            viewBox="0 0 29 28"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.0381 2.00879C13.4731 0.670058 15.3213 0.627835 15.8447 1.88281L15.8906 2.00879L17.9102 8.22168C18.2448 9.25167 19.2041 9.94913 20.2871 9.94922H26.8203C28.2734 9.94922 28.8777 11.809 27.7021 12.6631L22.417 16.5029C21.5957 17.0997 21.222 18.1286 21.4541 19.1035L21.5088 19.2979L23.5273 25.5117C23.9762 26.8936 22.3943 28.0425 21.2188 27.1885L15.9336 23.3486C15.1121 22.7518 14.0177 22.714 13.1621 23.2363L12.9951 23.3486L7.70898 27.1885C6.53346 28.0423 4.95246 26.8936 5.40137 25.5117L7.41992 19.2979C7.73357 18.3322 7.43098 17.2802 6.66992 16.6279L6.51172 16.5029L1.22656 12.6631C0.0509946 11.809 0.65531 9.94922 2.1084 9.94922H8.6416C9.72448 9.94903 10.6839 9.25159 11.0186 8.22168L13.0381 2.00879Z"
+              stroke="#F8C427"
+              stroke-width="1.5"
+            />
+          </svg>
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 w-full bg-red-500 text-white rounded-[1.25rem] hover:bg-ga-red300 transform transition-colors duration-300"
+        >
+          검색
+        </button>
+      </div>
     </form>
     <div
       id="festivalList"
