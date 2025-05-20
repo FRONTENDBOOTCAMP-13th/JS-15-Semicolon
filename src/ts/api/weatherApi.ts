@@ -54,10 +54,11 @@ export async function fetchMidTermForecast(regId: string) {
 const weatherFullAddress = "서울 종로구 사직로 161 경복궁";
 renderMidTermForecastFromAddress(weatherFullAddress);
 
+// 주소 문자열 안에서 날씨 지역을 찾아내기
 function matchRegionFromAddress(address: string): string | null {
   const regions = Object.keys(weatherRegionCodeMap).sort(
     (a, b) => b.length - a.length
-  );
+  ); // 길이가 긴 지역부터 먼저 검사
 
   // address 문자열에서 가능한 지역 단위만 추출
   const candidates = extractRegionCandidates(address);
@@ -71,15 +72,18 @@ function matchRegionFromAddress(address: string): string | null {
   return null;
 }
 
+// 시/군/구 단위로 주소 자르기
 function extractRegionCandidates(address: string): string[] {
   // 시/군/구 단위로 자르기 (예: "충청남도 보령시" → ["보령시", "보령", ...])
-  const matches = address.match(/(.*?[시군구])/g) || [];
-  const trimmed = matches.map((m) =>
-    m.replace(/(특별시|광역시|도)/g, "").trim()
+  const matches = address.match(/(.*?[시군구])/g) || []; // 시,군,구로 끝나는 단어들 뽑기
+  const trimmed = matches.map(
+    (
+      m //시/도 등 접두사 제거
+    ) => m.replace(/(특별시|광역시|도)/g, "").trim() // ex:"서울특별시"->"서울"
   );
 
   const splitWords = address
-    .replace(/(특별시|광역시|도)/g, "")
+    .replace(/(특별시|광역시|도)/g, "") //시/도 접두사 없앤 다음, 공백으로 분리해서 각각의 단어를 배열로 만듦
     .split(/[\s]+/)
     .map((w) => w.trim());
 
@@ -155,7 +159,7 @@ function getForecastLocationCode(city: string) {
   return { tempCode, landCode };
 }
 
-// ///////////////////////////////////////////////////////
+// 오늘 기준 N일 후 날짜를 MM월 DD일 형식으로 반환
 function getDateAfterDays(days: number): string {
   // 오늘 기준 N일 후 날짜를 "MM월 DD일" 형식으로 반환
   const now = new Date();
@@ -165,6 +169,7 @@ function getDateAfterDays(days: number): string {
   return `${month}월 ${date}일`;
 }
 
+// text로 오는 육상예보를 class name으로 반환
 function getMidTermWeatherClass(text: string): string {
   if (text.includes("맑음")) return "sunny";
   if (text.includes("구름")) return "cloudy";
@@ -174,6 +179,7 @@ function getMidTermWeatherClass(text: string): string {
   return "unknown";
 }
 
+// 여기서 작동~~~~~~~~~~~~~ html에 날씨예보 삽입
 function displayMidTermForecast(temp: any, land: any) {
   const weatherContainer = document.querySelector(
     ".weather-container.mid-term"
