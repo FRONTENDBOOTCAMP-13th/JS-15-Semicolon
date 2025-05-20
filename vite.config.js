@@ -7,6 +7,7 @@ export default defineConfig({
       input: {
         index: "index.html",
         card: "src/components/card.html",
+        detail: "src/components/detail.html",
       },
     },
   },
