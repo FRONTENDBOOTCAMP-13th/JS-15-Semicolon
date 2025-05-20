@@ -84,11 +84,16 @@ export class FestivalApi {
       `eventStartDate=${formattedDate}`,
     ].join("&");
 
-    const proxy = window.location.hostname === "localhost" ? "" : "/api/";
-    const url = `${proxy}?${query}`;
+    const proxy = `https://fesp-api.koyeb.app/proxy`;
+    // const proxy = window.location.hostname === "localhost" ? "" : "/api/";
+    const url = `${proxy}/B551011/KorService2/searchFestival2?${query}`;
 
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          "X-target-url": "https://apis.data.go.kr",
+        },
+      });
       const data = await response.json();
       return data.response?.body?.items?.item || [];
     } catch (error) {
