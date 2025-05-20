@@ -6,6 +6,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: "index.html",
+        card: "src/components/card.html",
       },
     },
   },
