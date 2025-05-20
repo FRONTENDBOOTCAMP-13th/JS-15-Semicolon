@@ -1,7 +1,11 @@
 export function xScroll() {
   const scrollContainer = document.querySelector(
     ".weather-container-wrap"
-  ) as HTMLElement;
+  ) as HTMLElement | null;
+  if (!scrollContainer) {
+    console.warn("weather-container-wrap 요소를 찾을 수 없습니다.");
+    return;
+  }
 
   let isDown = false;
   let startX: number;
@@ -49,4 +53,4 @@ export function xScroll() {
   });
 }
 
-xScroll();
+// xScroll();
