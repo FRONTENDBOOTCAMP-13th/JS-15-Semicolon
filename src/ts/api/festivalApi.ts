@@ -46,8 +46,8 @@ export class FestivalApi {
       .filter(Boolean)
       .join("&");
 
-    const proxy = window.location.hostname === "localhost" ? "" : "/api/";
-    const url = `${proxy}B551011/KorService2/searchFestival2?${query}`;
+    const proxy = window.location.hostname === "localhost" ? "" : "/api";
+    const url = `${proxy}?${query}`;
 
     try {
       const response = await fetch(url); // 서버에 축제 정보 요청
@@ -77,7 +77,8 @@ export class FestivalApi {
       `eventStartDate=${formattedDate}`,
     ].join("&");
 
-    const url = `${this.baseUrl}?${query}`;
+    const proxy = window.location.hostname === "localhost" ? "" : "/api/";
+    const url = `${proxy}?${query}`;
 
     try {
       const response = await fetch(url);
