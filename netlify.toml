@@ -1,7 +1,17 @@
 [[redirects]]
-from = "/api/*"
-  to = "https://apis.data.go.kr/:splat"  
+from = "/api"
+  to = "https://apis.data.go.kr/B551011/KorService2/searchFestival2?serviceKey=:serviceKey&MobileApp=:MobileApp&_type=:_type&numOfRows=:numOfRows&pageNo=:pageNo&arrange=:arrange&startDate=:startDate&endDate=:endDate&areaCode=:areaCode"  
   status = 200
   force = true
-
+  query = {
+    serviceKey=":serviceKey",
+    MobileApp=":MobileApp",
+    _type=":_type",
+    numOfRows=":numOfRows",
+    pageNo=":pageNo",
+    arrange=":arrange",
+    startDate=":startDate",
+    endDate=":endDate",
+    areaCode=":areaCode"
+    }
   
