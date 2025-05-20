@@ -1,3 +1,5 @@
+// 축제 검색 및 필터링
+
 import "./style.css";
 
 // main.ts

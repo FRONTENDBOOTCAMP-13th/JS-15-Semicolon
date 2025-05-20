@@ -1,4 +1,5 @@
-// festivalRenderer.ts
+// 서버에서 받아온 데이터를 바탕으로 디자인 입혀서 화면에 뿌리김
+
 import { FestivalItem } from "../api/festivalApi";
 
 export class FestivalRenderer {

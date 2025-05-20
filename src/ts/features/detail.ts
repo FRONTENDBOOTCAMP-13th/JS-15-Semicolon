@@ -164,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       xScroll();
 
-      // ✅ 여기가 빠졌던 핵심
       getCoordsFromAddress(addr).then((coords) => {
         window.festivalCoords = coords; // 전역으로 넘겨줌
         initKakaoMap(); // 지도 초기화 실행
