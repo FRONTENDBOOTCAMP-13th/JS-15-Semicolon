@@ -11,9 +11,9 @@ const imageList: string[] = [
   "../assets/img/hero-carousel-image1.webp",
   "../assets/img/hero-carousel-image2.webp",
   "../assets/img/hero-carousel-image3.webp",
+  "../assets/img/hero-carousel-image4.webp",
   "../assets/img/hero-carousel-image5.webp",
   "../assets/img/hero-carousel-image6.webp",
-  "../assets/img/hero-carousel-image7.webp",
 ];
 
 // DOM 로드된 이후에 실행
