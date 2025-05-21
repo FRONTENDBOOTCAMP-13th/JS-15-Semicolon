@@ -6,9 +6,9 @@ function topBtn() {
 
   window.addEventListener("scroll", function () {
     if (this.scrollY > 20) {
-      topBtn.style.display = "block";
+      topBtn.classList.remove("opacity-0", "pointer-events-none");
     } else {
-      topBtn.style.display = "none";
+      topBtn.classList.add("opacity-0", "pointer-events-none");
     }
   });
 
