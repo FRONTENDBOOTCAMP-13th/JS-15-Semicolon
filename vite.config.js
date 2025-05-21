@@ -8,6 +8,7 @@ export default defineConfig({
         index: "index.html",
         card: "src/components/card.html",
         detail: "src/components/detail.html",
+        login: "src/components/login.html",
       },
     },
   },
