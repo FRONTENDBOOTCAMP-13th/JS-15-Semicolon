@@ -23,7 +23,7 @@ const festivalApi = new FestivalApi(API_KEY, BASE_URL);
 // 축제 카드 클릭 핸들러
 const handleCardClick = (item: FestivalItem) => {
   localStorage.setItem("selectedFestival", JSON.stringify(item));
-  window.location.href = "detail.html";
+  window.location.href = "/src/components/detail.html";
 };
 
 // 렌더러 인스턴스 생성
