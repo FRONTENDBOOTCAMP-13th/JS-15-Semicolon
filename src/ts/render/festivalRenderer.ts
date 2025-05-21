@@ -15,6 +15,17 @@ export class FestivalRenderer {
     this.onCardClick = onCardClick;
   }
 
+  // 날짜 포맷 변환 함수 추가: YYYYMMDD -> YYYY.MM.DD
+  private formatDate(dateString: string): string {
+    if (!dateString || dateString.length !== 8) return dateString;
+
+    const year = dateString.substring(0, 4);
+    const month = dateString.substring(4, 6);
+    const day = dateString.substring(6, 8);
+
+    return `${year}.${month}.${day}`;
+  }
+
   //  🍀 아영 추가 로딩 인디케이터 표시
   public showLoading(): void {
     if (this.loadingElement) return;
@@ -81,6 +92,10 @@ export class FestivalRenderer {
               이미지 없음
             </div>`;
 
+        // 날짜 형식 변환 적용
+        const startDate = this.formatDate(item.eventstartdate);
+        const endDate = this.formatDate(item.eventenddate);
+
         card.innerHTML = `
           <div class="w-full flex flex-col relative rounded-[1rem] overflow-hidden shadow border border-ga-gray100 transform transition duration-300 ease-in-out hover:-translate-y-1">
             <button class="bookmark-btn absolute right-0 p-2 text-white">
@@ -107,8 +122,8 @@ export class FestivalRenderer {
                 item.addr1 || "지역 정보 없음"
               }</p>
               <p class="text-gray-500 text-xs md:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">🗓️ ${
-                item.eventstartdate
-              } ~ ${item.eventenddate}</p>
+                startDate
+              } ~ ${endDate}</p>
             </div>
           </div>
         `;
