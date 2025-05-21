@@ -41,7 +41,6 @@ const polylines: (typeof window.kakao.maps.Polyline)[] = []; // 폴리라인 초
 // DOM 요소
 const myPosition = document.querySelector("#userPosition"); // 사용자 위치 좌표로 받아서 텍스트로 표시
 const getRoutebtn = document.querySelector("#getRoute"); // 누르면 경로를 띄워주는 버튼
-// (TODO_API로 받아온 축제 장소 주소 입력)
 const changeOriginbtn = document.querySelector("#changeOrigin"); // 도착지 입력된 카카오 길찾기 새 창 띄워주는 버튼
 
 // 지도 초기화 및 이벤트 등록
@@ -64,10 +63,9 @@ export function initKakaoMap() {
   getRoutebtn?.addEventListener("click", getRoute);
   const changeOriginbtn = document.querySelector("#changeOrigin");
   changeOriginbtn?.addEventListener("click", () => {
-    // (TODO_축제 장소로 변경 필요)
-    openKakaoMapDirectionsTo(
-      "서울특별시 송파구 양재대로 932 가락몰 3층 하늘공원"
-    );
+    // 현재 위치-축제 장소 가는 길 새창으로 띄움
+    if (window.festivalAddress)
+      openKakaoMapDirectionsTo(window.festivalAddress);
   });
 
   // 초기 사용자 위치 표시
@@ -311,5 +309,6 @@ declare global {
   interface Window {
     kakao: any;
     festivalCoords?: Position;
+    festivalAddress?: string;
   }
 }
