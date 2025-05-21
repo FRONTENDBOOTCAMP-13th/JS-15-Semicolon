@@ -290,22 +290,45 @@
         <input type="hidden" id="startDate" name="startDate" />
         <input type="hidden" id="endDate" name="endDate" />
       </div>
+
       <div class="flex gap-2 w-full h-[3.125rem]">
+        <!-- 🍀 아영 초기화 ============================================================== -->
         <button
           type="button"
-          id="dropdownButton"
+          aria-label="초기화"
+          class="reset-btn flex items-center justify-center w-[3.75rem] px-4 py-3 border border-gray-300 rounded-[1.25rem] bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+        >
+          <svg
+            width="20"
+            height="22"
+            viewBox="0 0 20 22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.14036 9.76141C1.09477 10.167 1.07129 10.5802 1.07129 10.9996C1.07129 16.4704 5.06874 20.9053 9.99986 20.9053C12.7907 20.9053 15.2824 19.4847 16.9197 17.2598M16.9197 17.2598V20.9053M16.9197 17.2598V17.1907L13.5715 17.1907M18.8593 12.2378C18.905 11.8322 18.9284 11.419 18.9284 10.9996C18.9284 5.52884 14.931 1.09395 9.99986 1.09395C7.33313 1.09395 4.93947 2.39098 3.30343 4.44751M3.30343 4.44751V4.80857H6.65165M3.30343 4.44751V1.09395"
+              stroke="#838383"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <button
+          type="button"
+          title="북마크한 축제만 보기"
           class="render-bookmarks flex items-center justify-center w-[3.75rem] px-4 py-3 border border-gray-300 rounded-[1.25rem] bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
         >
           <svg
             width="29"
             height="28"
             viewBox="0 0 29 28"
-            fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
               d="M13.0381 2.00879C13.4731 0.670058 15.3213 0.627835 15.8447 1.88281L15.8906 2.00879L17.9102 8.22168C18.2448 9.25167 19.2041 9.94913 20.2871 9.94922H26.8203C28.2734 9.94922 28.8777 11.809 27.7021 12.6631L22.417 16.5029C21.5957 17.0997 21.222 18.1286 21.4541 19.1035L21.5088 19.2979L23.5273 25.5117C23.9762 26.8936 22.3943 28.0425 21.2188 27.1885L15.9336 23.3486C15.1121 22.7518 14.0177 22.714 13.1621 23.2363L12.9951 23.3486L7.70898 27.1885C6.53346 28.0423 4.95246 26.8936 5.40137 25.5117L7.41992 19.2979C7.73357 18.3322 7.43098 17.2802 6.66992 16.6279L6.51172 16.5029L1.22656 12.6631C0.0509946 11.809 0.65531 9.94922 2.1084 9.94922H8.6416C9.72448 9.94903 10.6839 9.25159 11.0186 8.22168L13.0381 2.00879Z"
               stroke="#F8C427"
+              fill="none"
               stroke-width="1.5"
             />
           </svg>
@@ -317,28 +340,29 @@
           검색
         </button>
       </div>
-      <button
-        type="button"
-        aria-label="초기화"
-        class="reset-btn flex items-center justify-center w-full px-4 py-3 border border-gray-300 rounded-[1.25rem] bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
-      >
-        <svg
-          width="20"
-          height="22"
-          viewBox="0 0 20 22"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1.14036 9.76141C1.09477 10.167 1.07129 10.5802 1.07129 10.9996C1.07129 16.4704 5.06874 20.9053 9.99986 20.9053C12.7907 20.9053 15.2824 19.4847 16.9197 17.2598M16.9197 17.2598V20.9053M16.9197 17.2598V17.1907L13.5715 17.1907M18.8593 12.2378C18.905 11.8322 18.9284 11.419 18.9284 10.9996C18.9284 5.52884 14.931 1.09395 9.99986 1.09395C7.33313 1.09395 4.93947 2.39098 3.30343 4.44751M3.30343 4.44751V4.80857H6.65165M3.30343 4.44751V1.09395"
-            stroke="#838383"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </button>
     </form>
+    <!-- 🍀 아영 초기화 ============================================================== -->
+    <button
+      type="button"
+      aria-label="초기화"
+      class="reset-btn flex items-center justify-center w-full px-4 py-3 border border-gray-300 rounded-[1.25rem] bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+    >
+      <svg
+        width="20"
+        height="22"
+        viewBox="0 0 20 22"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1.14036 9.76141C1.09477 10.167 1.07129 10.5802 1.07129 10.9996C1.07129 16.4704 5.06874 20.9053 9.99986 20.9053C12.7907 20.9053 15.2824 19.4847 16.9197 17.2598M16.9197 17.2598V20.9053M16.9197 17.2598V17.1907L13.5715 17.1907M18.8593 12.2378C18.905 11.8322 18.9284 11.419 18.9284 10.9996C18.9284 5.52884 14.931 1.09395 9.99986 1.09395C7.33313 1.09395 4.93947 2.39098 3.30343 4.44751M3.30343 4.44751V4.80857H6.65165M3.30343 4.44751V1.09395"
+          stroke="#838383"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
     <div
       id="festivalList"
       class="mx-auto grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-[1.25rem] md:px-[7%] lg:px-[13%] px-2"
