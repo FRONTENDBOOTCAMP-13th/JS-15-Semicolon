@@ -62,6 +62,12 @@ async function fetchMoreFestivals() {
   if (isFetching || getBookmarkFilterStatus()) return; // ✅ 필터링 중이면 막기
 
   isFetching = true;
+
+  // 🍀 아영 추가: 로딩 타이머 설정 (0.5초 후에 로딩 표시)
+  const loadingTimeout = setTimeout(() => {
+    festivalRenderer.showLoading();
+  }, 500);
+
   currentPage++;
 
   try {
@@ -73,6 +79,8 @@ async function fetchMoreFestivals() {
   } catch (error) {
     console.error("무한 스크롤 중 오류 발생:", error);
   } finally {
+    clearTimeout(loadingTimeout); //🍀 아영 추가
+    festivalRenderer.hideLoading(); // 🍀 아영 추가
     isFetching = false;
   }
 }
@@ -90,6 +98,11 @@ window.addEventListener("scroll", () => {
 
 // 초기 로딩
 document.addEventListener("DOMContentLoaded", async () => {
+  // 🍀 아영 추가: 로딩 타이머 설정 (0.5초 후에 로딩 표시)
+  const loadingTimeout = setTimeout(() => {
+    festivalRenderer.showLoading();
+  }, 500);
+
   try {
     const savedResults = localStorage.getItem("searchResults");
 
@@ -108,5 +121,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
     console.error("초기 로딩 중 오류 발생:", error);
     festivalRenderer.showError("초기 데이터를 불러오지 못했습니다.");
+  } finally {
+    //🍀 아영 추가가
+    clearTimeout(loadingTimeout);
+    festivalRenderer.hideLoading();
   }
 });
