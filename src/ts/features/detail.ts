@@ -75,7 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
               🗓️ 축제 기간
             </h2>
           <p text-[.875rem] ml-1 mt-1 md:text-lg font-[400]>
-          ${formatDate(selectedFestival.eventstartdate)} ~ ${formatDate(selectedFestival.eventenddate)}</p>
+          ${formatDate(selectedFestival.eventstartdate)} ~ ${formatDate(
+    selectedFestival.eventenddate
+  )}</p>
         </div>
 
         <!-- 축제 장소 -->
@@ -85,7 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
             >
               📍 축제 장소
             </h2>
-          <p class="text-[.875rem] ml-1 mt-1 md:text-lg font-[400]">${selectedFestival.addr1 || "장소 정보가 없습니다"}</p>
+          <p class="text-[.875rem] ml-1 mt-1 md:text-lg font-[400]">${
+            selectedFestival.addr1 || "장소 정보가 없습니다"
+          }</p>
           ${
             selectedFestival.addr2
               ? `<p class="text-[.875rem] ml-1 md:text-m font-[300]">${selectedFestival.addr2}</p>`
@@ -173,9 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       xScroll();
-
       getCoordsFromAddress(addr).then((coords) => {
         window.festivalCoords = coords; // 전역으로 넘겨줌
+        window.festivalAddress = addr;
         initKakaoMap(); // 지도 초기화 실행
       });
     });
