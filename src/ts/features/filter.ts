@@ -1,6 +1,3 @@
-// 🍀 아영 추가 | bookmark 기능 import ========================
-import { getBookmarkFilterStatus, changeFill } from "./bookmark";
-
 // festivalFilter.ts
 export interface FilterOptions {
   areaCode: string;
@@ -409,12 +406,6 @@ export class FestivalFilter {
           "button[type=submit]"
         ) as HTMLElement | null;
         searchBtn?.click();
-
-        // 북마크 해제/ 별 색상 채워지는 거 초기화되게
-        const renderBookmarksBtn = document.querySelector(".render-bookmarks"); // 즐겨찾기 필터 버튼
-        let isFiltered = getBookmarkFilterStatus();
-        isFiltered = false;
-        if (renderBookmarksBtn) changeFill(renderBookmarksBtn, isFiltered); // 필터링 버튼 아이콘 색상 변경
 
         renderCalendar();
       });
