@@ -2,6 +2,7 @@ import { renderMidTermForecastFromAddress } from "../api/weatherApi";
 import { outputtingWeather } from "../api/shortWeatherApi";
 import { xScroll } from "./weather";
 import { getCoordsFromAddress, initKakaoMap } from "../api/kakaoApi";
+import "/src/style.css";
 
 document.addEventListener("DOMContentLoaded", () => {
   // 축제 상세 정보를 표시할 요소 선택
@@ -61,24 +62,33 @@ document.addEventListener("DOMContentLoaded", () => {
   <div class="max-w-[58.5rem] mx-auto px-4">
     ${imageHTML}
     <div class="space-y-4 text-left" >
-      <div class="border rounded-2xl border-gray-300 px-4 mt-4">
+      <div>
         <h1 class="text-3xl font-bold my-4">
           ${selectedFestival.title || "제목 없음"}
         </h1>
 
         <!-- 축제 기간 -->
-        <div class="mt-6">
-          <h2 class="text-xl font-bold mb-2">🗓️ 축제 기간</h2>
-          <p>${formatDate(selectedFestival.eventstartdate)} ~ ${formatDate(selectedFestival.eventenddate)}</p>
+        <div class="mt-4 md:mt-6">
+            <h2
+              class="text-[.875rem] md:text-lg font-bold md:mb-2 py-1 px-2 md:py-2 md:px-4 w-fit rounded-3xl border border-ga-gray300"
+            >
+              🗓️ 축제 기간
+            </h2>
+          <p text-[.875rem] ml-1 mt-1 md:text-lg font-[400]>
+          ${formatDate(selectedFestival.eventstartdate)} ~ ${formatDate(selectedFestival.eventenddate)}</p>
         </div>
 
         <!-- 축제 장소 -->
         <div class="mt-6">
-          <h2 class="text-xl font-bold mb-2">📍 축제 장소</h2>
-          <p>${selectedFestival.addr1 || "장소 정보가 없습니다"}</p>
+            <h2
+              class="text-[.875rem] md:text-lg font-bold md:mb-2 py-1 px-2 md:py-2 md:px-4 w-fit rounded-3xl border border-ga-gray300"
+            >
+              📍 축제 장소
+            </h2>
+          <p class="text-[.875rem] ml-1 mt-1 md:text-lg font-[400]">${selectedFestival.addr1 || "장소 정보가 없습니다"}</p>
           ${
             selectedFestival.addr2
-              ? `<p class="text-sm text-gray-500 mt-1">${selectedFestival.addr2}</p>`
+              ? `<p class="text-[.875rem] ml-1 md:text-m font-[300]">${selectedFestival.addr2}</p>`
               : ""
           }
         </div>
@@ -88,8 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
           selectedFestival.tel
             ? `
             <div class="mt-6">
-              <h2 class="text-xl font-bold mb-2">📞 문의처</h2>
-              <p>${selectedFestival.tel}</p>
+              <h2 class="text-[.875rem] md:text-lg font-bold md:mb-2 py-1 px-2 md:py-2 md:px-4 w-fit rounded-3xl border border-ga-gray300">📞 문의처</h2>
+              <p class="text-[.875rem] ml-1 mt-1 md:text-lg font-[400]">${selectedFestival.tel}</p>
             </div>
           `
             : ""
