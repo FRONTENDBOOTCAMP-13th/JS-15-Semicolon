@@ -377,41 +377,42 @@ export class FestivalFilter {
       }
     });
 
-    // // =================초기화 버튼======================
-    // const resetBtn = document.querySelector(".reset-btn");
-    // resetBtn?.addEventListener("click", (e) => {
+    // // 🍀 아영 =================초기화 버튼======================
+    // function resetAll() {
     //   const resetBtn = document.querySelector(".reset-btn");
-    //   const locationText = document.getElementById("selectedLocation");
-    //   const displayStartDate = document.getElementById("displayStartDate");
-    //   const displayEndDate = document.getElementById("displayEndDate");
-    //   const locationSelect = document.getElementById(
-    //     "locationFilter"
-    //   ) as HTMLSelectElement | null;
+    //   resetBtn?.addEventListener("click", (e) => {
+    //     const locationText = document.getElementById("selectedLocation"); //지역 텍스트
+    //     const locationSelect = document.getElementById(
+    //       "locationFilter"
+    //     ) as HTMLSelectElement | null; // 실제 지역 셀렉트값
+    //     const displayStartDate = document.getElementById("displayStartDate");
+    //     const displayEndDate = document.getElementById("displayEndDate");
 
-    //   if (!locationText) return;
-    //   if (!locationSelect) return;
-    //   if (!displayStartDate) return;
+    //     if (!locationText) return;
+    //     if (!locationSelect) return;
+    //     if (!displayStartDate) return;
 
-    //   locationText.textContent = "전체"; // 지역 선택 텍스트 리셋
-    //   locationSelect.value = ""; // 실제 select value 리셋
+    //     locationText.textContent = "전체"; // 지역 선택 텍스트 리셋
+    //     locationSelect.value = ""; // 실제 select value 리셋
 
-    //   e.stopPropagation();
-    //   startDate = null;
-    //   endDate = null;
-    //   if (displayStartDate) displayStartDate.textContent = "-";
-    //   if (displayEndDate) displayEndDate.textContent = "-";
+    //     e.stopPropagation();
+    //     startDate = null;
+    //     endDate = null;
+    //     if (displayStartDate) displayStartDate.textContent = "-";
+    //     if (displayEndDate) displayEndDate.textContent = "-";
 
-    //   const cards = document.querySelectorAll("#festivalList > .festivalCard");
-    //   let isFiltered = false;
+    //     // 검색 초기화 > 검색 실행 함수를 못 찾아서(...) 강제로 클릭되게 했습니다
+    //     const searchBtn = document.querySelector(
+    //       "button[type=submit]"
+    //     ) as HTMLElement | null;
+    //     searchBtn?.click();
 
-    //   cards.forEach((card) => {
-    //     const cardE = card as HTMLElement;
+    //     // 별 색상 채워지는 거 초기화되게 ㅜㅜ
 
-    //     cardE.style.display = "block";
+    //     renderCalendar();
     //   });
-
-    //   renderCalendar();
-    // });
+    // }
+    // resetAll();
 
     // 초기 렌더링
     renderCalendar();
