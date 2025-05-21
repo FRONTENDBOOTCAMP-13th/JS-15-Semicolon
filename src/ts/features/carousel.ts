@@ -3,18 +3,17 @@ import Swiper from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import img1 from "/src/assets/img/hero-carousel-image1.webp";
+import img2 from "/src/assets/img/hero-carousel-image2.webp";
+import img3 from "/src/assets/img/hero-carousel-image3.webp";
+import img4 from "/src/assets/img/hero-carousel-image4.webp";
+import img5 from "/src/assets/img/hero-carousel-image5.webp";
+import img6 from "/src/assets/img/hero-carousel-image6.webp";
 
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 // 이미지 경로 배열 : 원하는 이미지 경로 추가하면 slide 추가 됨
-const imageList: string[] = [
-  "../assets/img/hero-carousel-image1.webp",
-  "../assets/img/hero-carousel-image2.webp",
-  "../assets/img/hero-carousel-image3.webp",
-  "../assets/img/hero-carousel-image4.webp",
-  "../assets/img/hero-carousel-image5.webp",
-  "../assets/img/hero-carousel-image6.webp",
-];
+const imageList: string[] = [img1, img2, img3, img4, img5, img6];
 
 // DOM 로드된 이후에 실행
 document.addEventListener("DOMContentLoaded", () => {
