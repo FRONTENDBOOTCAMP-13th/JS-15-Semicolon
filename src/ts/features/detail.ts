@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       </div>
       <div>
-        <div class="weather-container-wrap no-select flex justify-center text-center py-4 border rounded-2xl border-gray-300 overflow-hidden">
+        <div class="weather-container-wrap  no-select flex justify-start text-center p-4 border rounded-2xl border-gray-300 overflow-hidden">
           <ul class="weather-container flex short-term"></ul>
           <ul class="weather-container flex mid-term"></ul>
         </div>

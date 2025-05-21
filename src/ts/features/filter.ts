@@ -1,3 +1,6 @@
+// 🍀 아영 추가 | bookmark 기능 import ========================
+import { getBookmarkFilterStatus, changeFill } from "./bookmark";
+
 // festivalFilter.ts
 export interface FilterOptions {
   areaCode: string;
@@ -378,41 +381,45 @@ export class FestivalFilter {
     });
 
     // // 🍀 아영 =================초기화 버튼======================
-    // function resetAll() {
-    //   const resetBtn = document.querySelector(".reset-btn");
-    //   resetBtn?.addEventListener("click", (e) => {
-    //     const locationText = document.getElementById("selectedLocation"); //지역 텍스트
-    //     const locationSelect = document.getElementById(
-    //       "locationFilter"
-    //     ) as HTMLSelectElement | null; // 실제 지역 셀렉트값
-    //     const displayStartDate = document.getElementById("displayStartDate");
-    //     const displayEndDate = document.getElementById("displayEndDate");
+    function resetAll() {
+      const resetBtn = document.querySelector(".reset-btn");
+      resetBtn?.addEventListener("click", (e) => {
+        const locationText = document.getElementById("selectedLocation"); //지역 텍스트
+        const locationSelect = document.getElementById(
+          "locationFilter"
+        ) as HTMLSelectElement | null; // 실제 지역 셀렉트값
+        const displayStartDate = document.getElementById("displayStartDate");
+        const displayEndDate = document.getElementById("displayEndDate");
 
-    //     if (!locationText) return;
-    //     if (!locationSelect) return;
-    //     if (!displayStartDate) return;
+        if (!locationText) return;
+        if (!locationSelect) return;
+        if (!displayStartDate) return;
 
-    //     locationText.textContent = "전체"; // 지역 선택 텍스트 리셋
-    //     locationSelect.value = ""; // 실제 select value 리셋
+        locationText.textContent = "전체"; // 지역 선택 텍스트 리셋
+        locationSelect.value = ""; // 실제 select value 리셋
 
-    //     e.stopPropagation();
-    //     startDate = null;
-    //     endDate = null;
-    //     if (displayStartDate) displayStartDate.textContent = "-";
-    //     if (displayEndDate) displayEndDate.textContent = "-";
+        e.stopPropagation();
+        startDate = null;
+        endDate = null;
+        if (displayStartDate) displayStartDate.textContent = "-";
+        if (displayEndDate) displayEndDate.textContent = "-";
 
-    //     // 검색 초기화 > 검색 실행 함수를 못 찾아서(...) 강제로 클릭되게 했습니다
-    //     const searchBtn = document.querySelector(
-    //       "button[type=submit]"
-    //     ) as HTMLElement | null;
-    //     searchBtn?.click();
+        // 검색 초기화
+        const searchBtn = document.querySelector(
+          "button[type=submit]"
+        ) as HTMLElement | null;
+        searchBtn?.click();
 
-    //     // 별 색상 채워지는 거 초기화되게 ㅜㅜ
+        // 북마크 해제/ 별 색상 채워지는 거 초기화되게
+        const renderBookmarksBtn = document.querySelector(".render-bookmarks"); // 즐겨찾기 필터 버튼
+        let isFiltered = getBookmarkFilterStatus();
+        isFiltered = false;
+        if (renderBookmarksBtn) changeFill(renderBookmarksBtn, isFiltered); // 필터링 버튼 아이콘 색상 변경
 
-    //     renderCalendar();
-    //   });
-    // }
-    // resetAll();
+        renderCalendar();
+      });
+    }
+    resetAll();
 
     // 초기 렌더링
     renderCalendar();
