@@ -37,8 +37,8 @@ const slideData = [
   },
   {
     src: img5,
-    upperText: "축제 정보, 날씨, 길찾기까지 한눈에",
-    lowerText: "스마트하게 즐기기",
+    upperText: "축제 정보, 날씨, 길찾기",
+    lowerText: "한 눈에 스마트하게 즐기기",
   },
   {
     src: img6,
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const text = document.createElement("div");
     text.className =
       `absolute inset-0 flex flex-col text-2xl text-white p-6 font-bold z-10 
-   lg:text-5xl xl:text-6xl md:px-28 md:pt-16 xl:px-40 xl:pt-24 leading-snug ` +
+   md:text-5xl xl:text-6xl md:px-28 md:pt-16 xl:px-40 xl:pt-24 leading-snug ` +
       positionClass;
 
     text.innerHTML = `<p>${slideInfo.upperText}</p><p>${slideInfo.lowerText}</p>`;
