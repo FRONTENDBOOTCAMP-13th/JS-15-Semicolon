@@ -122,7 +122,7 @@ function login() {
 
   if (userData[username] && userData[username].password === password) {
     alert("Login successful");
-    window.location.href = "/src/components/card.html";
+    window.location.href = "/index.html"; // 로그인 성공 시 리다이렉트
     localStorage.setItem("loggedInUser", username);
   } else {
     alert("Invalid username or password");
