@@ -83,7 +83,7 @@ function verifyCode(inputCode: string): boolean {
     alert("인증번호가 일치하지 않습니다.");
     return false;
   }
-
+  alert("인증번호가 일치합니다.");
   return true;
 }
 
@@ -125,7 +125,7 @@ function login() {
     window.location.href = "/index.html"; // 로그인 성공 시 리다이렉트
     localStorage.setItem("loggedInUser", username);
   } else {
-    alert("Invalid username or password");
+    alert("아이디 및 비밀번호가 일치하지 않습니다.");
   }
 }
 
