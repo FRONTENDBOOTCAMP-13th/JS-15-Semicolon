@@ -46,10 +46,18 @@ export class FestivalApi {
       .filter(Boolean)
       .join("&");
 
-    const url = `${this.baseUrl}?${query}`;
+    // const proxy = window.location.hostname === "localhost" ? "" : "/api";
+    const proxy = `https://fesp-api.koyeb.app/proxy`;
+    const url = `${proxy}/B551011/KorService2/searchFestival2?${query}`;
+    // const proxy = window.location.hostname === "localhost" ? "" : "/api";
+    // const url = `${proxy}/B551011/KorService2/searchFestival2?${query}`;
 
     try {
-      const response = await fetch(url); // 서버에 축제 정보 요청
+      const response = await fetch(url, {
+        headers: {
+          "X-target-url": "https://apis.data.go.kr",
+        },
+      }); // 서버에 축제 정보 요청
       const data = await response.json(); // 응답 JSON 변환
       // 응답에서 축제 목록 추출, 없으면 빈 배열[]
       return data.response?.body?.items?.item || [];
@@ -76,10 +84,16 @@ export class FestivalApi {
       `eventStartDate=${formattedDate}`,
     ].join("&");
 
-    const url = `${this.baseUrl}?${query}`;
+    const proxy = `https://fesp-api.koyeb.app/proxy`;
+    // const proxy = window.location.hostname === "localhost" ? "" : "/api/";
+    const url = `${proxy}/B551011/KorService2/searchFestival2?${query}`;
 
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          "X-target-url": "https://apis.data.go.kr",
+        },
+      });
       const data = await response.json();
       return data.response?.body?.items?.item || [];
     } catch (error) {
