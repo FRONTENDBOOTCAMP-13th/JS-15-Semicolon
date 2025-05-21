@@ -58,7 +58,7 @@ export function bookmark() {
   renderBookmarksBtn?.addEventListener("click", () => {
     isFiltered = !isFiltered;
 
-    changeFill(renderBookmarksBtn, "#F8C427"); // 필터링 버튼 아이콘 색상 변경
+    changeFill(renderBookmarksBtn, isFiltered); // 필터링 버튼 아이콘 색상 변경
 
     const cards = document.querySelectorAll("#festivalList > .festivalCard");
     const bookmarks = getBookmarks(); // 현재 북마크 목록 가져오기
@@ -74,16 +74,12 @@ export function bookmark() {
   });
 
   // 요소와 색깔을 받아 요소 내부의 svg아이콘 fill 색깔 변경하는 함수
-  function changeFill(button: Element, color: string) {
-    if (!(button instanceof HTMLElement)) return;
-
-    const iconPath = button.querySelector("svg path");
-    if (!iconPath) return;
-
-    const fillColor = color;
-    const isActive = iconPath.getAttribute("fill") === fillColor;
-
-    iconPath.setAttribute("fill", isActive ? "none" : fillColor);
+  function changeFill(button: Element, status: boolean) {
+    if (status === true) {
+      button.classList.replace("text-white", "text-yellow-400");
+    } else {
+      button.classList.replace("text-yellow-400", "text-white");
+    }
   }
 
   // 페이지 로드 시 북마크된 카드 아이콘에 색상 반영하는 함수
