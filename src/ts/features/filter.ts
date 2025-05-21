@@ -324,7 +324,9 @@ export class FestivalFilter {
 
         // 버튼 텍스트 업데이트
         if (selectedDateRangeText) {
-          selectedDateRangeText.textContent = `${formatDate(startDate)} ~ ${formatDate(endDate)}`;
+          selectedDateRangeText.textContent = `${formatDate(
+            startDate
+          )} ~ ${formatDate(endDate)}`;
         }
 
         // 달력 닫기
@@ -374,6 +376,42 @@ export class FestivalFilter {
         dateRangeButton?.classList.remove("border-red-500");
       }
     });
+
+    // // =================초기화 버튼======================
+    // const resetBtn = document.querySelector(".reset-btn");
+    // resetBtn?.addEventListener("click", (e) => {
+    //   const resetBtn = document.querySelector(".reset-btn");
+    //   const locationText = document.getElementById("selectedLocation");
+    //   const displayStartDate = document.getElementById("displayStartDate");
+    //   const displayEndDate = document.getElementById("displayEndDate");
+    //   const locationSelect = document.getElementById(
+    //     "locationFilter"
+    //   ) as HTMLSelectElement | null;
+
+    //   if (!locationText) return;
+    //   if (!locationSelect) return;
+    //   if (!displayStartDate) return;
+
+    //   locationText.textContent = "전체"; // 지역 선택 텍스트 리셋
+    //   locationSelect.value = ""; // 실제 select value 리셋
+
+    //   e.stopPropagation();
+    //   startDate = null;
+    //   endDate = null;
+    //   if (displayStartDate) displayStartDate.textContent = "-";
+    //   if (displayEndDate) displayEndDate.textContent = "-";
+
+    //   const cards = document.querySelectorAll("#festivalList > .festivalCard");
+    //   let isFiltered = false;
+
+    //   cards.forEach((card) => {
+    //     const cardE = card as HTMLElement;
+
+    //     cardE.style.display = "block";
+    //   });
+
+    //   renderCalendar();
+    // });
 
     // 초기 렌더링
     renderCalendar();
