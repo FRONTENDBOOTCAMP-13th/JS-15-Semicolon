@@ -69,7 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- 축제 기간 -->
         <div class="mt-6">
           <h2 class="text-xl font-bold mb-2">🗓️ 축제 기간</h2>
-          <p>${formatDate(selectedFestival.eventstartdate)} ~ ${formatDate(selectedFestival.eventenddate)}</p>
+          <p>${formatDate(selectedFestival.eventstartdate)} ~ ${formatDate(
+    selectedFestival.eventenddate
+  )}</p>
         </div>
 
         <!-- 축제 장소 -->
@@ -96,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       </div>
       <div>
-        <div class="weather-container-wrap no-select flex justify-center text-center py-4 border rounded-2xl border-gray-300 overflow-hidden">
+        <div class="weather-container-wrap  no-select flex justify-start text-center p-4 border rounded-2xl border-gray-300 overflow-hidden">
           <ul class="weather-container flex short-term"></ul>
           <ul class="weather-container flex mid-term"></ul>
         </div>
