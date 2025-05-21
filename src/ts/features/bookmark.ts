@@ -1,3 +1,9 @@
+let isFiltered = false; // 현재 필터링 상태 저장 (true: 북마크된 것만 표시)
+
+export function getBookmarkFilterStatus() {
+  return isFiltered; // ✅ 외부에서 이걸 통해 접근 가능
+}
+
 // 북마크 기능 전체를 담은 함수
 export function bookmark() {
   const LOCAL_KEY = "bookmarkedFestivalTitles";
@@ -25,7 +31,6 @@ export function bookmark() {
   }
 
   const renderBookmarksBtn = document.querySelector(".render-bookmarks"); // 즐겨찾기 필터 버튼
-  let isFiltered = false; // 현재 필터링 상태 저장 (true: 북마크된 것만 표시)
 
   // 바인딩 전에 중복 리스너 방지를 위해 기존 북마크 버튼을 복제해서 이벤트 제거
   const bookmarkBtns = document.querySelectorAll(".bookmark-btn");

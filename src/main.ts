@@ -6,7 +6,7 @@ import "./style.css";
 import { FestivalFilter, FilterOptions } from "./ts/features/filter";
 import { FestivalApi, FestivalItem } from "./ts/api/festivalApi";
 import { FestivalRenderer } from "./ts/render/festivalRenderer";
-import { bookmark } from "./ts/features/bookmark";
+import { bookmark, getBookmarkFilterStatus } from "./ts/features/bookmark";
 
 // 환경 변수 로드
 const API_KEY = import.meta.env.VITE_TOUR_API_KEY;
@@ -59,7 +59,7 @@ const festivalFilter = new FestivalFilter({
 
 // 더 많은 축제 불러오기
 async function fetchMoreFestivals() {
-  if (isFetching) return;
+  if (isFetching || getBookmarkFilterStatus()) return; // ✅ 필터링 중이면 막기
 
   isFetching = true;
   currentPage++;
