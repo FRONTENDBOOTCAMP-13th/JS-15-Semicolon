@@ -24,38 +24,38 @@ export async function fetchMidTermForecast(regId: string) {
   const tmFc = getTmFc(); //기준 발표 시각
   //===============================================================
   // 🚀 훈진 수정 : 프록시 서버 주소 세팅
-  const proxy = `https://fesp-api.koyeb.app/proxy`;
-  // 기상청 API 경로
-  const landPath = `/1360000/MidFcstInfoService/getMidLandFcst`;
-  const tempPath = `/1360000/MidFcstInfoService/getMidTa`;
-  // 공통 쿼리
-  const commonQuery = `serviceKey=${WEATHER_API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&regId=${regId}&tmFc=${tmFc}`;
+  // const proxy = `https://fesp-api.koyeb.app/proxy`;
+  // // 기상청 API 경로
+  // const landPath = `/1360000/MidFcstInfoService/getMidLandFcst`;
+  // const tempPath = `/1360000/MidFcstInfoService/getMidTa`;
+  // // 공통 쿼리
+  // const commonQuery = `serviceKey=${WEATHER_API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&regId=${regId}&tmFc=${tmFc}`;
 
-  // 프록시를 통한 요청 URL
-  const landUrl = `${proxy}${landPath}?${commonQuery}`;
-  const tempUrl = `${proxy}${tempPath}?${commonQuery}`;
+  // // 프록시를 통한 요청 URL
+  // const landUrl = `${proxy}${landPath}?${commonQuery}`;
+  // const tempUrl = `${proxy}${tempPath}?${commonQuery}`;
 
-  // 요청 보낼 때 헤더에 타겟 API 도메인 명시 (프록시 서버가 필요로 함)
-  const headers = {
-    "X-target-url": "https://apis.data.go.kr", // 이건 프록시 서버가 보고 리다이렉트할 도메인
-  };
+  // // 요청 보낼 때 헤더에 타겟 API 도메인 명시 (프록시 서버가 필요로 함)
+  // const headers = {
+  //   "X-target-url": "https://apis.data.go.kr", // 이건 프록시 서버가 보고 리다이렉트할 도메인
+  // };
 
   // // 육상예보 API URL
-  // const landUrl =
-  //   `/weather-api/1360000/MidFcstInfoService/getMidLandFcst?` +
-  //   `serviceKey=${WEATHER_API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&` +
-  //   `regId=${regId}&tmFc=${tmFc}`;
+  const landUrl =
+    `https://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst?` +
+    `serviceKey=${WEATHER_API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&` +
+    `regId=${regId}&tmFc=${tmFc}`;
 
-  // // 기온예보 API URL
-  // const tempUrl =
-  //   `/weather-api/1360000/MidFcstInfoService/getMidTa?` +
-  //   `serviceKey=${WEATHER_API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&` +
-  //   `regId=${regId}&tmFc=${tmFc}`;
+  // 기온예보 API URL
+  const tempUrl =
+    `https://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa?` +
+    `serviceKey=${WEATHER_API_KEY}&pageNo=1&numOfRows=10&dataType=JSON&` +
+    `regId=${regId}&tmFc=${tmFc}`;
   //===============================================================
   //병렬로 요청 보내기
   const [landRes, tempRes] = await Promise.all([
-    fetch(landUrl, { headers }),
-    fetch(tempUrl, { headers }),
+    fetch(landUrl),
+    fetch(tempUrl),
   ]);
 
   // 응답 JSON 파싱
