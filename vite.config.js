@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
+import { sign } from "crypto";
 
 export default defineConfig({
   build: {
@@ -9,6 +10,7 @@ export default defineConfig({
         card: "src/components/card.html",
         detail: "src/components/detail.html",
         login: "src/components/login.html",
+        signup: "src/components/signup.html",
       },
     },
   },
