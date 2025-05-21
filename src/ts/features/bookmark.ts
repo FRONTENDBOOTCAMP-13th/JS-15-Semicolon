@@ -4,15 +4,6 @@ export function getBookmarkFilterStatus() {
   return isFiltered; // ✅ 외부에서 이걸 통해 접근 가능
 }
 
-// 🍀아영 위치 변경 |요소와 색깔을 받아 요소 내부의 svg아이콘 fill 색깔 변경하는 함수
-export function changeFill(button: Element, status: boolean) {
-  if (status === true) {
-    button.classList.replace("text-white", "text-yellow-400");
-  } else {
-    button.classList.replace("text-yellow-400", "text-white");
-  }
-}
-
 // 북마크 기능 전체를 담은 함수
 export function bookmark() {
   const LOCAL_KEY = "bookmarkedFestivalTitles";
@@ -37,6 +28,15 @@ export function bookmark() {
       : [...current, title]; // 기존의 배열에 새로운 제목 추가
     setBookmarks(updated);
     return !exists;
+  }
+
+  // 요소와 색깔을 받아 요소 내부의 svg아이콘 fill 색깔 변경하는 함수
+  function changeFill(button: Element, status: boolean) {
+    if (status === true) {
+      button.classList.replace("text-white", "text-yellow-400");
+    } else {
+      button.classList.replace("text-yellow-400", "text-white");
+    }
   }
 
   const renderBookmarksBtn = document.querySelector(".render-bookmarks"); // 즐겨찾기 필터 버튼
@@ -103,6 +103,17 @@ export function bookmark() {
       }
     });
   }
+
+  // 🍀 아영 추가 ======== 초기화 버튼 ===================
+  function resetBtnBookmark() {
+    const resetBtn = document.querySelector(".reset-btn");
+    resetBtn?.addEventListener("click", () => {
+      isFiltered = false; // 필터 상태 false로 초기화
+      changeFill(renderBookmarksBtn!, false); // 필터 버튼 색상 원래대로
+    });
+  }
+  resetBtnBookmark();
+  // 🍀 아영 추가 ======== 초기화 버튼 ===================
 
   applyBookmarkFills();
 }
