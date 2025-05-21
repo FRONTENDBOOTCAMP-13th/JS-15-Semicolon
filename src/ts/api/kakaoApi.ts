@@ -48,10 +48,7 @@ const changeOriginbtn = document.querySelector("#changeOrigin"); // 도착지 �
 export function initKakaoMap() {
   // 지도에 위치 표시
   const container = document.getElementById("map") as HTMLElement; //지도를 담을 영역의 DOM 레퍼런스
-  const position: Position = window.festivalCoords || {
-    lat: 37.571174,
-    lng: 126.978899,
-  }; // 초기 영역 (TODO_축제 장소로 변경 필요)
+  const position: Position = window.festivalCoords!; // 초기 영역 (TODO_축제 장소로 변경 필요)
   const options = {
     center: new kakao.maps.LatLng(position.lat, position.lng),
     level: 3,
@@ -185,10 +182,13 @@ function panTo(position: Position) {
 }
 
 // 입력된 좌표 위치에 마커 표시하는 함수
-function showMarker(position: Position) {
+function showMarker(
+  position: Position,
+  type: "origin" | "destination" = "origin"
+) {
   const imageSrc =
-    "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png"; // 빨강색 마커 사용
-  const imageSize = new kakao.maps.Size(35, 40);
+    type === "origin" ? "/marker(red).png" : "/marker(white).png";
+  const imageSize = new kakao.maps.Size(30, 40);
   const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
   const marker = new window.kakao.maps.Marker({
@@ -271,12 +271,12 @@ function drawRouteOnMap(data: any) {
   // 출발지 마커
   const origin = route.summary.origin;
   const originPoint: Position = { lat: origin.y, lng: origin.x };
-  showMarker(originPoint);
+  showMarker(originPoint, "origin");
 
   // 도착지 마커
   const destination = route.summary.destination;
   const destinationPoint: Position = { lat: destination.y, lng: destination.x };
-  showMarker(destinationPoint);
+  showMarker(destinationPoint, "destination");
 
   // 경로 전체 영역 계산을 위한 bounds 객체 생성
   const bounds = new kakao.maps.LatLngBounds();
