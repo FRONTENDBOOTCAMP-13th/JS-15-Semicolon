@@ -4,6 +4,15 @@ export function getBookmarkFilterStatus() {
   return isFiltered; // ✅ 외부에서 이걸 통해 접근 가능
 }
 
+// 🍀아영 위치 변경 |요소와 색깔을 받아 요소 내부의 svg아이콘 fill 색깔 변경하는 함수
+export function changeFill(button: Element, status: boolean) {
+  if (status === true) {
+    button.classList.replace("text-white", "text-yellow-400");
+  } else {
+    button.classList.replace("text-yellow-400", "text-white");
+  }
+}
+
 // 북마크 기능 전체를 담은 함수
 export function bookmark() {
   const LOCAL_KEY = "bookmarkedFestivalTitles";
@@ -77,15 +86,6 @@ export function bookmark() {
         !isFiltered || (title && bookmarks.includes(title)) ? "block" : "none";
     });
   });
-
-  // 요소와 색깔을 받아 요소 내부의 svg아이콘 fill 색깔 변경하는 함수
-  function changeFill(button: Element, status: boolean) {
-    if (status === true) {
-      button.classList.replace("text-white", "text-yellow-400");
-    } else {
-      button.classList.replace("text-yellow-400", "text-white");
-    }
-  }
 
   // 페이지 로드 시 북마크된 카드 아이콘에 색상 반영하는 함수
   function applyBookmarkFills() {
