@@ -2,12 +2,7 @@
 
 # 축제 정보 공유 서비스앱, 여기갈래? 
 > https://likelion-develop.netlify.app/
-
-
-
-
-
-
+![004](https://github.com/user-attachments/assets/723a11f5-526a-4de4-833e-1c1b2e1d9a89)
 
 
 <br/>
