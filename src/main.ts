@@ -132,11 +132,16 @@ window.addEventListener("scroll", () => {
 const renderBookmarksBtn = document.querySelector(".render-bookmarks");
 
 renderBookmarksBtn?.addEventListener("click", () => {
-  const newState = !getBookmarkFilterStatus();
-  setBookmarkFilterStatus(newState);
-  updateFilterButtonUI(renderBookmarksBtn, newState);
+  const loginStatus = localStorage.getItem("loggedInUser");
+  if (loginStatus === null) {
+    alert("로그인 사용자에게만 제공하는 기능입니다.");
+  } else {
+    const newState = !getBookmarkFilterStatus();
+    setBookmarkFilterStatus(newState);
+    updateFilterButtonUI(renderBookmarksBtn, newState);
 
-  renderFilteredFestivals();
+    renderFilteredFestivals();
+  }
 });
 
 // 리셋 버튼 이벤트 추가

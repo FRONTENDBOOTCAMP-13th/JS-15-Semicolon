@@ -45,8 +45,14 @@ export function toggleBookmark(item: FestivalItem): boolean {
 export function updateBookmarkIcon(card: Element, isBookmarked: boolean) {
   const svg = card.querySelector(".bookmark-btn svg");
   if (!svg) return;
-  svg.classList.toggle("text-yellow-400", isBookmarked);
-  svg.classList.toggle("text-white", !isBookmarked);
+
+  const loginStatus = localStorage.getItem("loggedInUser");
+  if (loginStatus === null) {
+    svg.classList.toggle("text-white", !isBookmarked);
+  } else {
+    svg.classList.toggle("text-yellow-400", isBookmarked);
+    svg.classList.toggle("text-white", !isBookmarked);
+  }
 }
 
 // 북마크 버튼 클릭 이벤트를 각 버튼에 바인딩하는 함수
@@ -76,8 +82,13 @@ export function bindBookmarkButtonEvents() {
       );
       if (!item) return;
 
-      const nowBookmarked = toggleBookmark(item);
-      updateBookmarkIcon(card, nowBookmarked);
+      const loginStatus = localStorage.getItem("loggedInUser");
+      if (loginStatus === null) {
+        alert("로그인 사용자에게만 제공하는 기능입니다.");
+      } else {
+        const nowBookmarked = toggleBookmark(item);
+        updateBookmarkIcon(card, nowBookmarked);
+      }
     });
   });
 }
