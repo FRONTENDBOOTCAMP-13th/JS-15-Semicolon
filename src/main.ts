@@ -95,6 +95,15 @@ async function fetchMoreFestivals() {
     const filters = festivalFilter.getFilters();
     const items = await festivalApi.searchFestivals(filters, currentPage);
 
+    // 검색 결과 저장
+    const beforeItems = JSON.parse(
+      localStorage.getItem("searchResults") || "[]"
+    );
+    localStorage.setItem(
+      "searchResults",
+      JSON.stringify(beforeItems.concat(items))
+    );
+
     // 콜백 추가해서 북마크 반영 및 버튼 이벤트 바인딩
     festivalRenderer.renderFestivals(items, true, () => {
       applyBookmarkFills();

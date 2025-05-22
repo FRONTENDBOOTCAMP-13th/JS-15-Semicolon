@@ -108,6 +108,7 @@ export function applyFilter() {
   const bookmarks = getBookmarks();
   const cards = document.querySelectorAll(".festivalCard");
 
+  // bookmarkedFestivals
   cards.forEach((card) => {
     const contentId = card.getAttribute("data-contentid");
     const cardE = card as HTMLElement;
