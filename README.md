@@ -10,8 +10,8 @@
 
 ## 🗨️ 프로젝트 소개
 - 전국공연행사정보표준데이터를 활용해 사용자가 선택한 지역과 날짜를 기반으로 **맞춤형 지역 행사**를 추천해주는 서비스
-- 카카오 API를 활용해 각 행사 상세 페이지에서 해당 지역의 **길찾기 기능**를 제공
-- 기상청 API를 활용해 **7일간 날씨 정보**을 통해 사용자의 현위치에서 행사장까지의 경로를 안내
+- 카카오 API를 활용해 각 행사 상세 페이지에서 해당 지역의 **길찾기 기능**을 제공해 현위치에서 행사장까지의 경로를 안내
+- 기상청 API를 활용해 행사 지역의 **7일간 날씨 정보**를 제공
 
 <br/>
 
@@ -21,7 +21,7 @@
 | 이훈진                                                                                    | 임지윤                                                                                    | 장아영                                                                                    |
 | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | <img src="https://github.com/user-attachments/assets/223f97bd-be99-4eb2-a4b0-f37569172b0b" style="width: 580px"> | <img src="https://github.com/user-attachments/assets/e240485a-5ef9-48f3-86ad-35d185e15ff6" style="width: 580px"> | <img src="https://github.com/user-attachments/assets/6ddb5e91-8fc7-4e18-854d-7eabdad25a00" style="width: 550px"> |
-|             <a href="https://github.com/huniversal"><img src="https://edent.github.io/SuperTinyIcons/images/svg/github.svg" width="35" /></a>                                                         |                <a href="https://github.com/whynotKeys"><img src="https://edent.github.io/SuperTinyIcons/images/svg/github.svg" width="35" /></a>                         |            <a href="https://github.com/cay0716"><img src="https://edent.github.io/SuperTinyIcons/images/svg/github.svg" width="35" /></a>                                                              |
+|             <a href="https://github.com/huniversal"><img src="https://edent.github.io/SuperTinyIcons/images/svg/github.svg" width="35" /></a> GitHub Link                                                         |                <a href="https://github.com/whynotKeys"><img src="https://edent.github.io/SuperTinyIcons/images/svg/github.svg" width="35" /></a>  GitHub Link                        |            <a href="https://github.com/cay0716"><img src="https://edent.github.io/SuperTinyIcons/images/svg/github.svg" width="35" /></a>    GitHub Link                                                           |
 |      <img src="https://img.shields.io/badge/hunivers0523@naver.com-76BB21?style=flat-square&logo=mailboxdotorg&logoColor=white"/>                                                           |     <img src="https://img.shields.io/badge/wildcat0426@naver.com-76BB21?style=flat-square&logo=mailboxdotorg&logoColor=white"/>                                                      |        <img src="https://img.shields.io/badge/fern3eh@gmail.com-76BB21?style=flat-square&logo=mailboxdotorg&logoColor=white"/>                                                          |
 | <img src="https://img.shields.io/badge/@huiivers-E4405F?style=flat-square&logo=Instagram&logoColor=white"/>                              |  <img src="https://img.shields.io/badge/@jlim_why -E4405F?style=flat-square&logo=Instagram&logoColor=white"/>                                                         |                             <img src="https://img.shields.io/badge/@fern3eh -E4405F?style=flat-square&logo=Instagram&logoColor=white"/> 
 <br/>
@@ -124,6 +124,16 @@
 - form에 입력된 값과 렌더링된 상태를 초기화
 <img src="https://github.com/user-attachments/assets/cf2adc6b-a1e3-4e84-b51e-b6be69155dca" style="width: 580px">
 
+#### 5. 즐겨찾기 기능 
+#### 로그인하지 않은 상태
+- "로그인 사용자에게만 제공하는 기능입니다. 로그인 페이지로 이동할까요?" 문구의 컨펌 창 >확인> 로그인 페이지로 이동, 취소> 취소 
+<img src="https://github.com/user-attachments/assets/d435e8a2-16e6-4dec-af21-97c205720e3f" style="width: 580px">
+
+#### 로그인 상태
+- 즐겨찾기 토글
+- 즐겨찾기 카드 렌더링 버튼 토글
+<img src="https://github.com/user-attachments/assets/3f3d5a73-0cd2-4c9a-9053-413ff3882a91" style="width: 580px">
+
 
 <br/>
 
@@ -162,7 +172,7 @@
 <img src="https://github.com/user-attachments/assets/8cae7a52-9c74-4388-8a93-1d37e5de9c3c" style="width: 580px">
 
 4. 일치하게 작성하고 확인 버튼을 누르면 인증에 성공했다는 alert
-<img src="https://github.com/user-attachments/assets/bee75bb1-d8b8-4d73-8052-0db40586ea24" style="width: 580px">
+<img src="https://github.com/user-attachments/assets/1485f9c1-00f9-4aed-8e26-85e84e8df83a" style="width: 580px">
 
 5. 비밀번호 작성 후 회원가입 버튼 > 로그인 페이지로 리다이렉트
 <img src="https://github.com/user-attachments/assets/dca9b037-b4dd-446a-b41a-666aceeb3f8b" style="width: 580px">
