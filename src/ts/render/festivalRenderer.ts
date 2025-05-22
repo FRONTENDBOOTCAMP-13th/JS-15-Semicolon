@@ -1,4 +1,5 @@
 import { FestivalItem } from "../api/festivalApi";
+import { updateBookmarkIcon, getBookmarks } from "../features/bookmark";
 
 export class FestivalRenderer {
   private container: HTMLElement;
@@ -59,8 +60,12 @@ export class FestivalRenderer {
     }
   }
 
-  // 축제 목록 렌더링
-  renderFestivals(items: FestivalItem[], append: boolean = false): void {
+  // 축제 목록 렌더링 : 콜백 추가
+  renderFestivals(
+    items: FestivalItem[],
+    append: boolean = false,
+    onRendered?: () => void
+  ): void {
     //  🍀 아영 추가로딩 타이머 설정 (0.5초 후에 로딩 표시)
     this.loadingTimeout = window.setTimeout(() => {
       this.showLoading();
@@ -80,9 +85,13 @@ export class FestivalRenderer {
         return;
       }
 
+      const bookmarks = getBookmarks();
+
       items.forEach((item) => {
         const card = document.createElement("div");
         card.className = "festivalCard";
+        card.setAttribute("data-contentid", item.contentid); // contentid 추가
+
         card.style.cursor = "pointer";
 
         const image = item.firstimage;
@@ -104,8 +113,8 @@ export class FestivalRenderer {
                 width="24"
                 height="23"
                 viewBox="0 0 24 23"
-                fill="none"
-                aria-label="북마크한 축제만 보기"
+                fill="currentColor"
+                aria-label="축제 북마크 추가하기"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
@@ -128,6 +137,13 @@ export class FestivalRenderer {
           </div>
         `;
 
+        // 북마크 여부 확인 후 클래스 추가
+        // const bookmarkBtn = card.querySelector(".bookmark-btn svg");
+        const isBookmarked = bookmarks.some(
+          (b) => b.contentid === card.getAttribute("data-contentid")
+        );
+        updateBookmarkIcon(card, isBookmarked);
+
         // 카드 클릭 이벤트
         card.addEventListener("click", (e) => {
           const target = e.target as HTMLElement;
@@ -137,14 +153,13 @@ export class FestivalRenderer {
 
         this.container.appendChild(card);
       });
-
+      if (onRendered) onRendered(); // 렌더링 후 콜백 호출
       // 🍀 아영 추가 렌더링 완료 후 로딩 표시 제거
       this.hideLoading();
     }, 0);
   }
-
   // 오류 표시
-  showError(message: string): void {
+  public showError(message: string): void {
     this.hideLoading(); // 🍀 아영 추가
     this.container.innerHTML = `<p class="text-red-500 text-center py-4">${message}</p>`;
   }
