@@ -104,6 +104,7 @@ export class FestivalRenderer {
                 height="23"
                 viewBox="0 0 24 23"
                 fill="none"
+                aria-label="북마크한 축제만 보기"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
