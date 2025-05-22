@@ -239,8 +239,8 @@ function displayMidTermForecast(temp: any, land: any) {
       <li class="flex flex-col items-center text-center ${borderClass} px-2 md:px-5">
         <time class=" text-ga-gray300 font-light text-12 md:text-14">${date}</time>
         <div class="flex p-1 gap-1 md:gap-4 ">
-          <div class="icon ${weatherAmClass} w-6 h-6 md:w-7.5 md:h-7.5 "></div>
-          <div class="icon ${weatherPmClass} w-6 h-6 md:w-7.5 md:h-7.5 "></div>
+          <div class="icon ${weatherAmClass} w-6 h-6 md:w-7.5 md:h-7.5 " aria-label="${weatherAm}"></div>
+          <div class="icon ${weatherPmClass} w-6 h-6 md:w-7.5 md:h-7.5 " aria-label="${weatherPm}"></div>
         </div>
         <strong  class="text-14 md:text-18">
           <span class="text-blue-500">${minTemp}°</span
