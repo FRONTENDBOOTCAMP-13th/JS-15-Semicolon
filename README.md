@@ -19,8 +19,8 @@
 | 이훈진                                                                                    | 임지윤                                                                                    | 장아영                                                                                    |
 | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | <img src="https://github.com/user-attachments/assets/223f97bd-be99-4eb2-a4b0-f37569172b0b" style="width: 580px"> | <img src="https://github.com/user-attachments/assets/262727e2-39d8-49fc-a4c2-a2a10742aceb" style="width: 595px"> | <img src="https://github.com/user-attachments/assets/6ddb5e91-8fc7-4e18-854d-7eabdad25a00" style="width: 540px"> |
-| hunivers0523@naver.com                                                                       | parksw003@gmail.com                                                                       | fern3eh@gmail.com                                                                         |
-| gnswls3945@gmail.com                                                            | wildcat0426@naver.com                                                          | https://github.com/cay0716                                                                |
+|             https://github.com/huniversal                                                         |          https://github.com/whynotKeys                               |        https://github.com/cay0716                                                                  |
+|    hunivers0523@naver.com                                                          | wildcat0426@naver.com                                                          |     fern3eh@gmail.com                                                            |
 | <img src="https://img.shields.io/badge/@huiivers-E4405F?style=flat-square&logo=Instagram&logoColor=white"/>                              |  <img src="https://img.shields.io/badge/@jlim_why -E4405F?style=flat-square&logo=Instagram&logoColor=white"/>                                                         |                             <img src="https://img.shields.io/badge/@fern3eh -E4405F?style=flat-square&logo=Instagram&logoColor=white"/> 
 <br/>
 
@@ -48,11 +48,11 @@
 
 ## 🍄 팀 역할 분배
 
-| 이름     | 역할                         | 주요 기여 기능                                                                 |
-|----------|------------------------------|--------------------------------------------------------------------------------|
-| **이훈진** | 팀장 · 스크럼마스터             | 지역/날짜 기반 축제 필터링 및 렌더링, 상세 페이지 데이터 연결, 로그인/회원가입 구현, 뒤로가기 버튼 구현              |
-| **임지윤** | 프론트엔드 개발                | 메인 히어로 섹션 구성, 행사 위치 기반 카카오맵 길찾기 기능, 행사 북마크 기능 구현       |
-| **장아영** | 프론트엔드 개발               | 지역 기반 날씨 정보 제공, 헤더/푸터 UI 구성, 탑 버튼 구현, 렌더링 초기화 기능 구현         |
+| 이름             | 역할                         | 주요 기여 기능                                                                 |
+|------------------|------------------------------|--------------------------------------------------------------------------------|
+| **이훈진**   &nbsp;  &nbsp;  &nbsp;   | 팀장 · 스크럼마스터  &nbsp;           | 지역/날짜 기반 축제 필터링 및 렌더링, 상세 페이지 데이터 연결, 로그인/회원가입 구현, 뒤로가기 버튼 구현              |
+| **임지윤**   &nbsp;  &nbsp;  &nbsp;   | 프론트엔드 개발      &nbsp;          | 메인 히어로 섹션 구성, 행사 위치 기반 카카오맵 길찾기 기능, 행사 북마크 기능 구현       |
+| **장아영**   &nbsp;  &nbsp;  &nbsp;   | 프론트엔드 개발     &nbsp;          | 지역 기반 날씨 정보 제공, 헤더/푸터 UI 구성, 탑 버튼 구현, 렌더링 초기화 기능 구현         |
 
 
 <br/>
@@ -167,8 +167,12 @@
 <br/>
 
 ### 반응형 디자인
+##### 모바일
+
 ![모바일](https://github.com/user-attachments/assets/f547ae5b-9fb1-44e3-9068-c306107d6b5b)
-![데스크탑](https://github.com/user-attachments/assets/5430114e-c2a3-4490-b470-f42ac05b03d2)
+
+##### 태블릿
+![태블릿](https://github.com/user-attachments/assets/5430114e-c2a3-4490-b470-f42ac05b03d2)
 
 
 
@@ -181,6 +185,8 @@
 - 전국 축제 지도 추가
 - 축제 안내 달력
 - 백엔드 서버 구축
+- 상세 페이지 북마크 버튼 추가
+- 
 
 <br/>
 
