@@ -84,7 +84,12 @@ export function bindBookmarkButtonEvents() {
 
       const loginStatus = localStorage.getItem("loggedInUser");
       if (loginStatus === null) {
-        alert("로그인 사용자에게만 제공하는 기능입니다.");
+        const goLogin = confirm(
+          "로그인 사용자에게만 제공하는 기능입니다.\n로그인 페이지로 이동할까요?"
+        );
+        if (goLogin) {
+          window.location.href = "/src/components/login.html"; // 실제 로그인 페이지 경로로 변경
+        }
       } else {
         const nowBookmarked = toggleBookmark(item);
         updateBookmarkIcon(card, nowBookmarked);
