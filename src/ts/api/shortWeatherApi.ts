@@ -15,8 +15,43 @@ function getBaseDate() {
 
 // 날씨 데이터를 기상청 API로부터 받아오는 함수
 async function fetchDailyWeather(nx: number, ny: number) {
-  const BASE_DATE = getBaseDate(); // 기준 날짜
-  const BASE_TIME = "0200"; // 새벽 2시 기준으로 예보 받음
+  // const BASE_DATE = getBaseDate(); // 기준 날짜
+  // const BASE_TIME = "0200"; // 새벽 2시 기준으로 예보 받음
+
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
+  // 기상청 단기예보 기준 시간 (8개)
+  const baseTimes = [
+    "2300",
+    "2000",
+    "1700",
+    "1400",
+    "1100",
+    "0800",
+    "0500",
+    "0200",
+  ];
+
+  // 가장 가까운 이전 baseTime 찾기
+  let baseHour = 2;
+  for (const t of baseTimes) {
+    const h = parseInt(t.slice(0, 2));
+    if (hours > h || (hours === h && minutes >= 10)) {
+      baseHour = h;
+      break;
+    }
+  }
+
+  // base_date 계산 (예: 새벽 1시에 2300을 쓰려면 전날로 바꿔야 함)
+  const baseDate = new Date(now);
+  if (hours < baseHour) {
+    baseDate.setDate(baseDate.getDate() - 1);
+  }
+
+  const BASE_DATE = baseDate.toISOString().slice(0, 10).replace(/-/g, "");
+  const BASE_TIME = String(baseHour).padStart(2, "0") + "00";
 
   // 기상청 API 호출 URL 생성
   const url =
