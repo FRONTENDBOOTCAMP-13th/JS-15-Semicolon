@@ -20,6 +20,17 @@ window.addEventListener("load", () => {
       }
     });
   }
+  // 엔터키 눌러서 회원가입
+  const signUpForm = document.getElementById(
+    "signupPasswordCheck"
+  ) as HTMLInputElement;
+  if (signUpForm) {
+    signUpForm.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        signup();
+      }
+    });
+  }
 });
 // 페이지 로드 시 데이터 가져오기
 const storedUserData = localStorage.getItem("userData");
@@ -110,7 +121,25 @@ function sendVerification() {
     alert("올바른 이메일 주소를 입력해주세요.");
     return;
   }
-  startEmailVerification(email);
+  // 중복 이메일 검사
+  let isEmailRegistered = false;
+
+  if (storedUserData) {
+    const parsed = JSON.parse(storedUserData);
+    const storedEmails = Object.keys(parsed); // 이메일 리스트 배열로 꺼냄
+
+    for (let i = 0; i < storedEmails.length; i++) {
+      if (storedEmails[i] === email) {
+        isEmailRegistered = true;
+      }
+    }
+  }
+  if (isEmailRegistered === true) {
+    alert("이미 가입된 이메일 주소입니다.");
+    return;
+  } else {
+    startEmailVerification(email);
+  }
 }
 
 function verifyCodeUI() {
@@ -182,9 +211,9 @@ function signup() {
     alert("이미 존재하는 아이디입니다.");
   } else {
     userData[username] = { password: password };
-    console.log("회원가입이 완료되었습니다.");
-
     localStorage.setItem("userData", JSON.stringify(userData));
+
+    alert("회원가입이 완료되었습니다.");
     window.location.href = "login.html";
   }
 }
