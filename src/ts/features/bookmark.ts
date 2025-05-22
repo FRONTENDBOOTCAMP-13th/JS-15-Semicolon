@@ -1,119 +1,201 @@
+import { FestivalItem } from "../api/festivalApi";
+
+// 로컬 스토리지에 저장할 키값 정의
+const LOCAL_KEY = "bookmarkedFestivals";
+const ID_KEY = "bookmarkedIds";
+
 let isFiltered = false; // 현재 필터링 상태 저장 (true: 북마크된 것만 표시)
 
-export function getBookmarkFilterStatus() {
-  return isFiltered; // ✅ 외부에서 이걸 통해 접근 가능
+// 외부에서 필터링 여부 확인할 수 있는 함수
+export function getBookmarkFilterStatus(): boolean {
+  return isFiltered;
+}
+// 외부에서 필터링 여부 변경할 수 있는 함수
+export function setBookmarkFilterStatus(value: boolean) {
+  isFiltered = value;
 }
 
-// 북마크 기능 전체를 담은 함수
-export function bookmark() {
-  const LOCAL_KEY = "bookmarkedFestivalTitles";
+// 로컬스토리지에서 현재 북마크된 FestivalItem 배열 가져오는 함수
+export function getBookmarks(): FestivalItem[] {
+  const raw = localStorage.getItem(LOCAL_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
 
-  // 로컬스토리지에서 현재 북마크 되어있는 제목 배열 가져오는 함수
-  function getBookmarks(): string[] {
-    const raw = localStorage.getItem(LOCAL_KEY);
-    return raw ? JSON.parse(raw) : [];
-  }
+// 북마크한 FestivalItem 배열을 로컬스토리지에 저장하는 함수
+function setBookmarks(festivals: FestivalItem[]) {
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(festivals));
 
-  // 클릭한 축제 이름 배열을 받아서 로컬스토리지에 저장
-  function setBookmarks(titles: string[]) {
-    localStorage.setItem(LOCAL_KEY, JSON.stringify(titles));
-  }
+  const ids = festivals.map((f) => f.contentid);
+  localStorage.setItem(ID_KEY, JSON.stringify(ids));
+  console.log("북마크 저장:", ids);
+}
 
-  // 축제 이름을 받아서 북마크 추가/제거 후 추가 시 true, 제거 시 false를 반환하는 함수
-  function toggleBookmark(title: string): boolean {
-    const current = getBookmarks();
-    const exists = current.includes(title); // 로컬스토리지에 축제 이름이 있는 지 확인
-    const updated = exists
-      ? current.filter((t) => t !== title) // 제목이 같지 않은 것만 모은 배열 반환
-      : [...current, title]; // 기존의 배열에 새로운 제목 추가
-    setBookmarks(updated);
-    return !exists;
-  }
+// 축제 정보를 받아서 북마크 추가/제거 후 상태 반환
+export function toggleBookmark(item: FestivalItem): boolean {
+  const current = getBookmarks();
+  const exists = current.some((f) => f.contentid === item.contentid);
+  const updated = exists
+    ? current.filter((f) => f.contentid !== item.contentid)
+    : [...current, item];
 
-  // 요소와 색깔을 받아 요소 내부의 svg아이콘 fill 색깔 변경하는 함수
-  function changeFill(button: Element, status: boolean) {
-    if (status === true) {
-      button.classList.replace("text-white", "text-yellow-400");
-    } else {
-      button.classList.replace("text-yellow-400", "text-white");
-    }
-  }
+  setBookmarks(updated);
+  return !exists;
+}
 
-  const renderBookmarksBtn = document.querySelector(".render-bookmarks"); // 즐겨찾기 필터 버튼
+// 북마크 아이콘 색상 업데이트 함수
+export function updateBookmarkIcon(card: Element, isBookmarked: boolean) {
+  const svg = card.querySelector(".bookmark-btn svg");
+  if (!svg) return;
+  svg.classList.toggle("text-yellow-400", isBookmarked);
+  svg.classList.toggle("text-white", !isBookmarked);
+}
 
-  // 바인딩 전에 중복 리스너 방지를 위해 기존 북마크 버튼을 복제해서 이벤트 제거
-  const bookmarkBtns = document.querySelectorAll(".bookmark-btn");
+// 북마크 버튼 클릭 이벤트를 각 버튼에 바인딩하는 함수
+export function bindBookmarkButtonEvents() {
+  // 이벤트가 아직 바인딩되지 않은 버튼만 선택
+  const bookmarkBtns = document.querySelectorAll(
+    ".bookmark-btn:not([data-event-bound])"
+  );
+  console.log("북마크 바인딩 실행");
+  console.log(bookmarkBtns);
   bookmarkBtns.forEach((btn) => {
-    btn.replaceWith(btn.cloneNode(true)); // 이벤트 리스너 초기화
-  });
+    btn.setAttribute("data-event-bound", "true"); // 중복 방지를 위한 표시
 
-  // 복제된 북마크 버튼에 클릭 이벤트 다시 바인딩
-  const newBookmarkBtns = document.querySelectorAll(".bookmark-btn");
-  newBookmarkBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       e.preventDefault();
 
-      const card = btn.closest(".festivalCard"); // 북마크 버튼의 부모 카드
-      if (!card) return;
+      const card = btn.closest(".festivalCard");
+      const contentId = card?.getAttribute("data-contentid");
+      if (!card || !contentId) return;
 
-      const title = card.querySelector("h3")?.textContent?.trim(); // 카드 제목 추출
-      if (!title) return;
+      const searchResults = JSON.parse(
+        localStorage.getItem("searchResults") || "[]"
+      );
 
-      const svg = btn.querySelector("svg path");
-      const nowBookmarked = toggleBookmark(title);
+      const item = searchResults.find(
+        (f: FestivalItem) => f.contentid === contentId
+      );
+      if (!item) return;
 
-      // 아이콘 색상 변경
-      svg?.setAttribute("fill", nowBookmarked ? "#F8C427" : "none");
+      const nowBookmarked = toggleBookmark(item);
+      updateBookmarkIcon(card, nowBookmarked);
+
+      console.log("북마크 바인딩 종료: ", nowBookmarked);
     });
   });
-
-  // 북마크 필터링 토글 버튼 (전체 보기/북마크만 보기)
-  renderBookmarksBtn?.addEventListener("click", () => {
-    isFiltered = !isFiltered;
-
-    changeFill(renderBookmarksBtn, isFiltered); // 필터링 버튼 아이콘 색상 변경
-
-    const cards = document.querySelectorAll("#festivalList > .festivalCard");
-    const bookmarks = getBookmarks(); // 현재 북마크 목록 가져오기
-
-    cards.forEach((card) => {
-      const title = card.querySelector("h3")?.textContent?.trim();
-      const cardE = card as HTMLElement;
-
-      // 필터링 상태에 따라 카드 숨기기 or 보이기
-      cardE.style.display =
-        !isFiltered || (title && bookmarks.includes(title)) ? "block" : "none";
-    });
-  });
-
-  // 페이지 로드 시 북마크된 카드 아이콘에 색상 반영하는 함수
-  function applyBookmarkFills() {
-    const bookmarks = getBookmarks();
-    const cards = document.querySelectorAll(".festivalCard");
-
-    cards.forEach((card) => {
-      const title = card.querySelector("h3")?.textContent?.trim();
-      const svg = card.querySelector(".bookmark-btn svg path");
-
-      if (title && bookmarks.includes(title)) {
-        svg?.setAttribute("fill", "#F8C427");
-      } else {
-        svg?.setAttribute("fill", "none");
-      }
-    });
-  }
-
-  // 🍀 아영 추가 ======== 초기화 버튼 ===================
-  function resetBtnBookmark() {
-    const resetBtn = document.querySelector(".reset-btn");
-    resetBtn?.addEventListener("click", () => {
-      isFiltered = false; // 필터 상태 false로 초기화
-      changeFill(renderBookmarksBtn!, false); // 필터 버튼 색상 원래대로
-    });
-  }
-  resetBtnBookmark();
-  // 🍀 아영 추가 ======== 초기화 버튼 ===================
-
-  applyBookmarkFills();
 }
+
+// 페이지 로드 시 북마크된 카드 아이콘에 색상 반영하는 함수
+export function applyBookmarkFills() {
+  const bookmarks = getBookmarks();
+  const cards = document.querySelectorAll(".festivalCard");
+
+  cards.forEach((card) => {
+    const contentId = card.getAttribute("data-contentid");
+    const isBookmarked = contentId
+      ? bookmarks.some((f) => f.contentid === contentId)
+      : false;
+
+    updateBookmarkIcon(card, isBookmarked);
+  });
+}
+
+// 북마크 필터링 상태에 따라 카드 보이기/숨기기
+// TODO : 필터링 따라 rendering 하는 걸로 바꿀수도
+export function applyFilter() {
+  // if
+  const bookmarks = getBookmarks();
+  const cards = document.querySelectorAll(".festivalCard");
+
+  cards.forEach((card) => {
+    const contentId = card.getAttribute("data-contentid");
+    const cardE = card as HTMLElement;
+
+    cardE.style.display =
+      !isFiltered ||
+      (contentId && bookmarks.some((f) => f.contentid === contentId))
+        ? "block"
+        : "none";
+  });
+}
+
+// 완료 확인용 함수 TODO: 삭제할 수도 있음
+export function getBookmarkCount() {
+  return getBookmarks().length;
+}
+
+// 현재 화면에 보이는 북마크된 카드 수 계산 TODO: 삭제할 수도 있음
+function countVisibleBookmarkedCards(): number {
+  const cards = document.querySelectorAll(".festivalCard");
+  const bookmarks = getBookmarks();
+
+  return Array.from(cards).filter((card) => {
+    const contentId = card.getAttribute("data-contentid");
+    return contentId && bookmarks.some((f) => f.contentid === contentId);
+  }).length;
+}
+
+// 화면에 보이는 카드 수랑 로컬 스토리지의 북마크 데이터 개수를 비교, 없으면 계속 카드 렌더링하게 하는 함수
+// TODO : 바로 그리는 걸로 바꾸면 삭제할 수도 있음
+export async function ensureAllBookmarksRendered(
+  fetchMoreFn: () => Promise<boolean>, // fetch 후 더 가져온 데이터가 있으면 true
+  maxAttempts = 10 // 무한 루프 방지를 위한 최대 반복 횟수 지정
+) {
+  if (!getBookmarkFilterStatus()) return;
+
+  let attempts = 0;
+
+  while (attempts < maxAttempts) {
+    const currentCount = countVisibleBookmarkedCards(); // 현재 렌더링 된 북마크 수
+    const totalCount = getBookmarkCount(); // 전체 북마크 수
+
+    if (currentCount >= totalCount) break; // 렌더링 완료 시 종료
+
+    const hasMore = await fetchMoreFn(); // 데이터 fetch 후 새 데이터 있는지 판단
+    if (!hasMore) break; // 더 가져올 게 없으면 종료
+
+    attempts++;
+  }
+}
+// 북마크 필터 버튼 이벤트 연결
+export function bookmark(fetchMoreFn: () => Promise<boolean>) {
+  const renderBookmarksBtn = document.querySelector(".render-bookmarks");
+
+  renderBookmarksBtn?.addEventListener("click", () => {
+    setBookmarkFilterStatus(!getBookmarkFilterStatus());
+
+    // 필터 버튼 색상 변경
+    renderBookmarksBtn.classList.toggle("text-yellow-400", isFiltered);
+    renderBookmarksBtn.classList.toggle("text-white", !isFiltered);
+
+    // 현재 필터 적용
+    applyFilter();
+
+    // 북마크 카드가 전부 렌더링될 때까지 fetchMore 반복
+    ensureAllBookmarksRendered(fetchMoreFn);
+  });
+}
+
+// 필터 버튼 색상 변경하는 함수
+export function updateFilterButtonUI(button: Element, isActive: boolean) {
+  button.classList.toggle("text-yellow-400", isActive);
+  button.classList.toggle("text-white", !isActive);
+}
+
+// // 북마크 기능 전체를 담은 함수
+// export function bookmark() {
+
+//   // 🍀 아영 추가 ======== 초기화 버튼 ===================
+//   function resetBtnBookmark() {
+//     const resetBtn = document.querySelector(".reset-btn");
+//     resetBtn?.addEventListener("click", () => {
+//       isFiltered = false; // 필터 상태 false로 초기화
+//       changeFill(renderBookmarksBtn!, false); // 필터 버튼 색상 원래대로
+//     });
+//   }
+//   resetBtnBookmark();
+//   // 🍀 아영 추가 ======== 초기화 버튼 ===================
+
+//   applyBookmarkFills();
+// }
