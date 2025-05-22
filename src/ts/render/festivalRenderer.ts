@@ -86,8 +86,9 @@ export class FestivalRenderer {
         card.style.cursor = "pointer";
 
         const image = item.firstimage;
+        const title = item.title || "제목 없음";
         const imageElement = image
-          ? `<img src="${image}" alt="축제 이미지" class="w-full h-[200px] object-cover rounded-[1rem]" />`
+          ? `<img src="${image}" alt="${title}" class="w-full h-[200px] object-cover rounded-[1rem]" />`
           : `<div class="w-full h-[200px] bg-ga-gray300 flex items-center justify-center text-gray-600 text-sm rounded-[1rem]">
               이미지 없음
             </div>`;
