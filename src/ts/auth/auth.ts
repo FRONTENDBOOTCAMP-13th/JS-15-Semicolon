@@ -8,6 +8,18 @@ window.addEventListener("load", () => {
   } else {
     console.error("❌ emailjs is not loaded");
   }
+
+  // 엔터키 눌러서 로그인
+  const loginForm = document.getElementById(
+    "loginPassword"
+  ) as HTMLInputElement;
+  if (loginForm) {
+    loginForm.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        login();
+      }
+    });
+  }
 });
 // 페이지 로드 시 데이터 가져오기
 const storedUserData = localStorage.getItem("userData");
@@ -83,7 +95,7 @@ function verifyCode(inputCode: string): boolean {
     alert("인증번호가 일치하지 않습니다.");
     return false;
   }
-  alert("인증번호가 일치합니다.");
+  alert("인증 완료되었습니다.");
   return true;
 }
 
@@ -121,7 +133,7 @@ function login() {
   ).value;
 
   if (userData[username] && userData[username].password === password) {
-    alert("Login successful");
+    alert("로그인 되었습니다.");
     window.location.href = "/index.html"; // 로그인 성공 시 리다이렉트
     localStorage.setItem("loggedInUser", username);
   } else {
@@ -167,10 +179,10 @@ function signup() {
   }
 
   if (userData[username]) {
-    alert("Username already exists");
+    alert("이미 존재하는 아이디입니다.");
   } else {
     userData[username] = { password: password };
-    console.log("Signup successful");
+    console.log("회원가입이 완료되었습니다.");
 
     localStorage.setItem("userData", JSON.stringify(userData));
     window.location.href = "login.html";
