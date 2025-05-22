@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     img.className = "w-full h-full object-cover object-center";
 
     const filter = document.createElement("div");
-    filter.className = "absolute inset-0 bg-black/40";
+    filter.className = "absolute inset-0 bg-black/65";
 
     // const text = document.createElement("div");
     // text.className =
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
    md:text-5xl xl:text-6xl md:px-28 md:pt-16 xl:px-40 xl:pt-24 leading-snug ` +
       positionClass;
 
-    text.innerHTML = `<p>${slideInfo.upperText}</p><p>${slideInfo.lowerText}</p>`;
+    text.innerHTML = `<h1 class="sr-only">Hero section title</h1><h2>${slideInfo.upperText}</h2><h3>${slideInfo.lowerText}</h3>`;
 
     slide.appendChild(img);
     slide.appendChild(filter);
