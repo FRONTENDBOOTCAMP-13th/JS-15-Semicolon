@@ -106,6 +106,20 @@ function getPtyClass(code: string) {
   }
 }
 
+function getWeatherLabel(code: string): string {
+  const labelMap: Record<string, string> = {
+    sunny: "맑음",
+    cloudy: "구름 많음",
+    overcast: "흐림",
+    rainy: "비",
+    snowy: "눈",
+    "rain-snow": "비 또는 눈",
+    unknown: "날씨 정보 없음",
+    "": "날씨 정보 없음",
+  };
+  return labelMap[code] || "날씨 정보 없음";
+}
+
 // 날짜 포맷 변경 (0월 0일)
 function formatToMonthDay(dateStr: string): string {
   // "20240518" → "05월 18일"
@@ -173,13 +187,17 @@ export function outputtingWeather(address: string) {
             <time class=" text-ga-gray300 font-light text-12 md:text-14">${formatToMonthDay(
               date
             )}</time>
-            <div class="flex p-1 gap-1 md:gap-4 ">
+            <div class="AmWeatherAria flex p-1 gap-1 md:gap-4 ">
               <div class="icon ${
                 skyAmClass || ptyAmClass
-              } w-6 h-6 md:w-7.5 md:h-7.5 "></div>
-              <div class="icon ${
+              } w-6 h-6 md:w-7.5 md:h-7.5 "><span class="sr-only">${getWeatherLabel(
+          skyAmClass || ptyAmClass
+        )}</span> </div>
+              <div class="PmWeatherAria icon ${
                 skyPmClass || ptyPmClass
-              } w-6 h-6 md:w-7.5 md:h-7.5 "></div>
+              } w-6 h-6 md:w-7.5 md:h-7.5 "><span class="sr-only">${getWeatherLabel(
+          skyPmClass || ptyPmClass
+        )}</span></div>
             </div>
             <strong  class="text-14 md:text-18">
               <span class="text-blue-500">${tmn}°</span
