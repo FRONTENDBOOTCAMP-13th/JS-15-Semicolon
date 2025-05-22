@@ -49,7 +49,6 @@ function renderFilteredFestivals() {
   festivalRenderer.renderFestivals(filtered, false, () => {
     applyBookmarkFills();
     bindBookmarkButtonEvents();
-    console.log("이벤트 바인딩 완료"); // ✅ 확인
   });
 }
 
@@ -108,7 +107,6 @@ async function fetchMoreFestivals() {
     festivalRenderer.renderFestivals(items, true, () => {
       applyBookmarkFills();
       bindBookmarkButtonEvents();
-      console.log("묶었당");
     });
   } catch (error) {
     console.error("무한 스크롤 중 오류 발생:", error);

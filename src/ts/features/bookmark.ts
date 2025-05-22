@@ -27,7 +27,6 @@ function setBookmarks(festivals: FestivalItem[]) {
 
   const ids = festivals.map((f) => f.contentid);
   localStorage.setItem(ID_KEY, JSON.stringify(ids));
-  console.log("북마크 저장:", ids);
 }
 
 // 축제 정보를 받아서 북마크 추가/제거 후 상태 반환
@@ -56,8 +55,7 @@ export function bindBookmarkButtonEvents() {
   const bookmarkBtns = document.querySelectorAll(
     ".bookmark-btn:not([data-event-bound])"
   );
-  console.log("북마크 바인딩 실행");
-  console.log(bookmarkBtns);
+
   bookmarkBtns.forEach((btn) => {
     btn.setAttribute("data-event-bound", "true"); // 중복 방지를 위한 표시
 
@@ -80,8 +78,6 @@ export function bindBookmarkButtonEvents() {
 
       const nowBookmarked = toggleBookmark(item);
       updateBookmarkIcon(card, nowBookmarked);
-
-      console.log("북마크 바인딩 종료: ", nowBookmarked);
     });
   });
 }
@@ -104,7 +100,6 @@ export function applyBookmarkFills() {
 // 북마크 필터링 상태에 따라 카드 보이기/숨기기
 // TODO : 필터링 따라 rendering 하는 걸로 바꿀수도
 export function applyFilter() {
-  // if
   const bookmarks = getBookmarks();
   const cards = document.querySelectorAll(".festivalCard");
 
@@ -119,6 +114,16 @@ export function applyFilter() {
         ? "block"
         : "none";
   });
+
+  //   renderFestivals(
+  //   items: FestivalItem[],
+  //   append: boolean = false,
+  //   onRendered?: () => void
+  // )  renderFestivals(
+  //   items: FestivalItem[],
+  //   append: boolean = false,
+  //   onRendered?: () => void
+  // )
 }
 
 // 완료 확인용 함수 TODO: 삭제할 수도 있음
