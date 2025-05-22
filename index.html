@@ -30,7 +30,7 @@
       <a
         id="authBtn"
         href="/src/components/login.html"
-        class="border border-[#ff515d] text-[#ff515d] hover:bg-[#ff515d] transition hover:text-white rounded-3xl py-1 px-3 md:py-1.5 md:px-6 text-12 md:text-14 lg:text-16 font-semibold font-sans"
+        class="border-2 border-red-500 text-red-500 hover:bg-red-500 transition hover:text-white rounded-3xl py-1 px-3 md:py-1.5 md:px-6 text-12 md:text-14 lg:text-16 font-semibold font-sans"
         >로그인</a
       >
     </header>
@@ -187,7 +187,7 @@
               </li>
             </ul>
           </div>
-
+          <label for="locationFilter" class="sr-only">지역 선택</label>
           <select id="locationFilter" name="locationFilter" class="hidden">
             <option value="">전체</option>
             <option value="1">서울</option>
@@ -241,7 +241,11 @@
           >
             <!-- 월 선택기 및 이전/다음 버튼 -->
             <div class="flex justify-between items-center mb-2">
-              <button id="prevMonth" class="text-gray-600 hover:text-gray-900">
+              <button
+                id="prevMonth"
+                class="text-gray-600 hover:text-gray-900"
+                aria-label="이전 달"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5"
@@ -256,7 +260,11 @@
                 </svg>
               </button>
               <span id="currentMonthYear" class="font-medium"></span>
-              <button id="nextMonth" class="text-gray-600 hover:text-gray-900">
+              <button
+                id="nextMonth"
+                class="text-gray-600 hover:text-gray-900"
+                aria-label="다음 달"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5"
@@ -351,12 +359,15 @@
           <button
             type="button"
             title="북마크한 축제만 보기"
+            aria-label="북마크한 축제만 보기"
             class="render-bookmarks flex items-center justify-center w-[3.75rem] px-4 py-3 border-2 border-gray-300 rounded-[1.25rem] bg-white focus:outline-none focus:border-red-500 transition-none text-white"
           >
+            <span class="sr-only">즐겨찾기 추가</span>
             <svg
               width="29"
               height="28"
               viewBox="0 0 29 28"
+              aria-label="즐겨찾기 아이콘"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -387,7 +398,7 @@
       <span class="md:w-[7rem] w-[4.5rem]">
         <img src="./src/assets/icon/logo.svg" alt="" />
       </span>
-      <span class="text-ga-gray300 text-12 pt-1.5 md:pt-0 md:text-16"
+      <span class="text-ga-black text-12 pt-1.5 md:pt-0 md:text-16"
         >&copy; 2025 여기갈래 All rights reserved.</span
       >
     </footer>
