@@ -1,9 +1,4 @@
 import { FestivalItem } from "../api/festivalApi";
-import {
-  bindBookmarkButtons,
-  applyBookmarkFills,
-  applyFilter,
-} from "../features/bookmark";
 
 export class FestivalRenderer {
   private container: HTMLElement;
@@ -88,7 +83,6 @@ export class FestivalRenderer {
       items.forEach((item) => {
         const card = document.createElement("div");
         card.className = "festivalCard";
-        card.setAttribute("data-contentid", item.contentid); // contentid 추가
         card.style.cursor = "pointer";
 
         const image = item.firstimage;
@@ -141,11 +135,6 @@ export class FestivalRenderer {
 
         this.container.appendChild(card);
       });
-
-      //북마크 버튼 바인딩
-      bindBookmarkButtons();
-      applyBookmarkFills();
-      applyFilter();
 
       // 🍀 아영 추가 렌더링 완료 후 로딩 표시 제거
       this.hideLoading();
